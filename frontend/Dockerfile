@@ -1,5 +1,5 @@
 FROM node:11
-MAINTAINER fixu
+LABEL maintainer="Fiksu codecontrol.fi"
 
 COPY package.json /src/package.json
 RUN cd /src && npm install --loglevel error
