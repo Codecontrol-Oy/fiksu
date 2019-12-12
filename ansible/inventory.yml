@@ -1,0 +1,4 @@
+fixu ansible_ssh_host=51.91.57.88
+
+[servers]
+fixu

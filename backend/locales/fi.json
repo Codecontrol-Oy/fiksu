@@ -1,0 +1,7 @@
+{
+	"Hello": "Moi",
+	"You have %s message": {
+		"one": "Sinulle on yksi viesti",
+		"other": "Sinulle on %n viestiä"
+	}
+}
