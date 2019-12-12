@@ -4,7 +4,7 @@ services:
 - docker
 addons:
   ssh_known_hosts:
-  - fiksu.codecontrol.fi
+  - fiksu.codecontrol.fi:${FIKSU_SSH_PORT}
 node_js:
 - 11.10.0
 before_install:
