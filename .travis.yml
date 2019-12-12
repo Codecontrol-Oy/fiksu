@@ -33,5 +33,6 @@ after_success:
 deploy:
   - provider: script
     script: "./deploy.sh"
+    skip_cleanup: true
     on:
       branch: master
