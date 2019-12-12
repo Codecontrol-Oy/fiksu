@@ -3,8 +3,7 @@ sudo: required
 services:
 - docker
 addons:
-  ssh_known_hosts: 
-   - "[fiksu.codecontrol.fi]:${FIKSU_SSH_PORT}"
+  ssh_known_hosts: fiksu.codecontrol.fi:20150
 node_js:
 - 11.10.0
 before_install:
