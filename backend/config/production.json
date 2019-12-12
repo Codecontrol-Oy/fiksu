@@ -2,9 +2,6 @@
     "name": "Fiksu",
     "version": "1.0.0",
     "port": 4000,
-    "connectionstring": "mongodb://dbservice:dbservice@mongo.codecontrol.fi/fiksuu?authSource=admin",
-    "rabbitHost": "amqp://DefaultUser:TcHsQdsAs8ehT4@rabbitmq",
-    "rabbitPort": 5672,
     "noIntegrationTests": false,
     "publicUrl": "https://api.fiksu.codecontrol.fi"
 }

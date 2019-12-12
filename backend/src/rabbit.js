@@ -13,7 +13,7 @@ class Rabbit {
 
     emailConsumer() {
         var queue = this.emailQueue
-        rabbit.connect(config.rabbitHost).then(function (conn) {
+        rabbit.connect(process.env.RABBITMQ_HOST).then(function (conn) {
             conn.createChannel().then(function (ch) {
                 ch.assertQueue(queue, { durable: false })
                 console.log(' [*] Waiting for email messages in %s.', queue)
@@ -53,7 +53,7 @@ class Rabbit {
         if (config.ignoreEmails) return
 
         var queue = this.emailQueue
-        const conn = await rabbit.connect(config.rabbitHost)
+        const conn = await rabbit.connect(process.env.RABBITMQ_HOST)
         const ch = await conn.createChannel()
         ch.assertQueue(queue, { durable: false })
         ch.sendToQueue(queue, Buffer.from(JSON.stringify(emailInfo)))
