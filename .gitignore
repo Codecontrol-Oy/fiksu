@@ -1,7 +1,6 @@
 **/node_modules/*
 docker-compose.yml
 *.retry
-server.js
 .vscode
 coverage
 ansible
