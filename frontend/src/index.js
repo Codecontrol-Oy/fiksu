@@ -79,7 +79,7 @@ const customFetch = (uri, options) => {
 }
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: "https://api.fiksu.codecontrol.fi",
   fetch: customFetch,
   cache: new InMemoryCache(),
 });
