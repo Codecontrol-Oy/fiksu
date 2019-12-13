@@ -72,11 +72,17 @@ const typeDefs = gql`
   """
   input FamilyInput {
     name: String!
+    permissions: VisibilityPermissionsInput
   }
 
   input FamilyUpdateInput {
     _id: ID!
     name: String!
+    permissions: VisibilityPermissionsInput
+  }
+
+  input VisibilityPermissionsInput {
+    visibility: VISIBILITYPERMISSION
   }
 
   input UserInput {
@@ -177,6 +183,7 @@ const typeDefs = gql`
     members: [User]
     admins: [User]
     pending: [User]
+    permissions: VisibilityPermissions
   }
 
   type User {
@@ -214,6 +221,10 @@ const typeDefs = gql`
     showBirthDate: PERMISSIONTYPE
     allowPushNotifications: Boolean
     allowEmailNotifications: Boolean
+  }
+
+  type VisibilityPermissions {
+    visibility: VISIBILITYPERMISSION
   }
 
   type ServerInfo {
@@ -311,6 +322,11 @@ const typeDefs = gql`
   enum PERMISSIONTYPE {
     NONE
     FRIENDS_ONLY
+    PUBLIC
+  }
+
+  enum VISIBILITYPERMISSION {
+    NONE
     PUBLIC
   }
 

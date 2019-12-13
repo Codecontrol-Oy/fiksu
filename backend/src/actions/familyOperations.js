@@ -34,6 +34,7 @@ exports.updateFamily = async (args, user) => {
             }
 
             family.name = args.family.name
+            family.permissions = args.family.permissions
 
             if (family.ownerId == user._id) { // Only owner can edit
                 family.adminIds = args.family.adminIds
