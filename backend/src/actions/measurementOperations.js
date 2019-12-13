@@ -15,7 +15,13 @@ exports.createMeasurement = async (args) => {
         date: date,
         userId: args.userId
     }
-    return Measurement.create(measurement)
+    const from = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
+    let to = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
+    to.setDate(to.getDate() + 1)
+    return Measurement.findOneAndRemove({ userId: args.userId, date: { "$gte": from, "$lt": to } }, { useFindAndModify: false })
+        .then(() => {
+            return Measurement.create(measurement)
+        })
 }
 
 exports.deleteMeasurement = async (args) => {
