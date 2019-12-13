@@ -6,63 +6,87 @@ import Grid from '../grid/grid'
 import Divider from "../atoms/divider"
 import Block from "../atoms/block"
 import InputGroup from "../molecules/inputGroup"
-import { QUERY_CONSUMPTION_TYPES, GET_USER_CONSUMPTIONS, GET_USER_ENERGY_SAVINGS } from '../../graphqlQueries'
+import { QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import Option from '../atoms/option'
 import SelectGroup from "../molecules/selectGroup"
 import Button from "../atoms/button"
-import { MUTATION_ADD_NEW_CONSUMPTION, MUTATION_REMOVE_CONSUMPTION } from '../../graphqlMutations'
+import { MUTATION_ADD_NEW_CONSUMPTION, MUTATION_REMOVE_CONSUMPTION, MUTATION_ADD_NEW_MEASUREMENT, MUTATION_REMOVE_MEASUREMENT } from '../../graphqlMutations'
 import List from '../atoms/list'
 import ListItem from '../molecules/listItem'  
 import ListItemAction from '../atoms/listItemAction'
 import Form from '../atoms/form'
+import LineChart from '../molecules/lineChart'
 const ProfileElectricity = props => {
 
-  var today = new Date();
-  var tomorrow = new Date();
-  var yesterday = new Date();
+  var today = new Date()
+  var tomorrow = new Date()  
+  var yesterday = new Date()
+  var lastMonth = new Date()
   tomorrow.setDate(today.getDate() + 1);
   yesterday.setDate(today.getDate() - 1);
+  lastMonth.setDate(today.getDate() - 31);
 
-  const [selectedType, setSelectedType] = useState(null)
-  const [readingType, setReadingType] = useState(null)
+  const [selectedType, setSelectedType] = useState(undefined)
+  const [measurement, setMeasurement] = useState(undefined)
+  const [readingType, setReadingType] = useState(undefined)
   const [date, setDate] = useState(today.toJSON().slice(0, 10))
+  const [measurementDate, setMeasurementDate] = useState(today.toJSON().slice(0, 10))
   const [reading, setReading] = useState("")
   const [removeSavingsFrom, setRemoveSavingsFrom] = useState(yesterday)
   const [removeSavingsTo, setRemoveSavingsTo] = useState(tomorrow)
-
+  const [removeMeasurementFrom, setRemoveMeasurementFrom] = useState(yesterday)
+  const [removeMeasurementTo, setRemoveMeasurementTo] = useState(tomorrow)
   const { loading, error, data } = useQuery(QUERY_CONSUMPTION_TYPES)
   const { loading: sLoading, error: sError, data: sData } = useQuery(GET_USER_ENERGY_SAVINGS, {
     variables: {
       id: localStorage.getItem('userId'), from: removeSavingsFrom, to: removeSavingsTo
     }
   })
-
-  const [saveConsumption, { loading: mutationLoading, error: mutationError, data: mData }] = useMutation(MUTATION_ADD_NEW_CONSUMPTION,
+  const { loading: mLoading, error: mError, data: mData } = useQuery(GET_USER_MEASUREMENTS, {
+    variables: {
+      id: localStorage.getItem('userId'), from: removeMeasurementFrom, to: removeMeasurementTo
+    }
+  })
+  const [saveConsumption, { loading: consumptionLoading, error: consumptionError, data: consumptionData }] = useMutation(MUTATION_ADD_NEW_CONSUMPTION,
     {
-      
       onCompleted(data) {
-        setSelectedType(null)
-        setReadingType("")
+        setSelectedType(undefined)
+        setReadingType(undefined)
         setDate(today)
-        setReading("")
+        setReading(undefined)
       },
       refetchQueries: ['GetEnergySavings']
     }
   )
+
   const [removeConsumption, { loading: rLoading, error: rError, data: rData }] = useMutation(MUTATION_REMOVE_CONSUMPTION, {
     refetchQueries: ['GetEnergySavings']
   })
 
+  const [saveMeasurement, { loading: measurementLoading, error: measurementError, data: measurementData }] = useMutation(MUTATION_ADD_NEW_MEASUREMENT,
+    {
+      onCompleted(data) {
+        setMeasurementDate(today)
+        setMeasurement(undefined)
+      },
+      refetchQueries: ['Measurements']
+    }
+  )
+
+  const [removeMeasurement, { loading: rmLoading, error: rmError, data: rmData }] = useMutation(MUTATION_REMOVE_MEASUREMENT, {
+    refetchQueries: ['Measurements']
+  })
+
   return (
     <ProfileCard>
-      <Heading variant={3} color={"secondary"}>Sähkönkäyttö ja ekoteot</Heading>
-      <GridRow wrap>
-        <Grid size={4} sizeS={12} sizeM={6}>
+      <Heading variant={3} color={"secondary"}>Sähkön säästötoimet</Heading>
+      <GridRow direction="row">
+        <Grid sizeS={12} sizeM={4} sizeL={4}>
           <Block className="new-electricity-consumption">
             <Heading variant={3} color={"secondary"}>Olen säästänyt kulutuksessa</Heading>
             <Form
-              onSubmit={e  => saveConsumption(
+              onSubmit={e => saveConsumption(
                 {
                   variables: {
                     savedConsumption: {
@@ -88,7 +112,35 @@ const ProfileElectricity = props => {
                 basic > Tallenna</Button>
             </Form>
           </Block>
-
+        </Grid>
+        <Grid sizeS={12} sizeM={4} sizeL={4}>
+          <Block className="new-electricity-consumption">
+            <Heading variant={3} color={"secondary"}>Sähkömittarilukema</Heading>
+            <Form
+              onSubmit={e => saveMeasurement(
+                {
+                  variables: {
+                    measurement: {
+                      "userId": localStorage.getItem("userId"),
+                      "value": parseFloat(measurement),
+                      "date": measurementDate,
+                    }
+                  }
+                }
+              )
+              }>
+              <InputGroup required underline value={measurementDate} onChange={(e) => setMeasurementDate(e.target.value)} color={"secondary"} basic id="measurementDate" type="date" />
+              <InputGroup required underline value={measurement} onChange={(e) => setMeasurement(e.target.value)} color={"secondary"} placeholder="Sähkömittarilukema" basic id="measurement" type="number" />
+              <Button
+                type="submit"
+                basic > Tallenna</Button>
+            </Form>
+          </Block>
+        </Grid>
+        <Grid sizeS={12} sizeM={4} sizeL={4}>
+          <Block>
+            <LineChart data={[{ data: [{x: new Date("2019-01-01"), y:12234},{x: new Date("2019-03-03"), y:12252},{x: new Date("2019-07-07"), y:12266},{x: new Date("2019-12-12"), y:12298}]},{ data: [{x: new Date("2019-01-01"), y:12234},{x: new Date("2019-12-12"), y:12302}]}]} title="Sähkönkäyttö"/>
+          </Block>
         </Grid>
       </GridRow>
       <Divider />
@@ -110,6 +162,30 @@ const ProfileElectricity = props => {
                       }
                     }
                   )}>Poista</ListItemAction>} title={item.consumptionType.title} description={(item.consumptionType.description + ": " + item.value + " " + item.consumptionType.amountType)} date={new Date(item.date).toLocaleDateString()} />
+            </Grid>
+            )}
+          </List>
+        </Block>
+      </GridRow>
+      <Divider />
+      <GridRow direction="row">
+        <Block className="edit-electricity-consumption">
+          <Heading variant={3} color={"secondary"}>Poista sähkömittarilukemia</Heading>
+          <Block>
+            <InputGroup required underline value={removeMeasurementFrom.toISOString().slice(0,10)} onChange={(e) => setRemoveMeasurementFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementFrom} basic id="MeasurementFrom" type="date" />
+            <InputGroup required underline value={removeMeasurementTo.toISOString().slice(0,10)} onChange={(e) => setRemoveMeasurementTo(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementTo} basic id="MeasurementTo" type="date" />
+          </Block>
+          <List>
+            {mData && mData.measurements && mData.measurements.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
+              <ListItem 
+                key={`item-${item._id}`} action={<ListItemAction
+                  icon={"icofont-energy-savings"} onClick={(e) => removeMeasurement(
+                    {
+                      variables: {
+                        id: item._id
+                      }
+                    }
+                  )}>Poista</ListItemAction>} description={("Sähkömittarilukema: " + item.value)} date={new Date(item.date).toLocaleDateString()} />
             </Grid>
             )}
           </List>

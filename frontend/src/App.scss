@@ -684,9 +684,6 @@ input::placeholder {
 
 }
 
-select {
-  height: 30px;
-}
 
 .button-basic {
   position: relative;
@@ -1249,7 +1246,7 @@ select {
 }
 
 [class*="grid-"] {
-  display: inline-flex;
+  display: inline-block;
   justify-content: inherit;
   align-items: center;
 }
@@ -1279,7 +1276,7 @@ select {
 .u-grid-9 {max-width: 74.97%; flex-basis: 74.97%; padding: 0.5rem; }
 .u-grid-10 {max-width: 83.3%; flex-basis: 83.3%; padding: 0.5rem;  }
 .u-grid-11 {max-width: 91.63%; flex-basis: 91.63%; padding: 0.5rem;  }
-.u-grid-12 {max-width: 100%; flex-basis: 100%; max-width: 100%; padding: 0.5rem;  }
+.u-grid-12 {min-width: 100%; flex-basis: 100%; max-width: 100%; padding: 0.5rem;  }
 
 @media screen and (max-width: 425px) {
 .s-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
@@ -1293,7 +1290,7 @@ select {
 .s-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
 .s-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
 .s-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
-.s-grid-12 {max-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
+.s-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 
 }
 
@@ -1309,7 +1306,7 @@ select {
 .m-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
 .m-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
 .m-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
-.m-grid-12 {max-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
+.m-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 }
 
 @media only screen and (min-device-width: 1024px) {
@@ -1324,7 +1321,7 @@ select {
   .l-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
   .l-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
   .l-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
-  .l-grid-12 {max-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
+  .l-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
   }
 
 .height-1 {height: 8.33%}
@@ -1616,11 +1613,12 @@ input:-webkit-autofill:active  {
 }
 
 .listItem {
-  margin: 5px;
+
   border: 1px solid rgb(39, 39, 39);
   display: block;
   background-color: #60a26a;
   list-style-type: none;
+  width:100%;
 }
 
 .listItem .input-label {

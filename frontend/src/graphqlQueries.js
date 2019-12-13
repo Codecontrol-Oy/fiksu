@@ -78,4 +78,15 @@ query GetEnergySavings($id: String!, $from: Date!, $to: Date!) {
 }
 `
 
-export { GET_ME, QUERY_CONSUMPTION_TYPES, GET_USER_CONSUMPTIONS, GET_USER_ENERGY_SAVINGS }
+const GET_USER_MEASUREMENTS = gql`
+query Measurements($id: String!, $from: Date!, $to: Date!) {
+  measurements(userId: $id, from: $from, to: $to) {
+        _id,
+        userId,
+        value,
+        date
+  }
+}
+`
+
+export { GET_ME, QUERY_CONSUMPTION_TYPES, GET_USER_CONSUMPTIONS, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS }

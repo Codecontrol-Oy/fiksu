@@ -1,20 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-
 import {
   XYPlot,
   XAxis,
   YAxis,
+  Hint,
   LineMarkSeries
 } from 'react-vis';
 
 class LineChart extends React.Component {
 
+  
   createSeries = () => {
     let series = []
-    this.props.data.map((serie) => {
-      series.push(<LineMarkSeries style={{strokeWidth: 3}} curve={'curveMonotoneX'} data={serie.data} />)
-    })
+    let index = 0
+    if(this.props.data && this.props.data.length > 0) {
+      this.props.data.map((serie) => {
+        series.push(<LineMarkSeries key={(`lineChart-${index}`)} style={{strokeWidth: 3}} curve={'curveMonotoneX'} data={serie.data} />)
+        index++
+      })
+    }
     return series
   }
 
@@ -22,7 +27,7 @@ class LineChart extends React.Component {
     const series = this.createSeries()
     return (
       <div>
-        <h3 style={{textAlign: 'center'}}>{this.props.title}</h3>
+        <h3 style={{textAlign: 'center'}} className="text-secondary">{this.props.title}</h3>
         <XYPlot
           xType="time"
           width={320}
