@@ -3,6 +3,7 @@ module.exports = {
     DEFAULT_LANGUAGE_CODE: 'fi',
     DEFAULT_MIN_PASSWORD_LENGTH: 8,
     REFRESH_ENDPOINT: "/refreshToken",
+    HERO_FILENAME: "hero.png",
 
     /* Permission Enums */
     PERMISSION_NONE: 'NONE',
@@ -26,6 +27,7 @@ module.exports = {
     MONGO_TIPS: 'tips',
     MONGO_FAMILY: 'family',
     MONGO_LOGIN: 'login',
+    MONGO_GROUP: 'group',
 
     /* Roles */
     ROLE_ADMIN: 'admin',

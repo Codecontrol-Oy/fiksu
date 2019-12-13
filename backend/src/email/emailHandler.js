@@ -2,16 +2,18 @@ import Email from 'email-templates'
 import config from 'config'
 import base64Img from 'base64-img'
 import container from '#translate'
+import Const from '#constants'
 const localeService = container.resolve('localeService')
 
 class EmailHandler {
-    constructor(template, user, data, family, callback, error) {
+    constructor(template, user, data, family, group, callback, error) {
         Object.assign(this, {
             template: template,
             receiver: user.email,
             data: data,
             user: user,
             family: family,
+            group: group,
             callback: callback,
             emailConfig: {
                 message: {
@@ -56,8 +58,8 @@ class EmailHandler {
                 to: this.user.email,
                 attachments: [
                     {
-                        filename: 'herologo.jpg',
-                        path: __dirname + '/assets/herologo.jpg',
+                        filename: `${Const.HERO_FILENAME}`,
+                        path: __dirname + `/assets/${Const.HERO_FILENAME}`,
                         cid: 'herologo'
                     }
                 ]
@@ -68,6 +70,7 @@ class EmailHandler {
                 email_content: localeService.translate('EMAIL_PASSWORD_RESET_CONTENT'),
                 preheader_text: localeService.translate('EMAIL_PASSWORD_RESET_CONTENT'),
                 button_text: localeService.translate('EMAIL_PASSWORD_RESET_BUTTON_TEXT'),
+                service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
                 resetLink: config.publicUrl + `/${resetLink}`
             }
         })
@@ -94,8 +97,8 @@ class EmailHandler {
                 to: this.user.email,
                 attachments: [
                     {
-                        filename: 'herologo.jpg',
-                        path: __dirname + '/assets/herologo.jpg',
+                        filename: `${Const.HERO_FILENAME}`,
+                        path: __dirname + `/assets/${Const.HERO_FILENAME}`,
                         cid: 'herologo'
                     }
                 ]
@@ -106,6 +109,7 @@ class EmailHandler {
                 email_content: localeService.translate('EMAIL_NEW_MEMBER_CONTENT'),
                 preheader_text: localeService.translate('EMAIL_NEW_MEMBER_CONTENT'),
                 button_text: localeService.translate('EMAIL_NEW_MEMBER_BUTTON_TEXT'),
+                service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
                 verificationLink: config.publicUrl + `/${verificationLink}`
             }
         })
@@ -133,8 +137,8 @@ class EmailHandler {
                 to: this.user.email,
                 attachments: [
                     {
-                        filename: 'herologo.jpg',
-                        path: __dirname + '/assets/herologo.jpg',
+                        filename: `${Const.HERO_FILENAME}`,
+                        path: __dirname + `/assets/${Const.HERO_FILENAME}`,
                         cid: 'herologo'
                     }
                 ]
@@ -145,7 +149,48 @@ class EmailHandler {
                 email_content: localeService.translate('EMAIL_NEW_FAMILYMEMBER_CONTENT', { familyName: familyName }),
                 preheader_text: localeService.translate('EMAIL_NEW_FAMILYMEMBER_CONTENT', { familyName: familyName }),
                 button_text: localeService.translate('EMAIL_NEW_FAMILYMEMBER_BUTTON_TEXT'),
+                service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
                 confirmLink: config.publicUrl + `/family`
+            }
+        })
+            .then(callback)
+            .catch(error)
+    }
+
+    sendGroupMemberInviteRequest() {
+        const callback = this.callback
+        const error = this.error
+        const email = new Email(this.emailConfig)
+        const firstName = this.user.firstName
+        const lastName = this.user.lastName
+        const groupName = this.group.name
+        email.send({
+            juiceResources: {
+                preserveImportant: true,
+                webResources: {
+                    images: false
+                }
+            },
+            template: 'templates/newGroupMemberInvite',
+            message: {
+                from: process.env.EMAIL_FROM || config.emailFrom,
+                to: this.user.email,
+                attachments: [
+                    {
+                        filename: `${Const.HERO_FILENAME}`,
+                        path: __dirname + `/assets/${Const.HERO_FILENAME}`,
+                        cid: 'herologo'
+                    }
+                ]
+            },
+            locals: {
+                email_subject: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_SUBJECT', { groupName: groupName }),
+                email_title: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_TITLE', { firstName: firstName }),
+                email_content: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_CONTENT', { groupName: groupName }),
+                preheader_text: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_CONTENT', { groupName: groupName }),
+                button_text: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_BUTTON_TEXT'),
+                service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
+                confirmLink: config.publicUrl + `/groups`
             }
         })
             .then(callback)
@@ -172,8 +217,8 @@ class EmailHandler {
                 to: this.user.email,
                 attachments: [
                     {
-                        filename: 'herologo.jpg',
-                        path: __dirname + '/assets/herologo.jpg',
+                        filename: `${Const.HERO_FILENAME}`,
+                        path: __dirname + `/assets/${Const.HERO_FILENAME}`,
                         cid: 'herologo'
                     }
                 ]
@@ -184,6 +229,7 @@ class EmailHandler {
                 email_content: localeService.translate('EMAIL_NEW_FRIENDREQUEST_CONTENT', { familyName: familyName }),
                 preheader_text: localeService.translate('EMAIL_NEW_FRIENDREQUEST_CONTENT', { familyName: familyName }),
                 button_text: localeService.translate('EMAIL_NEW_FRIENDREQUEST_BUTTON_TEXT'),
+                service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
                 confirmLink: config.publicUrl + `/friends`
             }
         })

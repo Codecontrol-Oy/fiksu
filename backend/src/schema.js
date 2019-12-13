@@ -37,6 +37,15 @@ const typeDefs = gql`
     demoteFamilyMember(familyId: ID!, userId: ID!): Family
     updateFamily(family: FamilyUpdateInput!): Family
     deleteFamily(_id: ID!): Family
+    createGroup(group: GroupInput!): Group
+    updateGroup(group: GroupUpdateInput!): Group
+    inviteToGroup(groupId: ID!, userId: ID!): Group
+    applyToGroup(groupId: ID!, userId: ID!): Group
+    approveToGroup(groupId: ID!, userId: ID!): Group
+    promoteGroupMember(groupId: ID!, userId: ID!): Group
+    demoteGroupMember(groupId: ID!, userId: ID!): Group
+    removeGroupMember(groupId: ID!, userId: ID!): Group
+    deleteGroup(_id: ID!): Group
   },
 
   """
@@ -65,6 +74,11 @@ const typeDefs = gql`
     getUserPendingFamilies(_id: ID): [Family]
     getAllFamilies: [Family]
     emailTaken(email: String!): Boolean
+    getGroup(_id: ID!): Group
+    searchGroup(search: String!, limit: Int, offset: Int): Groups
+    getUserGroups(_id: ID!): [Group]
+    getUserInvitedGroups(_id: ID): [Group]
+    getAllGroups(limit: Int, offset: Int): Groups
   }
 
   """
@@ -78,6 +92,19 @@ const typeDefs = gql`
   input FamilyUpdateInput {
     _id: ID!
     name: String!
+    permissions: VisibilityPermissionsInput
+  }
+
+  input GroupInput {
+    name: String!
+    description: String
+    permissions: VisibilityPermissionsInput
+  }
+
+  input GroupUpdateInput {
+    _id: ID!
+    name: String!
+    description: String
     permissions: VisibilityPermissionsInput
   }
 
@@ -174,7 +201,7 @@ const typeDefs = gql`
   type Family {
     _id: ID!
     createdAt: Date!
-    name: String
+    name: String!
     ownerId: ID!
     memberIds: [ID!]!
     adminIds: [ID]
@@ -184,6 +211,28 @@ const typeDefs = gql`
     admins: [User]
     pending: [User]
     permissions: VisibilityPermissions
+  }
+
+  type Group {
+    _id: ID!
+    createdAt: Date!
+    name: String!
+    description: String
+    ownerId: ID!
+    memberIds: [ID!]!
+    adminIds: [ID]
+    pendingIds: [ID]
+    owner: User!
+    members: [User]
+    admins: [User]
+    pending: [User]
+    invites: [User]
+    permissions: VisibilityPermissions
+  }
+
+  type Groups {
+    groups: [Group]
+    totalCount: Int
   }
 
   type User {
