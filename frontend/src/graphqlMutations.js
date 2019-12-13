@@ -33,5 +33,14 @@ const MUTATION_ADD_NEW_CONSUMPTION = gql`
         }
       `
 
-export { LOGIN_USER, CREATE_USER, GET_REFRESH_TOKEN, MUTATION_ADD_NEW_CONSUMPTION }
+const MUTATION_REMOVE_CONSUMPTION = gql`
+      mutation removeConsumption($id: ID!) {
+        removeSavedConsumption(_id: $id) {
+              _id,
+              userId
+          }
+      }
+    `
+
+export { LOGIN_USER, CREATE_USER, GET_REFRESH_TOKEN, MUTATION_ADD_NEW_CONSUMPTION, MUTATION_REMOVE_CONSUMPTION }
 

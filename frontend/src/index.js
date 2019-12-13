@@ -32,7 +32,7 @@ const customFetch = (uri, options) => {
     options.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
   }
 
-  let initialRequest = fetch(uri, options)
+
 
   return fetch(uri, options).then((response) => {
     return (response.json())

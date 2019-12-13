@@ -62,4 +62,20 @@ const GET_USER_CONSUMPTIONS = gql`
     }
     `;
 
-export { GET_ME, QUERY_CONSUMPTION_TYPES, GET_USER_CONSUMPTIONS }
+const GET_USER_ENERGY_SAVINGS = gql`
+query GetEnergySavings($id: String!, $from: Date!, $to: Date!) {
+  getSavedConsumptions(userId: $id, from: $from, to: $to) {
+    consumptionType {
+      title,
+      description,
+      amount, 
+      amountType
+    },
+    _id,
+    value,
+    date
+  }
+}
+`
+
+export { GET_ME, QUERY_CONSUMPTION_TYPES, GET_USER_CONSUMPTIONS, GET_USER_ENERGY_SAVINGS }
