@@ -24,7 +24,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 In short, when you submit code changes, your submissions are understood to be under the same [GPL Version 3](https://www.gnu.org/licenses/gpl-3.0.html) that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ## Report bugs using Github's [issues](https://github.com/Codecontrol-Oy/fiksu/issues)
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/Codecontrol-Oy/fiksu/issues/new)
 
 ## Write bug reports with detail, background, and sample code
 
