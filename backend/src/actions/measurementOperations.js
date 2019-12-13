@@ -9,11 +9,10 @@ exports.getMeasurements = async (args) => {
 }
 
 exports.createMeasurement = async (args) => {
-
     const date = new Date(args.date)
     const measurement = {
         value: args.value,
-        date: date.toDateString(),
+        date: date,
         userId: args.userId
     }
     return Measurement.create(measurement)

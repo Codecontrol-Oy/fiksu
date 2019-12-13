@@ -4,7 +4,7 @@ import AuthHelper from './helpers/authHelpers'
 import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles, getAllProfiles, deleteProfile, updateProfile, confirmProfile, createPasswordReset, confirmPasswordReset } from './actions/profileOperations'
 import { getLogin } from './actions/loginOperations'
 import { getRoles, addRole, removeRole } from './actions/roleOperations'
-import { getFamily, createFamily, addFamilyMember, updateFamily, deleteFamily, getUserFamilies, getUserPendingFamilies, approveFamilyMember, promoteFamilyMember, demoteFamilyMember, getAllFamilies, isInFamily } from './actions/familyOperations'
+import { getFamily, createFamily, addFamilyMember, updateFamily, removeFamilyMember, deleteFamily, getUserFamilies, getUserPendingFamilies, approveFamilyMember, promoteFamilyMember, demoteFamilyMember, getAllFamilies, isInFamily } from './actions/familyOperations'
 import { getHousing, createOrUpdateHousing, removeHousing } from './actions/housingOperations'
 import { getMeasurements, createMeasurement, deleteMeasurement } from './actions/measurementOperations'
 import { getFriends, getFriendRequests, approveFriendRequest, addFriend, unFriend } from './actions/friendOperations'
@@ -211,6 +211,10 @@ const resolvers = {
     updateFamily: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return updateFamily(args, context.user)
+    },
+    removeFamilyMember: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return removeFamilyMember(args, context.user)
     },
     deleteFamily: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()

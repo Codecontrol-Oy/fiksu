@@ -18,7 +18,14 @@ const familySchema = mongoose.Schema({
   },
   adminIds: { type: [mongoose.Schema.Types.ObjectId] },
   memberIds: { type: [mongoose.Schema.Types.ObjectId] },
-  pendingIds: { type: [mongoose.Schema.Types.ObjectId] }
+  pendingIds: { type: [mongoose.Schema.Types.ObjectId] },
+  permissions: {
+    visibility: {
+      type: String,
+      enum: [Const.PERMISSION_NONE, Const.PERMISSION_PUBLIC],
+      default: Const.PERMISSION_NONE
+    }
+  }
 }, {
   timestamps: true
 })

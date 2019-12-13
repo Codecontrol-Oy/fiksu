@@ -31,6 +31,7 @@ const typeDefs = gql`
     removeRole(userId: ID!, role: String!): [String]
     createFamily(family: FamilyInput!): Family
     addFamilyMember(familyId: ID!, userId: ID!): Family
+    removeFamilyMember(familyId: ID!, userId: ID!): Family
     approveFamilyMember(familyId: ID!): Family
     promoteFamilyMember(familyId: ID!, userId: ID!): Family
     demoteFamilyMember(familyId: ID!, userId: ID!): Family
@@ -71,11 +72,17 @@ const typeDefs = gql`
   """
   input FamilyInput {
     name: String!
+    permissions: VisibilityPermissionsInput
   }
 
   input FamilyUpdateInput {
     _id: ID!
     name: String!
+    permissions: VisibilityPermissionsInput
+  }
+
+  input VisibilityPermissionsInput {
+    visibility: VISIBILITYPERMISSION
   }
 
   input UserInput {
@@ -176,6 +183,7 @@ const typeDefs = gql`
     members: [User]
     admins: [User]
     pending: [User]
+    permissions: VisibilityPermissions
   }
 
   type User {
@@ -213,6 +221,10 @@ const typeDefs = gql`
     showBirthDate: PERMISSIONTYPE
     allowPushNotifications: Boolean
     allowEmailNotifications: Boolean
+  }
+
+  type VisibilityPermissions {
+    visibility: VISIBILITYPERMISSION
   }
 
   type ServerInfo {
@@ -310,6 +322,11 @@ const typeDefs = gql`
   enum PERMISSIONTYPE {
     NONE
     FRIENDS_ONLY
+    PUBLIC
+  }
+
+  enum VISIBILITYPERMISSION {
+    NONE
     PUBLIC
   }
 
