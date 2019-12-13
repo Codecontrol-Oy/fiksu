@@ -13,6 +13,7 @@ import * as constants from './constants'
 import ProfileController from "./components/controllers/profileController"
 import ProfileContainer from "./containers/ProfileContainer"
 import ProfileElectricityController from "./components/controllers/profileElectricityController"
+import ProfileSettingsController from "./components/controllers/profileSettingsController"
 
 const App = () => (
   <>
@@ -31,6 +32,7 @@ const App = () => (
         <PrivateRoute exact path="/logout" component={LogOut} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_PROFILE} component={ProfileController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ELECTRICITY} component={ProfileElectricityController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
         <Route component={NotFound} />
       </Switch>
     </Main>
