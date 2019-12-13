@@ -106,22 +106,46 @@ exports.emailTaken = async (email) => {
 
 function validatePassword(password) {
     if (!password.length) {
-        throw new ApolloError(localeService.translate('PASSWORD_REQUIRED'))
+        throw new ApolloError(localeService.translate('PASSWORD_REQUIRED'), null, { 
+            errors: {
+                password: localeService.translate('PASSWORD_REQUIRED')
+            }
+        })
     }
     if (password.length < Const.DEFAULT_MIN_PASSWORD_LENGTH) {
-        throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }))
+        throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }), null, { 
+            errors: {
+                password: localeService.translate('PASSWORD_MIN_REQUIRED')
+            }
+        })
     }
     if (!/\d/.test(password)) { // At least one number
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'))
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+            errors: {
+                password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
+            }
+        })
     }
     if (!/[a-z]/.test(password)) { // At least one lowercase char [a-z]
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'))
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+            errors: {
+                password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
+            }
+        })
     }
     if (!/[A-Z]/.test(password)) { // At least one uppercase char [A-Z]
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'))
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+            errors: {
+                password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
+            }
+        })
     }
     if (!/[!@#\$%\^&]/.test(password)) { // At least one special character
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'))
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+            errors: {
+                password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
+            }
+        })
     }
 }
 
