@@ -31,6 +31,7 @@ const typeDefs = gql`
     removeRole(userId: ID!, role: String!): [String]
     createFamily(family: FamilyInput!): Family
     addFamilyMember(familyId: ID!, userId: ID!): Family
+    removeFamilyMember(familyId: ID!, userId: ID!): Family
     approveFamilyMember(familyId: ID!): Family
     promoteFamilyMember(familyId: ID!, userId: ID!): Family
     demoteFamilyMember(familyId: ID!, userId: ID!): Family

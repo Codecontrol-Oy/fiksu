@@ -50,5 +50,9 @@
 	"MONGOOSE_UNIQUE": "{VALUE} on jo varattu",
 	"OWNER_UNIQUE": "Käyttäjä voi olla vain yhden perheen perustaja",
 
-	"TOKEN_EXPIRED": "Kirjautumistunnus on vanhentunut"
+	"TOKEN_EXPIRED": "Kirjautumistunnus on vanhentunut",
+
+	"FAMILY_MEMBER_NOT_FOUND": "Käyttäjä ei ole osa perhettä.",
+	"FAMILY_NO_PERMISSION_MEMBER": "Käyttäjällä ei ole oikeutta poistaa jäsentä.",
+	"FAMILY_NO_PERMISSION_OWNER": "Käyttäjällä ei ole oikeutta poistaa omistajaa."
 }

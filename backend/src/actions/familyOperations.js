@@ -168,6 +168,56 @@ exports.demoteFamilyMember = async (args, user) => {
         })
 }
 
+exports.removeFamilyMember = async (args, user) => {
+    let familyId = args.familyId
+    let userId = args.userId
+
+    return Family.findOne({ _id: mongoose.Types.ObjectId(familyId) })
+        .then(async (family) => {
+            if (!family) {
+                throw new ApolloError(localeService.translate('FAMILY_NOT_FOUND'))
+            }
+
+            // Check if user exists in family
+            if (family.ownerId == userId ||
+                family.adminIds.some(adminId => adminId == userId) ||
+                family.memberIds.some(memberId => memberId == userId) ||
+                family.pendingIds.some(memberId => memberId == userId)) {
+
+                // Can't remove owner
+                if (family.ownerId == userId) {
+                    throw new ApolloError(localeService.translate('FAMILY_NO_PERMISSION_OWNER'))
+                }
+                
+                if (userId == user._id) { // Check if self
+                    family.adminIds.remove(userId)
+                    family.memberIds.remove(userId)
+                    family.pendingIds.remove(userId)
+                }
+                else {
+                    let isAdmin = family.ownerId == user._id || family.adminIds.some(adminId => adminId == user._id)
+                    if (!isAdmin) {
+                        throw new ApolloError(localeService.translate('FAMILY_NO_PERMISSION_MEMBER'))
+                    }
+
+                    if ((family.ownerId == user._id && family.adminIds.some(adminId => adminId == user._id)) || family.memberIds.some(memberId => memberId == userId) || family.pendingIds.some(memberId => memberId == userId)) {
+                        family.adminIds.remove(userId)
+                        family.memberIds.remove(userId)
+                        family.pendingIds.remove(userId)
+                    }
+                    else {
+                        throw new ApolloError(localeService.translate('FAMILY_NO_PERMISSION_MEMBER'))
+                    }
+                }
+
+                return Family.findOneAndUpdate({ _id: mongoose.Types.ObjectId(familyId) }, family, { new: true, returnNewDocument: true, useFindAndModify: false })
+            }
+            else {
+                throw new ApolloError(localeService.translate('FAMILY_MEMBER_NOT_FOUND'))
+            }
+        })
+}
+
 exports.deleteFamily = async (args, user) => {
     return Family.findOne({ _id: mongoose.Types.ObjectId(args._id) })
         .then((result) => {
