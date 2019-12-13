@@ -683,6 +683,8 @@ input::placeholder {
   padding: 0.5rem;
 
 }
+
+
 .button-basic {
   position: relative;
   font-size: 0.8rem;
@@ -931,6 +933,13 @@ input::placeholder {
 
 }
 .new-electricity-consumption {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.edit-electricity-consumption {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -1236,13 +1245,11 @@ input::placeholder {
 }
 
 [class*="grid-"] {
-  display: flex;
+  display: inline-block;
   justify-content: inherit;
   align-items: center;
 }
-.text-main {
 
-}
 .text-secondary {
   color: #5a5a5a;
 }
@@ -1268,39 +1275,53 @@ input::placeholder {
 .u-grid-9 {max-width: 74.97%; flex-basis: 74.97%; padding: 0.5rem; }
 .u-grid-10 {max-width: 83.3%; flex-basis: 83.3%; padding: 0.5rem;  }
 .u-grid-11 {max-width: 91.63%; flex-basis: 91.63%; padding: 0.5rem;  }
-.u-grid-12 {max-width: 100%; flex-basis: 100%; max-width: 100%; padding: 0.5rem;  }
+.u-grid-12 {min-width: 100%; flex-basis: 100%; max-width: 100%; padding: 0.5rem;  }
 
 @media screen and (max-width: 425px) {
-.s-grid-1 {min-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
-.s-grid-2 {min-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
-.s-grid-3 {min-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
-.s-grid-4 {min-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
-.s-grid-5 {min-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
-.s-grid-6 {min-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
-.s-grid-7 {min-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
-.s-grid-8 {min-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
-.s-grid-9 {min-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
-.s-grid-10 {min-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
-.s-grid-11 {min-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+.s-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+.s-grid-2 {max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+.s-grid-3 {max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+.s-grid-4 {max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+.s-grid-5 {max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+.s-grid-6 {max-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
+.s-grid-7 {max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+.s-grid-8 {max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+.s-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+.s-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+.s-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
 .s-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 
 }
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-.m-grid-1 {min-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
-.m-grid-2 {min-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
-.m-grid-3 {min-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
-.m-grid-4 {min-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
-.m-grid-5 {min-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
-.m-grid-6 {min-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
-.m-grid-7 {min-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
-.m-grid-8 {min-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
-.m-grid-9 {min-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
-.m-grid-10 {min-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
-.m-grid-11 {min-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+.m-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+.m-grid-2 {max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+.m-grid-3 {max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+.m-grid-4 {max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+.m-grid-5 {max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+.m-grid-6 {max-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
+.m-grid-7 {max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+.m-grid-8 {max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+.m-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+.m-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+.m-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
 .m-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
-
 }
+
+@media only screen and (min-device-width: 1024px) {
+  .l-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+  .l-grid-2 {max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+  .l-grid-3 {max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+  .l-grid-4 {max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+  .l-grid-5 {max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+  .l-grid-6 {max-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
+  .l-grid-7 {max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+  .l-grid-8 {max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+  .l-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+  .l-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+  .l-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+  .l-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
+  }
 
 .height-1 {height: 8.33%}
 .height-2 {height: 16.66%}
@@ -1578,6 +1599,70 @@ input:-webkit-autofill:active  {
   color: rgb(53, 115, 143);
   flex-grow: 1;
   font-size: 1.5rem
+}
+
+.list {
+  width: 100%;
+  display: block;
+}
+
+
+.list span {
+  display: block;
+}
+
+.listItem {
+
+  border: 1px solid rgb(39, 39, 39);
+  display: block;
+  background-color: #60a26a;
+  list-style-type: none;
+  width:100%;
+}
+
+.listItem .input-label {
+  display:block;
+  font-weight: bold;
+  color: white;
+}
+
+.listItem .bottom {
+  width: 100%;
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  background-color: #c44741;
+
+}
+.listItem .top {
+  width: 100%;
+  padding: 10px;
+  display: inline-block;
+}
+
+.listItem-action {
+  cursor: pointer;
+}
+.listItem-icon {
+  transition: all 0.2s ease;
+  font-size: 1.5rem;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}
+.listItem-action:hover {
+  filter:  drop-shadow(0px 15px 3px rgba(24,24,24,0.3));
+  -webkit-filter:  drop-shadow(0px 15px 3px rgba(24,24,24,0.3));
+          
+}
+.listItem-icon:hover i {
+  transition: all 0.2s ease;
+  color: rgb(124, 251, 173);
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
 }
 
 @media only screen and (min-width: 768px) {

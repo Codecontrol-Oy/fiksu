@@ -1,10 +1,3 @@
 import React from 'react'
-
-
-const Divider = props => {
-
-    return (
-        <hr className="divider" />
-    )
-}
+const Divider = props => <hr className="divider" />
 export default Divider

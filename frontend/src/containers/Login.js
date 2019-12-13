@@ -43,7 +43,7 @@ export default class Login extends React.PureComponent {
               if (data && data.logIn && data.logIn.token) {
                 localStorage.setItem('token', data.logIn.token);
                 localStorage.setItem('id', data.logIn._id);
-                this.props.history.push(this.props.from ? this.props.from : '/home');
+                this.props.history.push(this.props.from ? this.props.from : '/account');
               } else if (data) {
                 return (
                   <React.Fragment>
