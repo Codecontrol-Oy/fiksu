@@ -14,7 +14,7 @@ before_install:
 - chmod 600 /tmp/deploy_rsa
 - ssh-add /tmp/deploy_rsa
 install:
-- cd $TRAVIS_BUILD_DIR/frontend && npm install
+- cd $TRAVIS_BUILD_DIR/frontend && npm build
 - cd $TRAVIS_BUILD_DIR/backend && npm install
 script:
 - echo "skipping tests for now"

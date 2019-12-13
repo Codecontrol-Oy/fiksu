@@ -3,4 +3,5 @@ docker-compose.yml
 *.retry
 .vscode
 coverage
+build
 ansible
