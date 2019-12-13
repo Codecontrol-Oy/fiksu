@@ -104,7 +104,7 @@ const Register = props => {
               </GridRow>
               <GridRow align="center" justify="center">
                 <Grid size={12}>
-                  <IconInput id="password" type="password" icon="icofont-lock" placeholder="Salasana" underline />
+                  <IconInput id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
                 </Grid>
               </GridRow>
 
@@ -127,7 +127,7 @@ const Register = props => {
         </Form>
       </CardBody>
       <CardFooter>
-        <Paragraph onClick={props.onClick} weight={3} size={2}>Uuden tilin luonti on helppoa, ja mikä parasta, ilmaista!</Paragraph>
+        <Paragraph onClick={props.onClick} weight={3} size={2}>Omistatko jo tilin ? Kirjaudu sisään täältä!</Paragraph>
       </CardFooter>
     </Transition>
   );

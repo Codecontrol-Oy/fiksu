@@ -17,7 +17,7 @@ const IconInput = props => {
     return (
         <Block style={props.wrapperStyle} className={"icon-input-wrapper " + (classes.join(' '))}>
             <i class={props.icon}></i>
-            <Input underline={props.underline} id={props.id} type={props.type} basic={props.basic} rounded={props.rounded} placeholder={props.placeholder} style={props.inputStyle} onChange={props.onChange} />
+            <Input error={props.error} underline={props.underline} id={props.id} type={props.type} basic={props.basic} rounded={props.rounded} placeholder={props.placeholder} style={props.inputStyle} onChange={props.onChange} />
         </Block>
     )
 }

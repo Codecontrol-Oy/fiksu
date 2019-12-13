@@ -35,14 +35,14 @@ const Register = props => {
     {
       onError(error) {
 
-        setErrors(error.graphQLErrors[0].extensions.exception.errors)
+        setErrors({ message: "Käyttäjätunnus tai salasana on väärä!" })
       },
       onCompleted(data) {
         localStorage.setItem("token", data.logIn.token)
         localStorage.setItem("refreshToken", data.logIn.refreshToken)
         localStorage.setItem("userId", data.logIn._id)
         props.history.push(constants.ROUTE_ACCOUNT)
-
+        setErrors(false)
       }
     },
   )
@@ -64,10 +64,10 @@ const Register = props => {
               <CardBody>
                 <GridContainer align="center" justify="center" height={12} grow direction="column" size={12}>
                   <GridRow justify="center" align="center">
-                    <InputGroup underline id="nickname" type="text" />
+                    <InputGroup error={errors ? true : false} underline id="nickname" type="text" />
                   </GridRow>
                   <GridRow justify="center" align="center">
-                    <InputGroup underline id="password" type="password" />
+                    <InputGroup error={errors} underline id="password" type="password" />
                   </GridRow>
                   <GridRow justify="center" align="center">
                     <Grid size={12}>
