@@ -887,6 +887,7 @@ input::placeholder {
   position: relative;
   display: flex;
   flex-direction: column;  
+  align-items: center;
 }
 .achievement-image {
   cursor: pointer;
@@ -1344,7 +1345,7 @@ input::placeholder {
 .m-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 }
 
-@media only screen and (min-device-width: 1024px) {
+@media only screen and (min-device-width: 1025px) {
   .l-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
   .l-grid-2 {min-width: 16.66% !important; max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
   .l-grid-3 {min-width: 24.99% !important; max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
@@ -1640,6 +1641,8 @@ input:-webkit-autofill:active  {
 .list {
   width: 100%;
   display: block;
+  margin: 0;
+  padding: 0;
 }
 
 

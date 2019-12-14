@@ -70,18 +70,16 @@ const Register = props => {
                     <InputGroup error={errors} underline id="password" type="password" />
                   </GridRow>
                   <GridRow justify="center" align="center">
-                    <Grid size={12}>
-                      <Button
-                        onClick={(e) => { postLogin({ variables: { nickname: document.getElementById("nickname").value, password: document.getElementById("password").value } }) }}
-                        type="button" basic>
-                        {mutationLoading ?
-                          <LoadingSpinner />
-                          :
-                          "Kirjaudu"
+                    <Button
+                      onClick={(e) => { postLogin({ variables: { nickname: document.getElementById("nickname").value, password: document.getElementById("password").value } }) }}
+                      type="button" basic>
+                      {mutationLoading ?
+                        <LoadingSpinner />
+                        :
+                        "Kirjaudu"
 
-                        }
-                      </Button>
-                    </Grid>
+                      }
+                    </Button>
                   </GridRow>
                 </GridContainer>
               </CardBody>

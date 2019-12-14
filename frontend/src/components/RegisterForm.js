@@ -67,45 +67,32 @@ const Register = props => {
         }}>
           <GridContainer align="center" direction="column">
             <GridRow align="center" justify="center">
-              <Grid size={12}>
-                <InputGroup placeholder="Etunimi" error={errors && errors.firstName && errors.firstName} underline id="firstName" type="text" />
-              </Grid>
+              <InputGroup placeholder="Etunimi" error={errors && errors.firstName && errors.firstName} underline id="firstName" type="text" />
             </GridRow>
             <GridRow align="center" justify="center">
-              <Grid size={12}>
-                <InputGroup placeholder="Sukunimi" error={errors && errors.lastName && errors.lastName} underline id="lastName" type="text" />
-              </Grid>
+              <InputGroup placeholder="Sukunimi" error={errors && errors.lastName && errors.lastName} underline id="lastName" type="text" />
             </GridRow>
             <GridRow align="center" justify="center">
-              <Grid size={12}>
-                <InputGroup placeholder="Syntymäaika" error={errors && errors.birthDate && errors.birthDate} underline id="birthDate" type="date" />
-              </Grid>
+              <InputGroup placeholder="Syntymäaika" error={errors && errors.birthDate && errors.birthDate} underline id="birthDate" type="date" />
             </GridRow>
 
             <GridRow align="center" justify="center">
-              <Grid size={12}>
-                <InputGroup placeholder="Kaupunki" error={errors && errors["address.city"] && errors["address.city"]} underline id="city" type="text" />
-              </Grid>
+
+              <InputGroup placeholder="Kaupunki" error={errors && errors["address.city"] && errors["address.city"]} underline id="city" type="text" />
             </GridRow>
           </GridContainer>
           <Fieldset title={"Käyttäjätunnus"}>
             <GridContainer align="center" direction="column">
 
               <GridRow align="center" justify="center">
-                <Grid size={12}>
-                  <IconInput id="nickName" type="text" icon="icofont-user-alt-4" placeholder="Käyttäjänimi" underline />
-                </Grid>
+                <IconInput id="nickName" type="text" icon="icofont-user-alt-4" placeholder="Käyttäjänimi" underline />
               </GridRow>
               <GridRow align="center" justify="center">
-                <Grid size={12}>
-                  <IconInput id="email" type="email" icon="icofont-email" placeholder="Sähköpostiosoite" underline />
+                <IconInput id="email" type="email" icon="icofont-email" placeholder="Sähköpostiosoite" underline />
 
-                </Grid>
               </GridRow>
               <GridRow align="center" justify="center">
-                <Grid size={12}>
-                  <IconInput id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
-                </Grid>
+                <IconInput id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
               </GridRow>
 
 
