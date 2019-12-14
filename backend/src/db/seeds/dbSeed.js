@@ -223,6 +223,7 @@ exports.seed = () => {
     addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2)
     addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi/paperi -pussia.', 0.2)
     addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa voidaan säästää lämmityskuluissa.', 0.2)
+    addEcoAction('En mennyt tänäänkään töihin helikopterilla', 'Menemällä esimerkiksi pyörällä, säästät luontoa ja kuntosi kohenee.', 0.2)
 }
 
 function addEcoAction(title, description, amount) {
