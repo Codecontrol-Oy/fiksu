@@ -13,6 +13,7 @@ import { getChallenges, getChallenge, createChallenge, removeChallenge, getTopLi
 import { getConsumptionTypes, getConsumptionType } from './actions/consumptionTypeOperations'
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
+import { getElectricityGraph } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -155,6 +156,10 @@ const resolvers = {
           }
           return result
         })
+    },
+    getElectricityGraph: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getElectricityGraph(args)
     },
   },
   Mutation: {
@@ -460,6 +465,14 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       if (!obj.pendingIds) return null
       return getProfiles(obj.pendingIds)
+    },
+    isOwner: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return context.user._id == obj.ownerId
+    },
+    isAdmin: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return obj.adminIds.some(adminId => adminId == context.user._id)
     }
   },
   Group: {

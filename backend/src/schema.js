@@ -79,6 +79,7 @@ const typeDefs = gql`
     getUserGroups(_id: ID!): [Group]
     getUserInvitedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
+    getElectricityGraph(userId: String!, from: Date!, to: Date!): [Measurement]
   }
 
   """
@@ -210,6 +211,8 @@ const typeDefs = gql`
     members: [User]
     admins: [User]
     pending: [User]
+    isOwner: Boolean
+    isAdmin: Boolean
     permissions: VisibilityPermissions
   }
 
