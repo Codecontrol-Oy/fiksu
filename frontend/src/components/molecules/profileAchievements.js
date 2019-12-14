@@ -16,25 +16,25 @@ const ProfileAchievements = props => {
             <Divider />
             <GridContainer direction={"row"} width={12}>
                 <GridRow wrap>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement />
                     </Grid>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement />
                     </Grid>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement />
                     </Grid>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement />
                     </Grid>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement />
                     </Grid>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement />
                     </Grid>
-                    <Grid size={1} sizeS={4}>
+                    <Grid size={1} sizeS={4} sizeM={2}>
                         <Achievement locked />
                     </Grid>
                 </GridRow>
