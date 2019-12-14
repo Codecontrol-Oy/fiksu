@@ -48,6 +48,7 @@ const typeDefs = gql`
     deleteGroup(_id: ID!): Group
     createSavedEcoAction(savedEcoAction: SavedEcoActionInput!): SavedEcoAction
     removeSavedEcoAction(_id: ID!): SavedEcoAction
+    acceptGroupInvitation(groupId: ID!): Group
   },
 
   """
@@ -87,6 +88,8 @@ const typeDefs = gql`
     getEcoActionTypes: [EcoActionType]
     getSavedEcoActions(userId: ID, from: Date!, to: Date!): [SavedEcoAction]
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
+    getUserEcoPoints(userId: ID, from: Date!, to: Date!): String
+    getResults(userId: ID, householdId: ID, from: Date!, to: Date!): [ResultsGraph]
   }
 
   """
@@ -394,6 +397,12 @@ const typeDefs = gql`
     visibleDate: Date
     createdBy: User
     updatedBy: User
+  }
+
+  type ResultsGraph {
+    info: User
+    ecopoints: Float
+    elctricpoints: Float
   }
 
   """

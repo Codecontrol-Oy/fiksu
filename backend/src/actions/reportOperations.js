@@ -1,6 +1,7 @@
 import Measurement from '../db/models/measurementModel'
 import SavedConsumption from '../db/models/savedConsumptionModel'
 import SavedEcoActions from '../db/models/savedEcoActionModel'
+import { getFamilyMemberIds } from './profileOperations'
 import mongoose from 'mongoose'
 import { ApolloError } from 'apollo-server'
 
@@ -110,7 +111,6 @@ exports.getUserEcoActionsGraph = async (args, context) => {
                 }
             })
 
-
             // Create the actual ecoaction line
             let actualEcoActionsLine = generateDataSet(fullRange, from, to, groupedEcoActions)
 
@@ -119,7 +119,112 @@ exports.getUserEcoActionsGraph = async (args, context) => {
         })
 }
 
-function generateDataSet(fullRange, from, to, data) {        
+exports.getUserEcoPoints = async (args, context) => {
+    const userId = args?.userId ?? context.user._id
+    const from = new Date(args.from)
+    const to = new Date(args.to)
+    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lt": to } })
+        .sort({ date: 1 })
+        .populate('ecoActionTypeId')
+        .then(async (ecoActions) => {
+            let totalPoints = 0
+            if (ecoActions.length <= 0) { return totalPoints }
+
+            ecoActions.map((ecoAction) => {
+                totalPoints += (ecoAction.value * ecoAction.ecoActionTypeId.amount)
+            })
+
+            return totalPoints
+        })
+}
+
+exports.getUserElectricPoints = async (args, context) => {
+    const userId = args?.userId ?? context.user._id
+    const householdId = args.householdId
+    const from = new Date(args.from)
+    const to = new Date(args.to)
+
+    return Measurement.find({ householdId: householdId, date: { "$gte": from, "$lt": to } })
+        .sort({ date: 1 })
+        .then(async (measurements) => {
+            let totalPoints = 0
+            if (measurements.length < 2) {
+                return totalPoints
+            }
+
+            // Create the actual electricity line
+            let actualElectricityLine = []
+            measurements.map((measurement) => {
+                actualElectricityLine.push({
+                    x: measurement.date.toISOString().slice(0, 10),
+                    y: measurement.value
+                })
+            })
+
+            // Calculate savings
+            const savedConsumptions = await SavedConsumption.find({ householdId: householdId, userId: userid, date: { "$gte": from, "$lt": to } })
+                .populate('consumptionTypeId')
+                .then((savings) => {
+                    if (savings) {
+                        let totalSavings = 0
+                        savings.map((saving) => {
+                            totalSavings += (saving.value * saving.consumptionTypeId.amount)
+                        })
+
+                        return totalSavings
+                    }
+
+                    return 0
+                })
+
+            // Create the "what it would've been without savings" line
+            const first = measurements[0]
+            const last = measurements[measurements.length - 1]
+            last.value += savedConsumptions
+
+            let savingsLine = []
+            savingsLine.push({
+                x: first.date.toISOString().slice(0, 10),
+                y: first.value
+            })
+            savingsLine.push({
+                x: last.date.toISOString().slice(0, 10),
+                y: last.value
+            })
+
+            //console.log(JSON.stringify([{ data: actualElectricityLine }, { data: savingsLine }]))
+            return [{ data: actualElectricityLine }, { data: savingsLine }]
+        })
+}
+
+exports.getResults = async (args) => {
+    const userId = args.userId
+    const householdId = args.householdId
+
+    // Household stats
+    if (householdId) {
+        const familyMemberIds = await getFamilyMemberIds(householdId)
+        let results = []
+        familyMemberIds.map((familyMemberId) => {
+            results.push({
+                userId: familyMemberId,
+                from: args.from,
+                to: args.to
+            })
+        })
+
+        return results
+    }
+
+    // Requester stats
+    return [{
+        userId: userId,
+        from: args.from,
+        to: args.to
+    }]
+}
+
+function generateDataSet(fullRange, from, to, data) {
     data = data ?? []
     const timeDiff = to.getTime() - from.getTime();
     const dateDiff = timeDiff / (1000 * 3600 * 24);

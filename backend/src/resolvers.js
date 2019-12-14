@@ -5,7 +5,7 @@ import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles
 import { getLogin } from './actions/loginOperations'
 import { getRoles, addRole, removeRole } from './actions/roleOperations'
 import { getFamily, createFamily, addFamilyMember, updateFamily, removeFamilyMember, deleteFamily, getUserFamilies, getUserPendingFamilies, approveFamilyMember, promoteFamilyMember, demoteFamilyMember, getAllFamilies, isInFamily } from './actions/familyOperations'
-import { getGroup, createGroup, searchGroup, updateGroup, inviteUserToGroup, applyToGroup, approveUserToGroup, promoteGroupMember, demoteGroupMember, removeGroupMember, deleteGroup, getUserGroups, getUserInvitedGroups, getAllGroups } from './actions/groupOperations'
+import { getGroup, createGroup, searchGroup, updateGroup, inviteUserToGroup, applyToGroup, approveUserToGroup, promoteGroupMember, demoteGroupMember, removeGroupMember, deleteGroup, getUserGroups, getUserInvitedGroups, getAllGroups, acceptGroupInvitation } from './actions/groupOperations'
 import { getHousing, createOrUpdateHousing, removeHousing } from './actions/housingOperations'
 import { getMeasurements, createMeasurement, deleteMeasurement } from './actions/measurementOperations'
 import { getFriends, getFriendRequests, approveFriendRequest, addFriend, unFriend } from './actions/friendOperations'
@@ -15,7 +15,7 @@ import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOper
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph, getUserEcoActionsGraph } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getResults } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -183,6 +183,14 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return getAllSavedEcoActions(args)
     },
+    getUserEcoPoints: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getUserEcoPoints(args, context)
+    },
+    getResults: async (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getResults(args)
+    },
   },
   Mutation: {
     logIn: (obj, args) => logIn(args.nickname, args.password),
@@ -338,6 +346,10 @@ const resolvers = {
     removeSavedEcoAction: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return removeSavedEcoAction(args)
+    },
+    acceptGroupInvitation: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return acceptGroupInvitation(args, context.user)
     },
   },
   Measurement: {
@@ -540,6 +552,19 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       if (!obj.invitedIds) return null
       return getProfiles(obj.invitedIds)
+    }
+  },
+  ResultsGraph: {
+    info: async (obj, args, context) => {
+      return getProfile(obj?.userId ?? context.user._id)
+    },
+    ecopoints: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getUserEcoPoints(obj, context)
+    },
+    elctricpoints: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getUserEcoPoints(obj, context)
     }
   }
 }

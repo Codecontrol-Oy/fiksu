@@ -105,6 +105,28 @@ exports.inviteUserToGroup = async (args, user) => {
         })
 }
 
+exports.acceptGroupInvitation = async (args, user) => {
+    let groupId = args.groupId
+    let userId = user._id
+
+    return Group.findOne({ _id: mongoose.Types.ObjectId(groupId) })
+        .then((group) => {
+            if (!group) {
+                throw new ApolloError(localeService.translate('GROUP_NOT_FOUND'))
+            }
+
+            // Move from invited to members
+            if (group.invitedIds.some(memberId => memberId == userId)) {
+                group.invitedIds.remove(userId)
+                group.memberIds.push(userId)
+                return Group.findOneAndUpdate({ _id: mongoose.Types.ObjectId(groupId) }, group, { new: true, returnNewDocument: true, useFindAndModify: false })
+            }
+
+            return null
+        })
+}
+
+
 exports.applyToGroup = async (args, user) => {
     let groupId = args.groupId
     let userId = args.userId
