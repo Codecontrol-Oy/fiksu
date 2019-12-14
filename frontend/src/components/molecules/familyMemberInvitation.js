@@ -26,13 +26,13 @@ const FamilyMemberInvitation = props => {
     return (
         <Block className="family-info">
             {invitationsData && invitationsData.getUserPendingFamilies.length &&
-            <GridContainer size={12}>
+            <GridContainer size={12} direction={"column"}>
               <GridRow size={12}>
                 <Grid sizeS={12} sizeM={12} sizeL={12}>
                   <Card>
-                  <Heading color={"secondary"} variant={2}>Olet saanut perhekutsun!</Heading>
-                  <Paragraph color={"secondary"}>Hyväksymällä kutsun, liityt mukaan perheeseen.</Paragraph>
-                  {invitationsData.getUserPendingFamilies.map((family) => <InputLabel color={"secondary"} variant={4} name={`Perhe: ${family.name}`}>
+                  <Heading color={"secondary"} variant={2}>Olet saanut kutsun talouteen!</Heading>
+                  <Paragraph color={"secondary"}>Hyväksymällä kutsun, liityt mukaan talouteen.</Paragraph>
+                  {invitationsData.getUserPendingFamilies.map((family) => <InputLabel color={"secondary"} variant={4} name={`Talous: ${family.name}`}>
                     <Button onClick={() => acceptInvitation({
                       variables: {
                         familyId: family._id

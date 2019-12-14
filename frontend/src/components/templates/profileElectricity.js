@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react'
 import ProfileCard from '../molecules/profileCard'
 import Heading from "../atoms/heading"
 import GridRow from '../grid/row'
+import GridContainer from '../grid/container'
 import Grid from '../grid/grid'
 import Divider from "../atoms/divider"
 import Block from "../atoms/block"
 import InputGroup from "../molecules/inputGroup"
-import { GET_USER_ELECTRICITY_GRAPH, QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
+import { GET_USER_FAMILIES,GET_USER_ELECTRICITY_GRAPH, QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import Option from '../atoms/option'
+import Paragraph from '../atoms/paragraph'
 import SelectGroup from "../molecules/selectGroup"
 import Button from "../atoms/button"
 import { MUTATION_ADD_NEW_CONSUMPTION, MUTATION_REMOVE_CONSUMPTION, MUTATION_ADD_NEW_MEASUREMENT, MUTATION_REMOVE_MEASUREMENT } from '../../graphqlMutations'
@@ -27,7 +29,8 @@ const ProfileElectricity = props => {
     yesterday.setDate(today.getDate() - 1);
     lastMonth.setDate(today.getDate() - 31);
 
-    const [selectedType, setSelectedType] = useState(undefined)
+    const [selectedType, setSelectedType] = useState('undefined')
+    const [selectedFamily, setSelectedFamily] = useState('default')
     const [measurement, setMeasurement] = useState(undefined)
     const [readingType, setReadingType] = useState(undefined)
     const [date, setDate] = useState(today.toJSON().slice(0, 10))
@@ -42,17 +45,22 @@ const ProfileElectricity = props => {
     const { loading, error, data } = useQuery(QUERY_CONSUMPTION_TYPES)
     const { loading: sLoading, error: sError, data: sData } = useQuery(GET_USER_ENERGY_SAVINGS, {
         variables: {
-            id: localStorage.getItem('userId'), from: removeSavingsFrom, to: removeSavingsTo
+            id: selectedFamily, from: removeSavingsFrom, to: removeSavingsTo
         }
     })
+    const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
+        variables: {
+          id: localStorage.getItem('userId')
+        }
+      })
     const { loading: mLoading, error: mError, data: mData } = useQuery(GET_USER_MEASUREMENTS, {
         variables: {
-            id: localStorage.getItem('userId'), from: removeMeasurementFrom, to: removeMeasurementTo
+            id: selectedFamily, from: removeMeasurementFrom, to: removeMeasurementTo
         }
     })
     const { loading: gLoading, error: gError, data: gData } = useQuery(GET_USER_ELECTRICITY_GRAPH, {
         variables: {
-            id: localStorage.getItem('userId'), from: graphFrom, to: graphTo
+            id: selectedFamily, from: graphFrom, to: graphTo
         }
     })
     const [saveConsumption, { loading: consumptionLoading, error: consumptionError, data: consumptionData }] = useMutation(MUTATION_ADD_NEW_CONSUMPTION,
@@ -88,6 +96,22 @@ const ProfileElectricity = props => {
     return (
         <ProfileCard>
             <Heading variant={3} color={"secondary"}>Sähkön säästötoimet</Heading>
+            <GridContainer size={12} direction={"column"}>
+            <GridRow wrap direction="row">
+                <Grid sizeS={12} sizeM={12} sizeL={12}>
+                <Heading variant={4} color={"secondary"}>Valitse talous</Heading>
+                <Paragraph color={"secondary"}>Valitse mille taloudelle haluat merkata sähkölukemia tai säästötoimia</Paragraph>
+                <Block style={{textAlign: 'center'}}>
+                {familyData && <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
+                <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
+                    {familyData.getUserFamilies &&
+                    familyData.getUserFamilies.map((item => (item.isOwner || item.isAdmin) && <Option key={item._id} value={item._id} text={item.name} />))
+                    }
+                </SelectGroup>}
+                </Block>
+                </Grid>
+            </GridRow>
+            {familyData && familyData.getUserFamilies.length > 0 && selectedFamily != 'default' && <Block>
             <GridRow wrap direction="row">
                 <Grid sizeS={12} sizeM={4} sizeL={4}>
                     <Block className="new-electricity-consumption">
@@ -97,7 +121,7 @@ const ProfileElectricity = props => {
                                 {
                                     variables: {
                                         savedConsumption: {
-                                            "userId": localStorage.getItem("userId"),
+                                            "householdId": selectedFamily,
                                             "consumptionTypeId": selectedType,
                                             "value": parseFloat(reading),
                                             "date": date,
@@ -110,15 +134,16 @@ const ProfileElectricity = props => {
 
                                 <InputGroup required underline value={date} onChange={(e) => setDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
                                 <SelectGroup underline color={"secondary"} value={selectedType} onChange={(e, dataset) => { setSelectedType(e.currentTarget.value); setReadingType(dataset.type) }}>
+                                   <Option key={'first_default_consumptionType'} type={'undefined'} value={'undefined'} text={'Valitse tapahtuma'} />
                                     {data && data.getConsumptionTypes && data.getConsumptionTypes.length > 0 &&
                                         data.getConsumptionTypes.map((item => <Option key={item._id} type={item.amountType} value={item._id} text={item.description} />))
                                     }
                                 </SelectGroup>
                                 <InputGroup required underline value={reading} onChange={(e) => setReading(e.target.value)} color={"secondary"} placeholder={readingType} basic id="reading" type="number" />
                                 <InputGroup underline color={"secondary"} placeholder="Muistiinpanot" basic id="notes" type="text" />
-                                <Button
+                                {selectedType != 'undefined' && <Button
                                     type="submit"
-                                    basic > Tallenna</Button>
+                                    basic > Tallenna</Button>}
                             </GridRow>
                         </Form>
                     </Block>
@@ -131,7 +156,7 @@ const ProfileElectricity = props => {
                                 {
                                     variables: {
                                         measurement: {
-                                            "userId": localStorage.getItem("userId"),
+                                            "householdId": selectedFamily,
                                             "value": parseFloat(measurement),
                                             "date": measurementDate,
                                         }
@@ -204,6 +229,8 @@ const ProfileElectricity = props => {
                     </List>
                 </Block>
             </GridRow>
+            </Block>}
+            </GridContainer>
         </ProfileCard>
     )
 }

@@ -8,7 +8,7 @@ const RadioInputField = props => {
 
     return (
         <Block className="radio-input-field">
-            <RadioInput />
+            <RadioInput active={props.active} id={props.id}/>
             <Label name={props.name} />
         </Block>
     )

@@ -8,7 +8,7 @@ const ProfileFamily = props => {
 
     return (
         <Block className="profile-achievements">
-            <Heading align={"left"} color={"secondary"} variant={4}>Perheeni</Heading>
+            <Heading align={"left"} color={"secondary"} variant={4}>Talouteni</Heading>
             <Divider />
         </Block>
     )
