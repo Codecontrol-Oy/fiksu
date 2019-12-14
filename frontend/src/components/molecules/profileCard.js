@@ -6,8 +6,9 @@ import GridContainer from '../grid/container'
 const ProfileCard = props => {
 
     return (
-        <Block className="profile-container">
+        <Block id={"profile-card"} className="profile-container">
             <GridContainer height={12} width={12} direction={"column"}>
+                <Block id={"modal"} />
                 {props.children}
             </GridContainer>
         </Block>

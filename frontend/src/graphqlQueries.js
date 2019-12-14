@@ -2,7 +2,7 @@
 import gql from "graphql-tag"
 
 const GET_ME = gql`
-{
+query me{
   me {
     _id
     createdAt
@@ -231,10 +231,44 @@ fragment EcoAction on EcoActionType {
     _id
 }`
 
-export { 
-  GET_ME, 
-  QUERY_CONSUMPTION_TYPES, 
-  GET_USER_CONSUMPTIONS, 
+const GET_MY_USER = gql`
+query GetMyUser($id: ID!){
+  user(id: $id) {
+    _id
+    createdAt
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+    birthDate
+    address {
+        city
+    }
+    permissions {
+        showRealName
+        showEmail
+        showBirthDate
+        allowPushNotifications
+        allowEmailNotifications
+    }
+    token
+    challenges {
+      createdAt
+      title
+      description
+      from
+      to
+    }
+  }
+}
+`
+
+export {
+  GET_ME,
+  QUERY_CONSUMPTION_TYPES,
+  GET_USER_CONSUMPTIONS,
   GET_USER_ENERGY_SAVINGS,
   GET_USER_MEASUREMENTS,
   GET_USER_FAMILIES,
@@ -242,5 +276,6 @@ export {
   GET_USER_ELECTRICITY_GRAPH,
   SEARCH_USER,
   GET_USER_ECOACTIONS,
-  GET_ECOACTION_TYPES
+  GET_ECOACTION_TYPES,
+  GET_MY_USER
 }

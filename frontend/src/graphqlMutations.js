@@ -119,6 +119,31 @@ mutation DemoteFamilyMember($familyId: ID!, $id: ID!) {
     }
 }`
 
+const MUTATION_UPDATE_USER = gql`
+mutation UpdateUser($User: UserUpdateInput!) {
+   updateUser(user:$User) {
+      _id
+    firstName
+    lastName
+    birthDate
+    permissions {
+      showEmail
+      showRealName
+      showBirthDate
+      allowEmailNotifications
+    }
+    address {
+      city
+    }
+  }
+}`
+const MUTATION_DELETE_USER = gql`
+mutation deleteUser($id: String!) {
+  deleteUser(_id: $id) {
+    _id
+  }
+}`
+
 const MUTATION_ADD_FAMILY_MEMBER = gql`
 mutation AddFamilyMember($familyId: ID!, $id: ID!) {
     addFamilyMember(familyId: $familyId, userId: $id) {
@@ -170,23 +195,25 @@ mutation RemoveSavedEcoAction($id: ID!) {
       date
   } `
 
-export { 
-  LOGIN_USER, 
-  CREATE_USER, 
-  GET_REFRESH_TOKEN, 
-  MUTATION_ADD_NEW_CONSUMPTION, 
-  MUTATION_REMOVE_CONSUMPTION, 
-  MUTATION_ADD_NEW_MEASUREMENT, 
-  MUTATION_REMOVE_MEASUREMENT,
-  MUTATION_CREATE_FAMILY,
-  MUTATION_REMOVE_FAMILY,
-  MUTATION_REMOVE_FAMILY_MEMBER,
-  MUTATION_PROMOTE_FAMILY_MEMBER,
-  MUTATION_DEMOTE_FAMILY_MEMBER,
-  MUTATION_ADD_FAMILY_MEMBER,
-  MUTATION_APPROVE_FAMILY_INVITATION,
-  MUTATION_CHANGE_FAMILY_VISIBILTY,
-  MUTATION_CREATE_ECOACTION,
-  MUTATION_REMOVE_ECO_ACTION
+export {
+    LOGIN_USER,
+    CREATE_USER,
+    GET_REFRESH_TOKEN,
+    MUTATION_ADD_NEW_CONSUMPTION,
+    MUTATION_REMOVE_CONSUMPTION,
+    MUTATION_ADD_NEW_MEASUREMENT,
+    MUTATION_REMOVE_MEASUREMENT,
+    MUTATION_CREATE_FAMILY,
+    MUTATION_REMOVE_FAMILY,
+    MUTATION_REMOVE_FAMILY_MEMBER,
+    MUTATION_PROMOTE_FAMILY_MEMBER,
+    MUTATION_DEMOTE_FAMILY_MEMBER,
+    MUTATION_ADD_FAMILY_MEMBER,
+    MUTATION_APPROVE_FAMILY_INVITATION,
+    MUTATION_CHANGE_FAMILY_VISIBILTY,
+    MUTATION_CREATE_ECOACTION,
+    MUTATION_REMOVE_ECO_ACTION,
+    MUTATION_UPDATE_USER,
+    MUTATION_DELETE_USER
 }
 
