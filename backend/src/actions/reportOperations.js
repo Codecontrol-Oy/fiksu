@@ -1,7 +1,8 @@
 import Measurement from '../db/models/measurementModel'
 import SavedConsumption from '../db/models/savedConsumptionModel'
 import SavedEcoActions from '../db/models/savedEcoActionModel'
-import { getFamilyMemberIds } from './profileOperations'
+import { getFamilyMemberIds, getGroupMemberIds } from './profileOperations'
+import { isInFamily } from './familyOperations'
 import mongoose from 'mongoose'
 import { ApolloError } from 'apollo-server'
 import Const from '#constants'
@@ -169,14 +170,10 @@ exports.getUserElectricPoints = async (args, context) => {
                     return 0
                 })
 
-            console.log("savedConsumptions: ", savedConsumptions)
             const last = measurements[measurements.length - 1].value
-            console.log("last: ", last)
             const lastPlusSavings = measurements[measurements.length - 1].value + savedConsumptions
-            console.log("lastPlusSavings: ", lastPlusSavings)
 
             const calculatedPercentage = ((lastPlusSavings * 100 / last) - 100).toFixed(2)
-            console.log("calculatedPercentage: ", calculatedPercentage)
 
             return (parseFloat(Const.ELECTRICITY_SAVING_MULTIPLIER) * calculatedPercentage)
         })
@@ -188,7 +185,7 @@ exports.getResults = async (args) => {
 
     // Household stats
     if (householdId) {
-        const familyMemberIds = await getFamilyMemberIds(householdId)
+        const familyMemberIds = await getFamilyMemberIds(householdId, true)
         let results = []
         familyMemberIds.map((familyMemberId) => {
             results.push({
@@ -208,6 +205,18 @@ exports.getResults = async (args) => {
         from: args.from,
         to: args.to
     }]
+}
+
+exports.getGroupResults = async (args) => {
+    const groupId = args.groupId
+    const groupMemberIds = await getGroupMemberIds(groupId, true)
+
+    let results = []
+    groupMemberIds.map((groupMemberId) => {
+        
+    })
+
+    return results
 }
 
 function generateDataSet(fullRange, from, to, data) {

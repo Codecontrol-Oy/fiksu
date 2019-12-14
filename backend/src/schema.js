@@ -90,6 +90,7 @@ const typeDefs = gql`
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
     getUserEcoPoints(userId: ID, from: Date!, to: Date!): String
     getResults(userId: ID, householdId: ID, from: Date!, to: Date!): [ResultsGraph]
+    getGroupResults(groupId: ID, from: Date!, to: Date!): [ResultsGraph]
   }
 
   """
@@ -246,6 +247,8 @@ const typeDefs = gql`
     admins: [User]
     pending: [User]
     invites: [User]
+    isOwner: Boolean
+    isAdmin: Boolean
     permissions: VisibilityPermissions
   }
 

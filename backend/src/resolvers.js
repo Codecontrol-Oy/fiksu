@@ -191,6 +191,10 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return getResults(args)
     },
+    getGroupResults: async (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getGroupResults(args)
+    },
   },
   Mutation: {
     logIn: (obj, args) => logIn(args.nickname, args.password),
@@ -552,6 +556,14 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       if (!obj.invitedIds) return null
       return getProfiles(obj.invitedIds)
+    },
+    isOwner: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return context.user._id == obj.ownerId
+    },
+    isAdmin: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return obj.adminIds.some(adminId => adminId == context.user._id)
     }
   },
   ResultsGraph: {

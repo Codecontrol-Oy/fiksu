@@ -356,11 +356,14 @@ exports.searchUser = async (args) => {
     return null
 }
 
-function getFamilyMemberIds (familyId) {
+function getFamilyMemberIds (familyId, ignoreUnaccepted) {
     if (!familyId || familyId.length != 24) return []
     return Family.findOne({ _id: mongoose.Types.ObjectId(familyId) })
         .then((family) => {
             if (family) {
+                if (ignoreUnaccepted) {
+                    return [family.ownerId, ...family.adminIds, ...family.memberIds]
+                }
                 return [family.ownerId, ...family.adminIds, ...family.memberIds, ...family.pendingIds]
             }
 
@@ -368,16 +371,21 @@ function getFamilyMemberIds (familyId) {
         })
 }
 
-exports.getFamilyMemberIds = getFamilyMemberIds
 
-function getGroupMemberIds(groupId) {
+function getGroupMemberIds(groupId, ignoreUnaccepted) {
     if (!groupId || groupId.length != 24) return []
     return Group.findOne({ _id: mongoose.Types.ObjectId(groupId) })
-        .then((group) => {
-            if (group) {
-                return [group.ownerId, ...group.adminIds, ...group.memberIds, ...group.pendingIds, ...group.invitedIds]
+    .then((group) => {
+        if (group) {
+            if (ignoreUnaccepted) {
+                return [group.ownerId, ...group.adminIds, ...group.memberIds]
             }
-
-            return []
-        })
+            return [group.ownerId, ...group.adminIds, ...group.memberIds, ...group.pendingIds, ...group.invitedIds]
+        }
+        
+        return []
+    })
 }
+
+exports.getFamilyMemberIds = getFamilyMemberIds
+exports.getGroupMemberIds = getGroupMemberIds
