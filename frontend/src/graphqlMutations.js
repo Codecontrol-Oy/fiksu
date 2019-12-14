@@ -118,18 +118,38 @@ mutation DemoteFamilyMember($familyId: ID!, $id: ID!) {
     }
 }`
 
-export { 
-  LOGIN_USER, 
-  CREATE_USER, 
-  GET_REFRESH_TOKEN, 
-  MUTATION_ADD_NEW_CONSUMPTION, 
-  MUTATION_REMOVE_CONSUMPTION, 
-  MUTATION_ADD_NEW_MEASUREMENT, 
-  MUTATION_REMOVE_MEASUREMENT,
-  MUTATION_CREATE_FAMILY,
-  MUTATION_REMOVE_FAMILY,
-  MUTATION_REMOVE_FAMILY_MEMBER,
-  MUTATION_PROMOTE_FAMILY_MEMBER,
-  MUTATION_DEMOTE_FAMILY_MEMBER
+const MUTATION_UPDATE_USER = gql`
+mutation UpdateUser($User: UserUpdateInput!) {
+   updateUser(user:$User) {
+      _id
+    firstName
+    lastName
+    birthDate
+    permissions {
+      showEmail
+      showRealName
+      showBirthDate
+      allowEmailNotifications
+    }
+    address {
+      city
+    }
+  }
+}`
+
+export {
+    LOGIN_USER,
+    CREATE_USER,
+    GET_REFRESH_TOKEN,
+    MUTATION_ADD_NEW_CONSUMPTION,
+    MUTATION_REMOVE_CONSUMPTION,
+    MUTATION_ADD_NEW_MEASUREMENT,
+    MUTATION_REMOVE_MEASUREMENT,
+    MUTATION_CREATE_FAMILY,
+    MUTATION_REMOVE_FAMILY,
+    MUTATION_REMOVE_FAMILY_MEMBER,
+    MUTATION_PROMOTE_FAMILY_MEMBER,
+    MUTATION_DEMOTE_FAMILY_MEMBER,
+    MUTATION_UPDATE_USER
 }
 

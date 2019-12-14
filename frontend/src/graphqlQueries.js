@@ -2,7 +2,7 @@
 import gql from "graphql-tag"
 
 const GET_ME = gql`
-{
+query me{
   me {
     _id
     createdAt
@@ -169,10 +169,10 @@ fragment GraphData on GraphData {
     }
 }`
 
-export { 
-  GET_ME, 
-  QUERY_CONSUMPTION_TYPES, 
-  GET_USER_CONSUMPTIONS, 
+export {
+  GET_ME,
+  QUERY_CONSUMPTION_TYPES,
+  GET_USER_CONSUMPTIONS,
   GET_USER_ENERGY_SAVINGS,
   GET_USER_MEASUREMENTS,
   GET_USER_FAMILIES,

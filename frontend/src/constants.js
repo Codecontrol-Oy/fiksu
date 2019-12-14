@@ -8,3 +8,19 @@ export const ROUTE_ACCOUNT_FAMILY = "/account/family"
 export const ROUTE_ACCOUNT_ECO = "/account/eco-life"
 export const ROUTE_ACCOUNT_GROUP = "/account/groups"
 export const ROUTE_ACCOUNT_SETTINGS = "/account/settings"
+
+/* PUBLICITY SETTINGS */
+export const PUBLICITY_SETTINGS = [
+    {
+        value: "NONE",
+        text: "Ei julkinen"
+    },
+    {
+        value: "FRIENDS_ONLY",
+        text: "Vain ystävät"
+    },
+    {
+        value: "PUBLIC",
+        text: "Julkinen"
+    }
+]

@@ -994,7 +994,6 @@ input::placeholder {
 .switch-wrapper {
   padding: 0.2rem;
   width: 3.5rem;
-  height: 1.6rem;
   border-radius: 1rem;
   box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.212);
   -webkit-border-radius: 1rem;
@@ -1006,23 +1005,29 @@ input::placeholder {
   align-items: center;
 }
 .switch-wrapper > button {
-  background-color: #278cb4;
-  height: 1.5rem;
-  width: 1.5rem;
+  background-color: #d0d0d0;
+  height: 1.3rem;
+  width: 1.3rem;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.219);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.219);
   transition:all 0.2s ease;
   -webkit-transition:all 0.2s ease;
   -moz-transition:all 0.2s ease;
   -ms-transition:all 0.2s ease;
   -o-transition:all 0.2s ease;
+  margin-left: 0;
 }
-.switch-on > button { 
-  margin-left: 1.6rem;
+.switch-on > button {
+    transform: translateX(1.8rem);
+    background-color: #278cb4;
+    -webkit-transform: translateX(1.8rem);
+    -moz-transform: translateX(1.8rem);
+    -ms-transform: translateX(1.8rem);
+    -o-transform: translateX(1.8rem);
 } 
 .menu-list {
   display: flex;
@@ -1171,7 +1176,7 @@ input::placeholder {
     width: 80%;
   }
   .profile-container {
-    width: 100%;
+    width: 93%;
   border-radius: 0.5rem;
   -webkit-border-radius: 0.5rem;
   -moz-border-radius: 0.5rem;

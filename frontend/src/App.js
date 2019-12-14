@@ -14,6 +14,7 @@ import ProfileController from "./components/controllers/profileController"
 import ProfileContainer from "./containers/ProfileContainer"
 import FamilyController from './components/controllers/familyController'
 import ProfileElectricityController from "./components/controllers/profileElectricityController"
+import ProfileSettingsController from "./components/controllers/profileSettingsController"
 
 const App = () => (
   <>
@@ -31,6 +32,8 @@ const App = () => (
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_PROFILE} component={ProfileController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ELECTRICITY} component={ProfileElectricityController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_FAMILY} component={FamilyController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
+
         <Route component={NotFound} />
       </Switch>
     </Main>

@@ -25,6 +25,7 @@ const Button = props => {
 
   return (
     <button
+      disabled={props.disabled}
       ref={ref}
       className={classes.join(' ')}
       style={props.style}
