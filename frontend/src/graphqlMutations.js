@@ -118,6 +118,14 @@ mutation DemoteFamilyMember($familyId: ID!, $id: ID!) {
     }
 }`
 
+const MUTATION_ADD_FAMILY_MEMBER = gql`
+mutation AddFamilyMember($familyId: ID!, $id: ID!) {
+    addFamilyMember(familyId: $familyId, userId: $id) {
+        _id
+    }
+}
+`
+
 export { 
   LOGIN_USER, 
   CREATE_USER, 
@@ -130,6 +138,7 @@ export {
   MUTATION_REMOVE_FAMILY,
   MUTATION_REMOVE_FAMILY_MEMBER,
   MUTATION_PROMOTE_FAMILY_MEMBER,
-  MUTATION_DEMOTE_FAMILY_MEMBER
+  MUTATION_DEMOTE_FAMILY_MEMBER,
+  MUTATION_ADD_FAMILY_MEMBER
 }
 
