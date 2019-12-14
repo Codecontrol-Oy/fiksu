@@ -30,9 +30,9 @@ class BarChart extends React.Component {
           width={320}
           height={320}
           xDistance={100}>
+          <XAxis tickLabelAngle={-45} />
           <HorizontalGridLines />
           <VerticalGridLines />
-          <XAxis />
           <YAxis />
           {series}
           

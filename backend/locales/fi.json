@@ -9,16 +9,16 @@
 
 	"EMAIL_SERVICE_DESCRIPTION": "Maecenas sed ante pellentesque, posuere leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque congue eros eu posuere. Praesent in felis ut velit pretium lobortis rhoncus ut&nbsp;erat.",
 	"EMAIL_NEW_FAMILYMEMBER_TITLE": "Hei {{firstName}}!",
-	"EMAIL_NEW_FAMILYMEMBER_CONTENT": "Olet saanut kutsun liittyä perheeseen <strong>{{familyName}}</strong>.",
+	"EMAIL_NEW_FAMILYMEMBER_CONTENT": "Olet saanut kutsun liittyä talouteen <strong>{{familyName}}</strong>.",
 	"EMAIL_NEW_FAMILYMEMBER_BUTTON_TEXT": "Hyväksy kutsu",
-	"EMAIL_NEW_FAMILYMEMBER_SUBJECT": "Kutsu liittyä perheeseen {{familyName}}",
+	"EMAIL_NEW_FAMILYMEMBER_SUBJECT": "Kutsu liittyä talouteen {{familyName}}",
 	"EMAIL_NEW_MEMBER_SUBJECT": "Kiitos rekisteröinnistäsi",
 	"EMAIL_NEW_MEMBER_TITLE": "Hei {{firstName}}!",
-	"EMAIL_NEW_MEMBER_CONTENT": "Kiitos kun rekisteröidyit käyttämään Fixua. Ole hyvä ja paina alla olevaa painiketta aktivoidaksesi tilisi.",
+	"EMAIL_NEW_MEMBER_CONTENT": "Kiitos kun rekisteröidyit käyttämään Fiksua. Ole hyvä ja paina alla olevaa painiketta aktivoidaksesi tilisi.",
 	"EMAIL_NEW_MEMBER_BUTTON_TEXT": "Vahvista tili",
 	"EMAIL_PASSWORD_RESET_SUBJECT": "Salasanan palautus",
 	"EMAIL_PASSWORD_RESET_TITLE": "Hei {{firstName}}!",
-	"EMAIL_PASSWORD_RESET_CONTENT": "Olet pyytänyt salasanan palautusta palveluun Fixu. Salasanan palautus on voimassa yhden vuorokauden ajan. Ole hyvä ja paina alla olevaa painiketta palauttaaksesi salasanasi.",
+	"EMAIL_PASSWORD_RESET_CONTENT": "Olet pyytänyt salasanan palautusta palveluun Fiksu. Salasanan palautus on voimassa yhden vuorokauden ajan. Ole hyvä ja paina alla olevaa painiketta palauttaaksesi salasanasi.",
 	"EMAIL_PASSWORD_RESET_BUTTON_TEXT": "Palauta salasana",
 	"EMAIL_NEW_GROUPMEMBERINVITE_TITLE": "Hei {{firstName}}!",
 	"EMAIL_NEW_GROUPMEMBERINVITE_CONTENT": "Olet saanut kutsun liittyä ryhmään <strong>{{groupName}}</strong>.",
@@ -57,11 +57,13 @@
 	"NICKNAME_UNIQUE": "Käyttäjänimi on jo varattu",
 	"EMAIL_UNIQUE": "Sähköposti ei ole käytettävissä",
 	"MONGOOSE_UNIQUE": "{VALUE} on jo varattu",
-	"OWNER_UNIQUE": "Käyttäjä voi olla vain yhden perheen perustaja",
+	"OWNER_UNIQUE": "Käyttäjä voi olla vain yhden talouden perustaja",
 	"NAME_UNIQUE": "Ryhmän nimi on jo varattu",
 	"TOKEN_EXPIRED": "Kirjautumistunnus on vanhentunut",
 
-	"FAMILY_MEMBER_NOT_FOUND": "Käyttäjä ei ole osa perhettä.",
+	"FAMILY_MEMBER_NOT_FOUND": "Käyttäjä ei ole osa taloutta.",
 	"FAMILY_NO_PERMISSION_MEMBER": "Käyttäjällä ei ole oikeutta poistaa jäsentä.",
-	"FAMILY_NO_PERMISSION_OWNER": "Käyttäjällä ei ole oikeutta poistaa omistajaa."
+	"FAMILY_NO_PERMISSION_OWNER": "Käyttäjällä ei ole oikeutta poistaa omistajaa.",
+
+	"ECOACTIONTYPE_NOT_FOUND": "Ekoteon tyyppiä ei löytynyt."
 }

@@ -45,7 +45,8 @@ const MUTATION_ADD_NEW_MEASUREMENT = gql`
     mutation CreateMeasurement($measurement: MeasurementInput!) {
       createMeasurement(measurement: $measurement) {
             _id,
-            userId
+            userId,
+
         }
     }
 `
@@ -143,6 +144,56 @@ mutation deleteUser($id: String!) {
   }
 }`
 
+const MUTATION_ADD_FAMILY_MEMBER = gql`
+mutation AddFamilyMember($familyId: ID!, $id: ID!) {
+    addFamilyMember(familyId: $familyId, userId: $id) {
+        _id
+    }
+}
+`
+
+const MUTATION_APPROVE_FAMILY_INVITATION = gql`
+mutation ApproveFamilyMember($familyId: ID!) {
+    approveFamilyMember(familyId: $familyId) {
+        _id
+    }
+  }
+`
+const MUTATION_CHANGE_FAMILY_VISIBILTY = gql`
+mutation UpdateFamily($family: FamilyUpdateInput!) {
+    updateFamily(family: $family) {
+        _id
+    }
+  }`
+
+const MUTATION_CREATE_ECOACTION = gql`
+mutation CreateSavedEcoAction($savedEcoAction: SavedEcoActionInput!) {
+    createSavedEcoAction(savedEcoAction: $savedEcoAction) {
+        ...SavedEcoAction
+    }
+  }
+  fragment SavedEcoAction on SavedEcoAction {
+      _id
+      userId
+      ecoActionTypeId
+      value
+      date
+}`
+
+const MUTATION_REMOVE_ECO_ACTION = gql`
+mutation RemoveSavedEcoAction($id: ID!) {
+    removeSavedEcoAction(_id: $id) {
+        ...SavedEcoAction
+    }
+  }
+  
+  fragment SavedEcoAction on SavedEcoAction {
+      _id
+      userId
+      ecoActionTypeId
+      value
+      date
+  } `
 
 export {
     LOGIN_USER,
@@ -157,6 +208,12 @@ export {
     MUTATION_REMOVE_FAMILY_MEMBER,
     MUTATION_PROMOTE_FAMILY_MEMBER,
     MUTATION_DEMOTE_FAMILY_MEMBER,
+    MUTATION_ADD_FAMILY_MEMBER,
+    MUTATION_APPROVE_FAMILY_INVITATION,
+    MUTATION_CHANGE_FAMILY_VISIBILTY,
+    MUTATION_CREATE_ECOACTION,
+    MUTATION_REMOVE_ECO_ACTION,
     MUTATION_UPDATE_USER,
     MUTATION_DELETE_USER
 }
+

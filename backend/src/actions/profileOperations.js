@@ -1,6 +1,8 @@
 import Login from '../db/models/loginModel'
 import Profile from '../db/models/profileModel'
 import Reset from '../db/models/resetModel'
+import Family from '../db/models/familyModel'
+import Group from '../db/models/groupModel'
 import RandomString from 'randomstring'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
@@ -106,42 +108,42 @@ exports.emailTaken = async (email) => {
 
 function validatePassword(password) {
     if (!password.length) {
-        throw new ApolloError(localeService.translate('PASSWORD_REQUIRED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_REQUIRED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_REQUIRED')
             }
         })
     }
     if (password.length < Const.DEFAULT_MIN_PASSWORD_LENGTH) {
-        throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }), null, {
             errors: {
                 password: localeService.translate('PASSWORD_MIN_REQUIRED')
             }
         })
     }
     if (!/\d/.test(password)) { // At least one number
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
         })
     }
     if (!/[a-z]/.test(password)) { // At least one lowercase char [a-z]
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
         })
     }
     if (!/[A-Z]/.test(password)) { // At least one uppercase char [A-Z]
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
         })
     }
     if (!/[!@#\$%\^&]/.test(password)) { // At least one special character
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
@@ -321,4 +323,59 @@ exports.confirmPasswordReset = async (username, verificationToken, newPassword) 
                 else return false
             })
     })
+}
+
+exports.searchUser = async (args) => {
+    const search = args.search.split(' ')
+    const familyIds = await getFamilyMemberIds(args.familyId)
+    const groupIds = await getGroupMemberIds(args.groupId)
+    let userIdsFilterOut = [...familyIds, ...groupIds]
+
+    if (search.length == 1) {
+        let nickname = search[0]
+
+        return Login.findOne({ normalizedNickName: nickname.toUpperCase(), profileId: { $nin: userIdsFilterOut } })
+            .populate('profileId')
+            .then((result) => {
+                if (result) return [result.profileId]
+                else return null
+            })
+    }
+    else if (search.length > 1) {
+        let firstName = search[0]
+        let lastName = search[search.length - 1]
+
+        return Profile.find({ $and: [
+            { _id: { $nin: userIdsFilterOut } },
+            { firstName: { $regex : new RegExp(firstName, "i") } }, 
+            { lastName: { $regex : new RegExp(lastName, "i") } }, 
+            { 'permissions.showRealName': Const.PERMISSION_PUBLIC }
+        ] })
+    }
+    
+    return null
+}
+
+function getFamilyMemberIds(familyId) {
+    if (!familyId || familyId.length != 24) return []
+    return Family.findOne({ _id: mongoose.Types.ObjectId(familyId) })
+        .then((family) => {
+            if (family) {
+                return [family.ownerId, ...family.adminIds, ...family.memberIds, ...family.pendingIds]
+            }
+
+            return []
+        })
+}
+
+function getGroupMemberIds(groupId) {
+    if (!groupId || groupId.length != 24) return []
+    return Group.findOne({ _id: mongoose.Types.ObjectId(groupId) })
+        .then((group) => {
+            if (group) {
+                return [group.ownerId, ...group.adminIds, ...group.memberIds, ...group.pendingIds, ...group.invitedIds]
+            }
+
+            return []
+        })
 }

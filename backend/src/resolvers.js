@@ -1,7 +1,7 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server'
 import AuthHelper from './helpers/authHelpers'
-import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles, getAllProfiles, deleteProfile, updateProfile, confirmProfile, createPasswordReset, confirmPasswordReset } from './actions/profileOperations'
+import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles, getAllProfiles, deleteProfile, updateProfile, confirmProfile, createPasswordReset, confirmPasswordReset, searchUser } from './actions/profileOperations'
 import { getLogin } from './actions/loginOperations'
 import { getRoles, addRole, removeRole } from './actions/roleOperations'
 import { getFamily, createFamily, addFamilyMember, updateFamily, removeFamilyMember, deleteFamily, getUserFamilies, getUserPendingFamilies, approveFamilyMember, promoteFamilyMember, demoteFamilyMember, getAllFamilies, isInFamily } from './actions/familyOperations'
@@ -11,9 +11,11 @@ import { getMeasurements, createMeasurement, deleteMeasurement } from './actions
 import { getFriends, getFriendRequests, approveFriendRequest, addFriend, unFriend } from './actions/friendOperations'
 import { getChallenges, getChallenge, createChallenge, removeChallenge, getTopList } from './actions/challengeOperations'
 import { getConsumptionTypes, getConsumptionType } from './actions/consumptionTypeOperations'
+import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOperations'
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
+import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -159,7 +161,27 @@ const resolvers = {
     },
     getElectricityGraph: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return getElectricityGraph(args)
+      return getElectricityGraph(args, context)
+    },
+    getUserEcoActionsGraph: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getUserEcoActionsGraph(args, context)
+    },
+    searchUser: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return searchUser(args)
+    },
+    getEcoActionTypes: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getEcoActionTypes()
+    },
+    getSavedEcoActions: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getSavedEcoActions(args)
+    },
+    getAllSavedEcoActions: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getAllSavedEcoActions(args)
     },
   },
   Mutation: {
@@ -187,7 +209,7 @@ const resolvers = {
     },
     createMeasurement: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return createMeasurement(args.measurement)
+      return createMeasurement(args.measurement, context)
     },
     deleteMeasurement: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -215,7 +237,7 @@ const resolvers = {
     },
     createSavedConsumption: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return createSavedConsumption(args)
+      return createSavedConsumption(args, context)
     },
     removeSavedConsumption: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -309,8 +331,20 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return deleteGroup(args, context.user)
     },
+    createSavedEcoAction: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return createSavedEcoAction(args, context)
+    },
+    removeSavedEcoAction: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return removeSavedEcoAction(args)
+    },
   },
   Measurement: {
+    household: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getFamily(obj.householdId)
+    },
     user: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getProfile(obj.userId)
@@ -431,6 +465,12 @@ const resolvers = {
     consumptionType: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getConsumptionType(obj)
+    }
+  },
+  SavedEcoAction: {
+    ecoActionType: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getEcoActionType(obj)
     }
   },
   Tip: {

@@ -28,6 +28,8 @@ module.exports = {
     MONGO_FAMILY: 'family',
     MONGO_LOGIN: 'login',
     MONGO_GROUP: 'group',
+    MONGO_ECOACTION_TYPE: 'ecoActionType',
+    MONGO_SAVED_ECOACTIONS: 'savedEcoAction',
 
     /* Roles */
     ROLE_ADMIN: 'admin',

@@ -46,6 +46,8 @@ const typeDefs = gql`
     demoteGroupMember(groupId: ID!, userId: ID!): Group
     removeGroupMember(groupId: ID!, userId: ID!): Group
     deleteGroup(_id: ID!): Group
+    createSavedEcoAction(savedEcoAction: SavedEcoActionInput!): SavedEcoAction
+    removeSavedEcoAction(_id: ID!): SavedEcoAction
   },
 
   """
@@ -55,8 +57,8 @@ const typeDefs = gql`
     user(id: ID): User
     users: [User]
     me: User
-    measurements(userId: String!, from: Date!, to: Date!): [Measurement]
-    friendMeasurements(userId: String!, from: Date!, to: Date!): [Measurement]
+    measurements(householdId: String!, from: Date!, to: Date!): [Measurement]
+    friendMeasurements(householdId: String!, from: Date!, to: Date!): [Measurement]
     serverInfo: ServerInfo
     getFriends: [Friend]
     getRoles(userId: ID!): [String]
@@ -64,8 +66,8 @@ const typeDefs = gql`
     getChallenge(_id: ID!): Challenge
     getChallenges(userId: ID!): [Challenge]
     getConsumptionTypes: [ConsumptionType]
-    getSavedConsumptions(userId: String!, from: Date!, to: Date!): [SavedConsumption]
-    getAllSavedConsumptions(userId: String!): [SavedConsumption]
+    getSavedConsumptions(householdId: String!, from: Date!, to: Date!): [SavedConsumption]
+    getAllSavedConsumptions(householdId: String!): [SavedConsumption]
     getTopList(topListInput: TopListInput!): [TopListItem]
     getTip(_id: ID!): Tip
     getAllTips(filter: TipFilterInput): [Tip]
@@ -79,7 +81,12 @@ const typeDefs = gql`
     getUserGroups(_id: ID!): [Group]
     getUserInvitedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
-    getElectricityGraph(userId: String!, from: Date!, to: Date!): [GraphData]
+    getElectricityGraph(householdId: ID!, from: Date!, to: Date!): [GraphData]
+    getUserEcoActionsGraph(userId: ID, from: Date!, to: Date!, fullRange: Boolean!): [GraphData]
+    searchUser(search: String, familyId: ID, groupId: ID): [User]
+    getEcoActionTypes: [EcoActionType]
+    getSavedEcoActions(userId: ID, from: Date!, to: Date!): [SavedEcoAction]
+    getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
   }
 
   """
@@ -155,7 +162,7 @@ const typeDefs = gql`
   }
 
   input MeasurementInput {
-    userId: String!
+    householdId: ID!
     value: Float!
     date: Date!
   }
@@ -170,8 +177,14 @@ const typeDefs = gql`
   }
 
   input SavedConsumptionInput {
-    userId: String
+    householdId: ID!
     consumptionTypeId: String
+    value: Float
+    date: Date
+  }
+
+  input SavedEcoActionInput {
+    ecoActionTypeId: String
     value: Float
     date: Date
   }
@@ -297,7 +310,9 @@ const typeDefs = gql`
 
   type Measurement {
     _id: ID
+    householdId: ID
     userId: String
+    household: Family
     user: User
     value: Float
     date: Date
@@ -339,11 +354,28 @@ const typeDefs = gql`
     amountType: String
   }
 
+  type EcoActionType {
+    _id: ID
+    title: String
+    description: String
+    amount: Float
+  }
+
   type SavedConsumption {
     _id: ID
+    householdId: ID
     userId: String
     consumptionTypeId: String
     consumptionType: ConsumptionType
+    value: Float
+    date: Date
+  }
+
+  type SavedEcoAction {
+    _id: ID!
+    userId: ID
+    ecoActionTypeId: ID
+    ecoActionType: EcoActionType
     value: Float
     date: Date
   }

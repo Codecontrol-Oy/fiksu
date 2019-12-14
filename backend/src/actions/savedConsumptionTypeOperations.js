@@ -1,25 +1,40 @@
 import SavedConsumption from '../db/models/savedConsumptionModel'
+import Family from '../db/models/familyModel'
 import mongoose from 'mongoose'
 import { ApolloError } from 'apollo-server'
+import container from '#translate'
+const localeService = container.resolve('localeService')
 
-exports.createSavedConsumption = async (args) => {
-    let consumption = {
-        userId: args.savedConsumption.userId,
-        consumptionTypeId: args.savedConsumption.consumptionTypeId,
-        value: args.savedConsumption.value,
-        date: new Date(args.savedConsumption.date)
-    }
-    return SavedConsumption.create(consumption)
+exports.createSavedConsumption = async (args, context) => {
+    return Family.findOne({
+        $and: [
+            { _id: args.savedConsumption.householdId },
+            { $or: [{ ownerId: context.user._id }, { memberIds: context.user._id }, { adminIds: context.user._id }] }
+        ]
+    }).then((household) => {
+        if (!household) {
+            throw new ApolloError(localeService.translate('FAMILY_MEMBER_NOT_FOUND'))
+        }
+
+        let consumption = {
+            householdId: args.savedConsumption.householdId,
+            userId: context.user._id,
+            consumptionTypeId: args.savedConsumption.consumptionTypeId,
+            value: args.savedConsumption.value,
+            date: new Date(args.savedConsumption.date)
+        }
+        return SavedConsumption.create(consumption)
+    })
 }
 
 exports.getSavedConsumptions = async (args) => {
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return SavedConsumption.find({ userId: args.userId, date: { "$gte": from, "$lt": to } })
+    return SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
 }
 
 exports.getAllSavedConsumptions = async (args) => {
-    return SavedConsumption.find({ userId: args.userId })
+    return SavedConsumption.find({ householdId: args.householdId })
 }
 
 exports.removeSavedConsumption = async (args) => {

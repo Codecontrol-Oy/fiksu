@@ -2,22 +2,20 @@ import React from 'react'
 import Block from "../atoms/block"
 import GridContainer from '../grid/container'
 import GridRow from '../grid/row'
-import FamilyInfo from "../molecules/familyInfo"
-import FamilyMemberSearch from "../molecules/familyMemberSearch"
-import FamilyMemberInvitation from "../molecules/familyMemberInvitation"
-
-const Family = props => <Block className="family-container">
+import EcoInfo from '../molecules/ecoInfo'
+import UserEcoActions from '../molecules/userEcoActions'
+const EcoAction = props => <Block className="eco-container">
   <GridContainer height={12} width={12} direction={"column"}>
     <GridRow justify={"center"}>
-      <FamilyMemberInvitation />
+      <EcoInfo />
     </GridRow>
     <GridRow justify={"center"}>
-      <FamilyInfo />
+      <UserEcoActions />
     </GridRow>
     <GridRow justify={"center"}>
-      <FamilyMemberSearch />
+
     </GridRow>
   </GridContainer>
 </Block>
 
-export default Family
+export default EcoAction
