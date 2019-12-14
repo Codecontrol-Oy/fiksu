@@ -141,6 +141,35 @@ mutation UpdateFamily($family: FamilyUpdateInput!) {
     }
   }`
 
+const MUTATION_CREATE_ECOACTION = gql`
+mutation CreateSavedEcoAction($savedEcoAction: SavedEcoActionInput!) {
+    createSavedEcoAction(savedEcoAction: $savedEcoAction) {
+        ...SavedEcoAction
+    }
+  }
+  fragment SavedEcoAction on SavedEcoAction {
+      _id
+      userId
+      ecoActionTypeId
+      value
+      date
+}`
+
+const MUTATION_REMOVE_ECO_ACTION = gql`
+mutation RemoveSavedEcoAction($id: ID!) {
+    removeSavedEcoAction(_id: $id) {
+        ...SavedEcoAction
+    }
+  }
+  
+  fragment SavedEcoAction on SavedEcoAction {
+      _id
+      userId
+      ecoActionTypeId
+      value
+      date
+  } `
+
 export { 
   LOGIN_USER, 
   CREATE_USER, 
@@ -156,6 +185,8 @@ export {
   MUTATION_DEMOTE_FAMILY_MEMBER,
   MUTATION_ADD_FAMILY_MEMBER,
   MUTATION_APPROVE_FAMILY_INVITATION,
-  MUTATION_CHANGE_FAMILY_VISIBILTY
+  MUTATION_CHANGE_FAMILY_VISIBILTY,
+  MUTATION_CREATE_ECOACTION,
+  MUTATION_REMOVE_ECO_ACTION
 }
 

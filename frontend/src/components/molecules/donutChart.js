@@ -30,7 +30,10 @@ const DonutChart = props => {
               <div style={{
               position: 'absolute',
               top: '36%',
-              left: '43%',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              left: 0,
+              right: 0,
               padding: '5px',
             }}>
             <span style={{color: 'rgb(39, 140, 180)', fontSize: '72px'}}>{props.data.reduce(function (a, b) {return a.angle + b.angle})}</span>

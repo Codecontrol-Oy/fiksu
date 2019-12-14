@@ -195,6 +195,42 @@ fragment User on User {
     }
 }`
 
+const GET_USER_ECOACTIONS = gql`
+query UserEcoActions($id: ID!, $from: Date!, $to: Date!) {
+  getSavedEcoActions(userId: $id, from: $from, to: $to) {
+      ...SavedEcoAction
+  }
+}
+
+fragment SavedEcoAction on SavedEcoAction {
+    _id
+    userId
+    ecoActionTypeId
+    value
+    date
+    ecoActionType {
+        ...EcoAction
+    }
+}
+
+fragment EcoAction on EcoActionType {
+    title
+    description
+}`
+
+const GET_ECOACTION_TYPES = gql`
+query EcoActions {
+  getEcoActionTypes {
+      ...EcoAction
+  }
+}
+
+fragment EcoAction on EcoActionType {
+    title
+    description
+    _id
+}`
+
 export { 
   GET_ME, 
   QUERY_CONSUMPTION_TYPES, 
@@ -204,5 +240,7 @@ export {
   GET_USER_FAMILIES,
   GET_USER_PENDING_FAMILIES,
   GET_USER_ELECTRICITY_GRAPH,
-  SEARCH_USER
+  SEARCH_USER,
+  GET_USER_ECOACTIONS,
+  GET_ECOACTION_TYPES
 }
