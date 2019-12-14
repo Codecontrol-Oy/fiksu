@@ -18,7 +18,6 @@ import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks"
 import { GET_USER_FAMILIES, SEARCH_USER } from '../../graphqlQueries'
 import { MUTATION_ADD_FAMILY_MEMBER, MUTATION_REMOVE_FAMILY_MEMBER } from '../../graphqlMutations'
 
-
 const FamilyMemberSearch = props => {
 
   const [ search, setSearch ] = useState(undefined)
@@ -40,8 +39,7 @@ const FamilyMemberSearch = props => {
     }
   )
   return ( <Block className="family-info">
-        {familyError && <Heading color="secondary">{familyError}</Heading>}
-        {familyData && familyData.getUserFamilies.length && 
+        {familyData && familyData.getUserFamilies.length && (familyData.getUserFamilies.some(x => x.isOwner) || familyData.getUserFamilies.some(x => x.isAdmin)) && 
         <GridContainer size={12}>
             <GridRow size={12}>
             <Grid sizeS={12} sizeM={6} sizeL={6}>
@@ -61,7 +59,7 @@ const FamilyMemberSearch = props => {
                <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
                <Option key={'defaultFamily'} value={'default'} text={'Valitse perhe'} />
                 {familyData.getUserFamilies &&
-                 familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
+                 familyData.getUserFamilies.map((item => (item.isOwner || item.isAdmin) && <Option key={item._id} value={item._id} text={item.name} />))
                 }
               </SelectGroup>
               <InputGroup required underline color={"secondary"} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Etunimi Sukunimi" basic id="searchFamilyMember" type="text" />
@@ -98,7 +96,7 @@ const FamilyMemberSearch = props => {
             <Card>
               <Heading color={"secondary"} variant={4}>Vahvistamista odottavat perheenjäsenet</Heading>
               <Paragraph color={"secondary"}>Alla olevasta listasta näet henkilöt, jotka eivät vielä ole vahvistaneet perhekutsua.</Paragraph>
-              {familyData && familyData.getUserFamilies.length && familyData.getUserFamilies.map((family) => <Block>
+              {familyData && familyData.getUserFamilies.length && familyData.getUserFamilies.map((family) => (family.isAdmin || family.isOwner) && <Block>
                 {family && (!family.pending || !family.pending.length) && <Block>
                     <Heading color={"secondary"} variant={4}>Ei vahvistamattomia henkilöitä</Heading>
                     )}

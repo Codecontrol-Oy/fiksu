@@ -138,7 +138,7 @@ const [familyName, setFamilyname] = useState(undefined)
               <Divider />
             </GridRow>
             )}
-            {familyData && !familyData.getUserFamilies.length && <Block>
+            {familyData && (!familyData.getUserFamilies.length || !familyData.getUserFamilies.some(x => x.isOwner)) && <Block>
               <Heading color={"secondary"} variant={4}>Et ole perustanut perhettä palveluun.</Heading>
               <Paragraph color={"secondary"}>Voit luoda uuden perheen alla olevalla lomakkeella. <br /> Perheen luonnin jälkeen, voit kutsua henkilöitä liittymään perheeseesi.</Paragraph>
               <Block style={{textAlign: 'center'}}>
@@ -160,6 +160,8 @@ const [familyName, setFamilyname] = useState(undefined)
                     type="submit"
                     basic > Tallenna</Button> 
                 </Form>
+                <br />
+                <Divider />
               </Block>
             </Block>}
           </Grid>

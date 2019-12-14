@@ -126,6 +126,14 @@ mutation AddFamilyMember($familyId: ID!, $id: ID!) {
 }
 `
 
+const MUTATION_APPROVE_FAMILY_INVITATION = gql`
+mutation ApproveFamilyMember($familyId: ID!) {
+    approveFamilyMember(familyId: $familyId) {
+        _id
+    }
+  }
+`
+
 export { 
   LOGIN_USER, 
   CREATE_USER, 
@@ -139,6 +147,7 @@ export {
   MUTATION_REMOVE_FAMILY_MEMBER,
   MUTATION_PROMOTE_FAMILY_MEMBER,
   MUTATION_DEMOTE_FAMILY_MEMBER,
-  MUTATION_ADD_FAMILY_MEMBER
+  MUTATION_ADD_FAMILY_MEMBER,
+  MUTATION_APPROVE_FAMILY_INVITATION
 }
 
