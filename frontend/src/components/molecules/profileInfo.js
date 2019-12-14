@@ -10,8 +10,6 @@ import Grid from "../grid/grid"
 const ProfileInfo = props => {
 
     const { loading, error, data } = useQuery(GET_ME)
-
-    console.log(data)
     return (
         <Block className="profile-info">
             <GridContainer size={12}>

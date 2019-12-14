@@ -2,7 +2,7 @@ import React from 'react'
 import Paragraph from '../atoms/paragraph'
 import Label from '../atoms/label'
 const ListItem = props => 
-  <div className="listItem">
+  <li className="listItem">
     <div className="top">
       {props.title && <Label name={props.title} />}
       {props.date && <Label name={props.date} />}
@@ -13,5 +13,5 @@ const ListItem = props =>
         {props.action}
       </div>
     }
-  </div>
+  </li>
 export default ListItem

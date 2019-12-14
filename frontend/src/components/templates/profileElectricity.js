@@ -6,7 +6,7 @@ import Grid from '../grid/grid'
 import Divider from "../atoms/divider"
 import Block from "../atoms/block"
 import InputGroup from "../molecules/inputGroup"
-import { QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
+import { GET_USER_ELECTRICITY_GRAPH, QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import Option from '../atoms/option'
 import SelectGroup from "../molecules/selectGroup"
@@ -31,6 +31,8 @@ const ProfileElectricity = props => {
   const [measurement, setMeasurement] = useState(undefined)
   const [readingType, setReadingType] = useState(undefined)
   const [date, setDate] = useState(today.toJSON().slice(0, 10))
+  const [graphFrom, setGraphFrom] = useState(lastMonth)
+  const [graphTo, setGraphTo] = useState(tomorrow)
   const [measurementDate, setMeasurementDate] = useState(today.toJSON().slice(0, 10))
   const [reading, setReading] = useState("")
   const [removeSavingsFrom, setRemoveSavingsFrom] = useState(yesterday)
@@ -48,6 +50,11 @@ const ProfileElectricity = props => {
       id: localStorage.getItem('userId'), from: removeMeasurementFrom, to: removeMeasurementTo
     }
   })
+  const { loading: gLoading, error: gError, data: gData } = useQuery(GET_USER_ELECTRICITY_GRAPH, {
+    variables: {
+      id: localStorage.getItem('userId'), from: graphFrom, to: graphTo
+    }
+  })
   const [saveConsumption, { loading: consumptionLoading, error: consumptionError, data: consumptionData }] = useMutation(MUTATION_ADD_NEW_CONSUMPTION,
     {
       onCompleted(data) {
@@ -56,12 +63,12 @@ const ProfileElectricity = props => {
         setDate(today)
         setReading(undefined)
       },
-      refetchQueries: ['GetEnergySavings']
+      refetchQueries: ['GetEnergySavings','GetElectricityGraph']
     }
   )
 
   const [removeConsumption, { loading: rLoading, error: rError, data: rData }] = useMutation(MUTATION_REMOVE_CONSUMPTION, {
-    refetchQueries: ['GetEnergySavings']
+    refetchQueries: ['GetEnergySavings','GetElectricityGraph']
   })
 
   const [saveMeasurement, { loading: measurementLoading, error: measurementError, data: measurementData }] = useMutation(MUTATION_ADD_NEW_MEASUREMENT,
@@ -70,12 +77,12 @@ const ProfileElectricity = props => {
         setMeasurementDate(today)
         setMeasurement(undefined)
       },
-      refetchQueries: ['Measurements']
+      refetchQueries: ['Measurements','GetElectricityGraph']
     }
   )
 
   const [removeMeasurement, { loading: rmLoading, error: rmError, data: rmData }] = useMutation(MUTATION_REMOVE_MEASUREMENT, {
-    refetchQueries: ['Measurements']
+    refetchQueries: ['Measurements','GetElectricityGraph']
   })
 
   return (
@@ -115,7 +122,7 @@ const ProfileElectricity = props => {
         </Grid>
         <Grid sizeS={12} sizeM={4} sizeL={4}>
           <Block className="new-electricity-consumption">
-            <Heading variant={3} color={"secondary"}>Sähkömittarilukema</Heading>
+            <Heading variant={3} color={"secondary"}>Kuukauden sähkötiedot</Heading>
             <Form
               onSubmit={e => saveMeasurement(
                 {
@@ -139,7 +146,7 @@ const ProfileElectricity = props => {
         </Grid>
         <Grid sizeS={12} sizeM={4} sizeL={4}>
           <Block>
-            <LineChart data={[{ data: [{x: new Date("2019-01-01"), y:12234},{x: new Date("2019-03-03"), y:12252},{x: new Date("2019-07-07"), y:12266},{x: new Date("2019-12-12"), y:12298}]},{ data: [{x: new Date("2019-01-01"), y:12234},{x: new Date("2019-12-12"), y:12302}]}]} title="Sähkönkäyttö"/>
+            {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö"/>}
           </Block>
         </Grid>
       </GridRow>

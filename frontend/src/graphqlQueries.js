@@ -88,5 +88,94 @@ query Measurements($id: String!, $from: Date!, $to: Date!) {
   }
 }
 `
+const GET_USER_FAMILIES = gql`
+  query GetUserFamilies($id: ID!) {
+    getUserFamilies(_id: $id) {
+      _id
+      createdAt
+      name
+      ownerId
+      memberIds
+      adminIds
+      isOwner
+      isAdmin
+      owner {
+      ... User
+      }
+      members {
+      ... User
+      }
+      admins {
+      ... User
+      }
+    }
+  }
 
-export { GET_ME, QUERY_CONSUMPTION_TYPES, GET_USER_CONSUMPTIONS, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS }
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+`
+const GET_USER_PENDING_FAMILIES = gql`
+  query GetUserPendingFamilies($id: ID) {
+    getUserPendingFamilies(_id: $id) {
+      _id
+      createdAt
+      name
+      ownerId
+      memberIds
+      adminIds
+      pendingIds
+      owner {
+      ... User
+      }
+      members {
+      ... User
+      }
+      admins {
+      ... User
+      }
+      pending {
+      ... User
+      }
+    }
+  }
+
+  fragment User on User {
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+`
+const GET_USER_ELECTRICITY_GRAPH = gql`
+query GetElectricityGraph($id: String!, $from: Date!, $to: Date!) {
+  getElectricityGraph(userId: $id, from: $from, to: $to) {
+      ...GraphData
+  }
+}
+
+fragment GraphData on GraphData {
+    data {
+        x
+        y
+    }
+}`
+
+export { 
+  GET_ME, 
+  QUERY_CONSUMPTION_TYPES, 
+  GET_USER_CONSUMPTIONS, 
+  GET_USER_ENERGY_SAVINGS,
+  GET_USER_MEASUREMENTS,
+  GET_USER_FAMILIES,
+  GET_USER_PENDING_FAMILIES,
+  GET_USER_ELECTRICITY_GRAPH
+}

@@ -12,6 +12,7 @@ import HeaderAccount from "./containers/AccountHeader"
 import * as constants from './constants'
 import ProfileController from "./components/controllers/profileController"
 import ProfileContainer from "./containers/ProfileContainer"
+import FamilyController from './components/controllers/familyController'
 import ProfileElectricityController from "./components/controllers/profileElectricityController"
 
 const App = () => (
@@ -26,11 +27,10 @@ const App = () => (
         <Redirect exact from="/account" to="/account/profile" />
         <PrivateRoute exact path="/account/profile" component={ProfileContainer} />
         <PrivateRoute exact path="/home" component={HomePage} />
-        <PrivateRoute exact path="/friends" component={Friends} />
-        <PrivateRoute exact path="/challenges" component={Challenges} />
         <PrivateRoute exact path="/logout" component={LogOut} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_PROFILE} component={ProfileController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ELECTRICITY} component={ProfileElectricityController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_FAMILY} component={FamilyController} />
         <Route component={NotFound} />
       </Switch>
     </Main>
