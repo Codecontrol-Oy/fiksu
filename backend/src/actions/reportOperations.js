@@ -36,7 +36,7 @@ exports.getElectricityGraph = async (args, context) => {
             })
 
             // Calculate savings
-            const savedConsumptions = await SavedConsumption.find({ userId: args.userId, date: { "$gte": from, "$lt": to } })
+            const savedConsumptions = await SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
                 .populate('consumptionTypeId')
                 .then((savings) => {
                     if (savings) {
