@@ -4,6 +4,7 @@ import SavedEcoActions from '../db/models/savedEcoActionModel'
 import { getFamilyMemberIds } from './profileOperations'
 import mongoose from 'mongoose'
 import { ApolloError } from 'apollo-server'
+import Const from '#constants'
 
 exports.getElectricityGraph = async (args, context) => {
     const from = new Date(args.from)
@@ -148,21 +149,12 @@ exports.getUserElectricPoints = async (args, context) => {
         .sort({ date: 1 })
         .then(async (measurements) => {
             let totalPoints = 0
-            if (measurements.length < 2) {
+            if (measurements.length <= 0) {
                 return totalPoints
             }
 
-            // Create the actual electricity line
-            let actualElectricityLine = []
-            measurements.map((measurement) => {
-                actualElectricityLine.push({
-                    x: measurement.date.toISOString().slice(0, 10),
-                    y: measurement.value
-                })
-            })
-
             // Calculate savings
-            const savedConsumptions = await SavedConsumption.find({ householdId: householdId, userId: userid, date: { "$gte": from, "$lt": to } })
+            const savedConsumptions = await SavedConsumption.find({ householdId: householdId, userId: userId, date: { "$gte": from, "$lt": to } })
                 .populate('consumptionTypeId')
                 .then((savings) => {
                     if (savings) {
@@ -177,23 +169,16 @@ exports.getUserElectricPoints = async (args, context) => {
                     return 0
                 })
 
-            // Create the "what it would've been without savings" line
-            const first = measurements[0]
-            const last = measurements[measurements.length - 1]
-            last.value += savedConsumptions
+            console.log("savedConsumptions: ", savedConsumptions)
+            const last = measurements[measurements.length - 1].value
+            console.log("last: ", last)
+            const lastPlusSavings = measurements[measurements.length - 1].value + savedConsumptions
+            console.log("lastPlusSavings: ", lastPlusSavings)
 
-            let savingsLine = []
-            savingsLine.push({
-                x: first.date.toISOString().slice(0, 10),
-                y: first.value
-            })
-            savingsLine.push({
-                x: last.date.toISOString().slice(0, 10),
-                y: last.value
-            })
+            const calculatedPercentage = ((lastPlusSavings * 100 / last) - 100).toFixed(2)
+            console.log("calculatedPercentage: ", calculatedPercentage)
 
-            //console.log(JSON.stringify([{ data: actualElectricityLine }, { data: savingsLine }]))
-            return [{ data: actualElectricityLine }, { data: savingsLine }]
+            return (parseFloat(Const.ELECTRICITY_SAVING_MULTIPLIER) * calculatedPercentage)
         })
 }
 
@@ -208,6 +193,7 @@ exports.getResults = async (args) => {
         familyMemberIds.map((familyMemberId) => {
             results.push({
                 userId: familyMemberId,
+                householdId: args.householdId,
                 from: args.from,
                 to: args.to
             })

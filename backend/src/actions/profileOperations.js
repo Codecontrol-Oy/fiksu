@@ -356,7 +356,7 @@ exports.searchUser = async (args) => {
     return null
 }
 
-exports.getFamilyMemberIds = (familyId) => {
+function getFamilyMemberIds (familyId) {
     if (!familyId || familyId.length != 24) return []
     return Family.findOne({ _id: mongoose.Types.ObjectId(familyId) })
         .then((family) => {
@@ -367,6 +367,8 @@ exports.getFamilyMemberIds = (familyId) => {
             return []
         })
 }
+
+exports.getFamilyMemberIds = getFamilyMemberIds
 
 function getGroupMemberIds(groupId) {
     if (!groupId || groupId.length != 24) return []
