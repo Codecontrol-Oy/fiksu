@@ -55,8 +55,8 @@ const typeDefs = gql`
     user(id: ID): User
     users: [User]
     me: User
-    measurements(userId: String!, from: Date!, to: Date!): [Measurement]
-    friendMeasurements(userId: String!, from: Date!, to: Date!): [Measurement]
+    measurements(householdId: String!, from: Date!, to: Date!): [Measurement]
+    friendMeasurements(householdId: String!, from: Date!, to: Date!): [Measurement]
     serverInfo: ServerInfo
     getFriends: [Friend]
     getRoles(userId: ID!): [String]
@@ -64,8 +64,8 @@ const typeDefs = gql`
     getChallenge(_id: ID!): Challenge
     getChallenges(userId: ID!): [Challenge]
     getConsumptionTypes: [ConsumptionType]
-    getSavedConsumptions(userId: String!, from: Date!, to: Date!): [SavedConsumption]
-    getAllSavedConsumptions(userId: String!): [SavedConsumption]
+    getSavedConsumptions(householdId: String!, from: Date!, to: Date!): [SavedConsumption]
+    getAllSavedConsumptions(householdId: String!): [SavedConsumption]
     getTopList(topListInput: TopListInput!): [TopListItem]
     getTip(_id: ID!): Tip
     getAllTips(filter: TipFilterInput): [Tip]
@@ -79,7 +79,7 @@ const typeDefs = gql`
     getUserGroups(_id: ID!): [Group]
     getUserInvitedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
-    getElectricityGraph(userId: String!, from: Date!, to: Date!): [GraphData]
+    getElectricityGraph(householdId: ID!, from: Date!, to: Date!): [GraphData]
     searchUser(search: String, familyId: ID, groupId: ID): [User]
   }
 
@@ -156,7 +156,7 @@ const typeDefs = gql`
   }
 
   input MeasurementInput {
-    userId: String!
+    householdId: ID!
     value: Float!
     date: Date!
   }
@@ -171,7 +171,7 @@ const typeDefs = gql`
   }
 
   input SavedConsumptionInput {
-    userId: String
+    householdId: ID!
     consumptionTypeId: String
     value: Float
     date: Date
@@ -298,7 +298,9 @@ const typeDefs = gql`
 
   type Measurement {
     _id: ID
+    householdId: ID
     userId: String
+    household: Family
     user: User
     value: Float
     date: Date
@@ -342,6 +344,7 @@ const typeDefs = gql`
 
   type SavedConsumption {
     _id: ID
+    householdId: ID
     userId: String
     consumptionTypeId: String
     consumptionType: ConsumptionType

@@ -159,7 +159,7 @@ const resolvers = {
     },
     getElectricityGraph: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return getElectricityGraph(args)
+      return getElectricityGraph(args, context)
     },
     searchUser: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -191,7 +191,7 @@ const resolvers = {
     },
     createMeasurement: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return createMeasurement(args.measurement)
+      return createMeasurement(args.measurement, context)
     },
     deleteMeasurement: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -219,7 +219,7 @@ const resolvers = {
     },
     createSavedConsumption: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return createSavedConsumption(args)
+      return createSavedConsumption(args, context)
     },
     removeSavedConsumption: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -315,6 +315,10 @@ const resolvers = {
     },
   },
   Measurement: {
+    household: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getFamily(obj.householdId)
+    },
     user: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getProfile(obj.userId)

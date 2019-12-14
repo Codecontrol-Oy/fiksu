@@ -3,10 +3,10 @@ import SavedConsumption from '../db/models/savedConsumptionModel'
 import mongoose from 'mongoose'
 import { ApolloError } from 'apollo-server'
 
-exports.getElectricityGraph = async (args) => {
+exports.getElectricityGraph = async (args, context) => {
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return Measurement.find({ userId: args.userId, date: { "$gte": from, "$lt": to } })
+    return Measurement.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
         .sort({date: 1})
         .then(async (measurements) => {
             // If not at least two measurements, return nothing
