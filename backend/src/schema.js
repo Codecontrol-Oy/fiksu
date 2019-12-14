@@ -81,6 +81,7 @@ const typeDefs = gql`
     searchGroup(search: String!, limit: Int, offset: Int): Groups
     getUserGroups(_id: ID!): [Group]
     getUserInvitedGroups(_id: ID): [Group]
+    getUserAppliedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
     getElectricityGraph(householdId: ID!, from: Date!, to: Date!): [GraphData]
     getUserEcoActionsGraph(userId: ID, from: Date!, to: Date!, fullRange: Boolean!): [GraphData]
@@ -90,7 +91,7 @@ const typeDefs = gql`
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
     getUserEcoPoints(userId: ID, from: Date!, to: Date!): String
     getResults(userId: ID, householdId: ID, from: Date!, to: Date!): [ResultsGraph]
-    getGroupResults(groupId: ID, from: Date!, to: Date!): [ResultsGraph]
+    getGroupResults(groupId: ID, from: Date!, to: Date!): ResultsGraph
   }
 
   """

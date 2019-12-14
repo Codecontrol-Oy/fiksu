@@ -324,6 +324,10 @@ exports.getUserGroups = async (args) => {
         ])
 }
 
+exports.getUserAppliedGroups = async (userId) => {
+    return Group.find({ pendingIds: userId })
+}
+
 exports.getUserInvitedGroups = async (userId) => {
     return Group.find({ invitedIds: userId })
 }

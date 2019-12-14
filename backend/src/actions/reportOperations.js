@@ -1,8 +1,8 @@
 import Measurement from '../db/models/measurementModel'
+import Family from '../db/models/familyModel'
 import SavedConsumption from '../db/models/savedConsumptionModel'
 import SavedEcoActions from '../db/models/savedEcoActionModel'
 import { getFamilyMemberIds, getGroupMemberIds } from './profileOperations'
-import { isInFamily } from './familyOperations'
 import mongoose from 'mongoose'
 import { ApolloError } from 'apollo-server'
 import Const from '#constants'
@@ -121,7 +121,7 @@ exports.getUserEcoActionsGraph = async (args, context) => {
         })
 }
 
-exports.getUserEcoPoints = async (args, context) => {
+async function getUserEcoPoints(args, context) {
     const userId = args?.userId ?? context.user._id
     const from = new Date(args.from)
     const to = new Date(args.to)
@@ -140,7 +140,7 @@ exports.getUserEcoPoints = async (args, context) => {
         })
 }
 
-exports.getUserElectricPoints = async (args, context) => {
+async function getUserElectricPoints(args, context) {
     const userId = args?.userId ?? context.user._id
     const householdId = args.householdId
     const from = new Date(args.from)
@@ -179,6 +179,9 @@ exports.getUserElectricPoints = async (args, context) => {
         })
 }
 
+exports.getUserEcoPoints = getUserEcoPoints
+exports.getUserElectricPoints = getUserElectricPoints
+
 exports.getResults = async (args) => {
     const userId = args.userId
     const householdId = args.householdId
@@ -211,12 +214,24 @@ exports.getGroupResults = async (args) => {
     const groupId = args.groupId
     const groupMemberIds = await getGroupMemberIds(groupId, true)
 
-    let results = []
-    groupMemberIds.map((groupMemberId) => {
-        
+    let totalPoints = 0
+    groupMemberIds.map(async (groupMemberId) => {
+        let memberFamilies = await Family.find({ $or: [{ ownerId: groupMemberId }, { memberIds: groupMemberId }, { adminIds: groupMemberId }] })
+        memberFamilies.map((household) => {
+            let points = getUserElectricPoints({
+                userId: groupMemberId,
+                householdId: household._id,
+                from: args.from,
+                to: args.to
+            })
+
+            console.log(`Member ${groupMemberId} in household ${household.name} has ${points} points`)
+
+            totalPoints += points
+        })
     })
 
-    return results
+    return totalPoints
 }
 
 function generateDataSet(fullRange, from, to, data) {
