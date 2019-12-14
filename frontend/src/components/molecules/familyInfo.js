@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Block from '../atoms/block'
-import { GET_USER_FAMILIES, GET_USER_PENDING_FAMILIES} from '../../graphqlQueries'
+import { GET_USER_FAMILIES } from '../../graphqlQueries'
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import { MUTATION_CREATE_FAMILY, MUTATION_REMOVE_FAMILY, MUTATION_REMOVE_FAMILY_MEMBER, MUTATION_PROMOTE_FAMILY_MEMBER, MUTATION_DEMOTE_FAMILY_MEMBER } from '../../graphqlMutations'
 import Heading from '../atoms/heading'
@@ -18,7 +18,7 @@ import DonutChart from '../molecules/donutChart'
 import FamilyMember from './familyMember'
 const FamilyInfo = props => {
 
-  const [familyName, setFamilyname] = useState(undefined)
+const [familyName, setFamilyname] = useState(undefined)
 
   const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
     variables: {
@@ -59,7 +59,7 @@ const FamilyInfo = props => {
     }
   )
 
-  const myData = [{angle: 1, subLabel:"ekopisteet"}, {angle: 5, subLabel: "Sähkönkäyttöpisteet"}]
+  const myData = [{angle: 1, label: "1", subLabel:"ekopisteet"}, {angle: 5, label: "5", subLabel: "Sähkönkäyttöpisteet"}]
 
   return (
     <Block className="family-info">
@@ -126,8 +126,8 @@ const FamilyInfo = props => {
                     })}
                     id={member._id}
                     name={`${member.firstName} ${member.lastName}`} />)}
-                  <Divider />
-                  <Heading color={"secondary"} variant={3}>Kutsu perheenjäsen</Heading>
+                  {(family.isOwner || family.isAdmin) && <Block>
+                  </Block> }
                 </Card>
               </Grid>
               <Grid sizeS={12} sizeM={6} sizeL={6}>
@@ -138,7 +138,7 @@ const FamilyInfo = props => {
               <Divider />
             </GridRow>
             )}
-            {familyData && !familyData.getUserFamilies.length && <Block>
+            {familyData && (!familyData.getUserFamilies.length || !familyData.getUserFamilies.some(x => x.isOwner)) && <Block>
               <Heading color={"secondary"} variant={4}>Et ole perustanut perhettä palveluun.</Heading>
               <Paragraph color={"secondary"}>Voit luoda uuden perheen alla olevalla lomakkeella. <br /> Perheen luonnin jälkeen, voit kutsua henkilöitä liittymään perheeseesi.</Paragraph>
               <Block style={{textAlign: 'center'}}>
@@ -160,6 +160,8 @@ const FamilyInfo = props => {
                     type="submit"
                     basic > Tallenna</Button> 
                 </Form>
+                <br />
+                <Divider />
               </Block>
             </Block>}
           </Grid>

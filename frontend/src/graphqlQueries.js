@@ -105,6 +105,9 @@ const GET_USER_FAMILIES = gql`
       members {
       ... User
       }
+      pending {
+        ... User
+      }
       admins {
       ... User
       }
@@ -169,6 +172,23 @@ fragment GraphData on GraphData {
     }
 }`
 
+const SEARCH_USER = gql`
+query SearchUser($search: String, $familyId: ID, $groupId: ID) {
+  searchUser(search: $search, familyId: $familyId, groupId: $groupId) {
+      ...User
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}`
+
 export { 
   GET_ME, 
   QUERY_CONSUMPTION_TYPES, 
@@ -177,5 +197,6 @@ export {
   GET_USER_MEASUREMENTS,
   GET_USER_FAMILIES,
   GET_USER_PENDING_FAMILIES,
-  GET_USER_ELECTRICITY_GRAPH
+  GET_USER_ELECTRICITY_GRAPH,
+  SEARCH_USER
 }
