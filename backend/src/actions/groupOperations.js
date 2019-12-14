@@ -274,10 +274,10 @@ exports.removeGroupMember = async (args, user) => {
                         throw new ApolloError(localeService.translate('GROUP_NO_PERMISSION_MEMBER'))
                     }
 
-                    if ((group.ownerId == user._id && group.adminIds.some(adminId => adminId == user._id)) ||
+                    if ((group.ownerId == user._id && group.adminIds.some(adminId => adminId == userId)) ||
                         group.memberIds.some(memberId => memberId == userId) ||
                         group.pendingIds.some(memberId => memberId == userId) ||
-                        group.pendingIds.some(memberId => memberId == userId)) {
+                        group.invitedIds.some(memberId => memberId == userId)) {
 
                         group.adminIds.remove(userId)
                         group.memberIds.remove(userId)
