@@ -18,6 +18,10 @@ const Button = props => {
       newClasses.push("button-alert")
     }
 
+    if (props.rounded) {
+      newClasses.push("button-rounded")
+    }
+
     return newClasses
 
   })
@@ -26,6 +30,7 @@ const Button = props => {
   return (
     <button
       disabled={props.disabled}
+      style={props.style}
       ref={ref}
       className={classes.join(' ')}
       style={props.style}

@@ -169,6 +169,40 @@ fragment GraphData on GraphData {
     }
 }`
 
+const GET_MY_USER = gql`
+query GetMyUser($id: ID!){
+  user(id: $id) {
+    _id
+    createdAt
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+    birthDate
+    address {
+        city
+    }
+    permissions {
+        showRealName
+        showEmail
+        showBirthDate
+        allowPushNotifications
+        allowEmailNotifications
+    }
+    token
+    challenges {
+      createdAt
+      title
+      description
+      from
+      to
+    }
+  }
+}
+`
+
 export {
   GET_ME,
   QUERY_CONSUMPTION_TYPES,
@@ -177,5 +211,6 @@ export {
   GET_USER_MEASUREMENTS,
   GET_USER_FAMILIES,
   GET_USER_PENDING_FAMILIES,
-  GET_USER_ELECTRICITY_GRAPH
+  GET_USER_ELECTRICITY_GRAPH,
+  GET_MY_USER
 }

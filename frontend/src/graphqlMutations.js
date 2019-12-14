@@ -136,6 +136,13 @@ mutation UpdateUser($User: UserUpdateInput!) {
     }
   }
 }`
+const MUTATION_DELETE_USER = gql`
+mutation deleteUser($id: String!) {
+  deleteUser(_id: $id) {
+    _id
+  }
+}`
+
 
 export {
     LOGIN_USER,
@@ -150,6 +157,6 @@ export {
     MUTATION_REMOVE_FAMILY_MEMBER,
     MUTATION_PROMOTE_FAMILY_MEMBER,
     MUTATION_DEMOTE_FAMILY_MEMBER,
-    MUTATION_UPDATE_USER
+    MUTATION_UPDATE_USER,
+    MUTATION_DELETE_USER
 }
-
