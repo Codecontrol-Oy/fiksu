@@ -337,7 +337,7 @@ exports.searchUser = async (args) => {
         return Login.findOne({ normalizedNickName: nickname.toUpperCase(), profileId: { $nin: userIdsFilterOut } })
             .populate('profileId')
             .then((result) => {
-                if (result) return result.profileId
+                if (result) return [result.profileId]
                 else return null
             })
     }
