@@ -106,42 +106,42 @@ exports.emailTaken = async (email) => {
 
 function validatePassword(password) {
     if (!password.length) {
-        throw new ApolloError(localeService.translate('PASSWORD_REQUIRED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_REQUIRED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_REQUIRED')
             }
         })
     }
     if (password.length < Const.DEFAULT_MIN_PASSWORD_LENGTH) {
-        throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }), null, {
             errors: {
                 password: localeService.translate('PASSWORD_MIN_REQUIRED')
             }
         })
     }
     if (!/\d/.test(password)) { // At least one number
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
         })
     }
     if (!/[a-z]/.test(password)) { // At least one lowercase char [a-z]
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
         })
     }
     if (!/[A-Z]/.test(password)) { // At least one uppercase char [A-Z]
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
         })
     }
     if (!/[!@#\$%\^&]/.test(password)) { // At least one special character
-        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, { 
+        throw new ApolloError(localeService.translate('PASSWORD_COMPLEXITY_FAILED'), null, {
             errors: {
                 password: localeService.translate('PASSWORD_COMPLEXITY_FAILED')
             }
@@ -321,4 +321,30 @@ exports.confirmPasswordReset = async (username, verificationToken, newPassword) 
                 else return false
             })
     })
+}
+
+exports.searchUser = async (args) => {
+    const search = args.search.split(' ')
+    if (search.length == 1) {
+        let nickname = search[0]
+
+        return Login.findOne({ normalizedNickName: nickname.toUpperCase() })
+            .populate('profileId')
+            .then((result) => {
+                if (result) return result.profileId
+                else return null
+            })
+    }
+    else if (search.length > 1) {
+        let firstName = search[0]
+        let lastName = search[search.length - 1]
+
+        return Profile.find({ $and: [
+            { firstName: { $regex : new RegExp(firstName, "i") } }, 
+            { lastName: { $regex : new RegExp(lastName, "i") } }, 
+            { 'permissions.showRealName': Const.PERMISSION_PUBLIC }
+        ] })
+    }
+    
+    return null
 }

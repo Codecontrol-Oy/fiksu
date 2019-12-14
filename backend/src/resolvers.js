@@ -1,7 +1,7 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server'
 import AuthHelper from './helpers/authHelpers'
-import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles, getAllProfiles, deleteProfile, updateProfile, confirmProfile, createPasswordReset, confirmPasswordReset } from './actions/profileOperations'
+import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles, getAllProfiles, deleteProfile, updateProfile, confirmProfile, createPasswordReset, confirmPasswordReset, searchUser } from './actions/profileOperations'
 import { getLogin } from './actions/loginOperations'
 import { getRoles, addRole, removeRole } from './actions/roleOperations'
 import { getFamily, createFamily, addFamilyMember, updateFamily, removeFamilyMember, deleteFamily, getUserFamilies, getUserPendingFamilies, approveFamilyMember, promoteFamilyMember, demoteFamilyMember, getAllFamilies, isInFamily } from './actions/familyOperations'
@@ -160,6 +160,10 @@ const resolvers = {
     getElectricityGraph: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getElectricityGraph(args)
+    },
+    searchUser: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return searchUser(args)
     },
   },
   Mutation: {
