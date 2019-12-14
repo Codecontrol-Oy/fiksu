@@ -11,7 +11,9 @@ import { getMeasurements, createMeasurement, deleteMeasurement } from './actions
 import { getFriends, getFriendRequests, approveFriendRequest, addFriend, unFriend } from './actions/friendOperations'
 import { getChallenges, getChallenge, createChallenge, removeChallenge, getTopList } from './actions/challengeOperations'
 import { getConsumptionTypes, getConsumptionType } from './actions/consumptionTypeOperations'
+import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOperations'
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
+import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
 import { getElectricityGraph } from './actions/reportOperations'
 import Const from './constants'
@@ -165,6 +167,18 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return searchUser(args)
     },
+    getEcoActionTypes: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getEcoActionTypes()
+    },
+    getSavedEcoActions: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getSavedEcoActions(args)
+    },
+    getAllSavedEcoActions: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getAllSavedEcoActions(args)
+    },
   },
   Mutation: {
     logIn: (obj, args) => logIn(args.nickname, args.password),
@@ -313,6 +327,14 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return deleteGroup(args, context.user)
     },
+    createSavedEcoAction: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return createSavedEcoAction(args, context)
+    },
+    removeSavedEcoAction: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return removeSavedEcoAction(args)
+    },
   },
   Measurement: {
     household: (obj, args, context) => {
@@ -439,6 +461,12 @@ const resolvers = {
     consumptionType: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getConsumptionType(obj)
+    }
+  },
+  SavedEcoAction: {
+    ecoActionType: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getEcoActionType(obj)
     }
   },
   Tip: {

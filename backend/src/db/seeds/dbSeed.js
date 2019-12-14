@@ -1,6 +1,7 @@
 import RandomString from 'randomstring'
 import crypto from 'crypto'
 import Type from '../models/consumpionTypeModel'
+import EcoAction from '../models/ecoActionTypeModel'
 import Admin from '../models/profileModel'
 import AdminLogin from '../models/loginModel'
 import Const from '../../constants'
@@ -24,10 +25,10 @@ exports.seed = () => {
                     address: {
                         city: 'Pori'
                     },
-                    roles: [ Const.ROLE_ADMIN ],
+                    roles: [Const.ROLE_ADMIN],
                     loginId: loginId,
                 })
-            
+
                 Admin.create(profile).then((profileResult) => {
                     if (!profileResult) {
                         throw new ApolloError("Couldn't create profile")
@@ -215,6 +216,23 @@ exports.seed = () => {
                     description: "Valmistin ruuan ilman uunia tai liettä",
                     amount: 1.5,
                     amountType: "kertaa"
+                })
+            }
+        })
+
+    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2)
+    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi/paperi -pussia.', 0.2)
+    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa voidaan säästää lämmityskuluissa.', 0.2)
+}
+
+function addEcoAction(title, description, amount) {
+    EcoAction.findOne({ title: title })
+        .then((result) => {
+            if (!result) {
+                EcoAction.create({
+                    title: title,
+                    description: description,
+                    amount: amount
                 })
             }
         })

@@ -46,6 +46,8 @@ const typeDefs = gql`
     demoteGroupMember(groupId: ID!, userId: ID!): Group
     removeGroupMember(groupId: ID!, userId: ID!): Group
     deleteGroup(_id: ID!): Group
+    createSavedEcoAction(savedEcoAction: SavedEcoActionInput!): SavedEcoAction
+    removeSavedEcoAction(_id: ID!): SavedEcoAction
   },
 
   """
@@ -81,6 +83,9 @@ const typeDefs = gql`
     getAllGroups(limit: Int, offset: Int): Groups
     getElectricityGraph(householdId: ID!, from: Date!, to: Date!): [GraphData]
     searchUser(search: String, familyId: ID, groupId: ID): [User]
+    getEcoActionTypes: [ConsumptionType]
+    getSavedEcoActions(userId: ID!, from: Date!, to: Date!): [SavedEcoAction]
+    getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
   }
 
   """
@@ -173,6 +178,12 @@ const typeDefs = gql`
   input SavedConsumptionInput {
     householdId: ID!
     consumptionTypeId: String
+    value: Float
+    date: Date
+  }
+
+  input SavedEcoActionInput {
+    ecoActionTypeId: String
     value: Float
     date: Date
   }
@@ -342,12 +353,28 @@ const typeDefs = gql`
     amountType: String
   }
 
+  type EcoActionType {
+    _id: ID
+    title: String
+    description: String
+    amount: Float
+  }
+
   type SavedConsumption {
     _id: ID
     householdId: ID
     userId: String
     consumptionTypeId: String
     consumptionType: ConsumptionType
+    value: Float
+    date: Date
+  }
+
+  type SavedEcoAction {
+    _id: ID!
+    userId: ID
+    ecoActionTypeId: ID
+    ecoActionType: EcoActionType
     value: Float
     date: Date
   }

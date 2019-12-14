@@ -64,5 +64,7 @@
 
 	"FAMILY_MEMBER_NOT_FOUND": "Member is not part of the household.",
 	"FAMILY_NO_PERMISSION_MEMBER": "Not allowed to remove household member.",
-	"FAMILY_NO_PERMISSION_OWNER": "Not allowed to remove owner."
+	"FAMILY_NO_PERMISSION_OWNER": "Not allowed to remove owner.",
+
+	"ECOACTIONTYPE_NOT_FOUND": "Eco action type not found."
 }
