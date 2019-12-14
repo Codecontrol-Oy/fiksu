@@ -79,7 +79,7 @@ const typeDefs = gql`
     getUserGroups(_id: ID!): [Group]
     getUserInvitedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
-    getElectricityGraph(userId: String!, from: Date!, to: Date!): [Measurement]
+    getElectricityGraph(userId: String!, from: Date!, to: Date!): [GraphData]
   }
 
   """
@@ -301,6 +301,15 @@ const typeDefs = gql`
     user: User
     value: Float
     date: Date
+  }
+
+  type GraphData {
+    data: [GraphPoint]
+  }
+
+  type GraphPoint {
+    x: String
+    y: Float
   }
 
   type Friend {

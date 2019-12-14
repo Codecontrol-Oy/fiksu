@@ -31,7 +31,7 @@ exports.getElectricityGraph = async (args) => {
                 y: last.value
             })
 
-            console.log(JSON.stringify([{ data: actualElectricityLine }, { data: savingsLine }]))
+            //console.log(JSON.stringify([{ data: actualElectricityLine }, { data: savingsLine }]))
             return [{ data: actualElectricityLine }, { data: savingsLine }]
         })
 }
