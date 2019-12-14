@@ -80,7 +80,7 @@ const typeDefs = gql`
     getUserInvitedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
     getElectricityGraph(userId: String!, from: Date!, to: Date!): [GraphData]
-    searchUser(search: String): [User]
+    searchUser(search: String, familyId: ID, groupId: ID): [User]
   }
 
   """

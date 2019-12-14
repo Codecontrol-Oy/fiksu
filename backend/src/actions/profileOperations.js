@@ -1,6 +1,8 @@
 import Login from '../db/models/loginModel'
 import Profile from '../db/models/profileModel'
 import Reset from '../db/models/resetModel'
+import Family from '../db/models/familyModel'
+import Group from '../db/models/groupModel'
 import RandomString from 'randomstring'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
@@ -325,10 +327,14 @@ exports.confirmPasswordReset = async (username, verificationToken, newPassword) 
 
 exports.searchUser = async (args) => {
     const search = args.search.split(' ')
+    const familyIds = await getFamilyMemberIds(args.familyId)
+    const groupIds = await getGroupMemberIds(args.groupId)
+    let userIdsFilterOut = [...familyIds, ...groupIds]
+
     if (search.length == 1) {
         let nickname = search[0]
 
-        return Login.findOne({ normalizedNickName: nickname.toUpperCase() })
+        return Login.findOne({ normalizedNickName: nickname.toUpperCase(), profileId: { $nin: userIdsFilterOut } })
             .populate('profileId')
             .then((result) => {
                 if (result) return result.profileId
@@ -340,6 +346,7 @@ exports.searchUser = async (args) => {
         let lastName = search[search.length - 1]
 
         return Profile.find({ $and: [
+            { _id: { $nin: userIdsFilterOut } },
             { firstName: { $regex : new RegExp(firstName, "i") } }, 
             { lastName: { $regex : new RegExp(lastName, "i") } }, 
             { 'permissions.showRealName': Const.PERMISSION_PUBLIC }
@@ -347,4 +354,28 @@ exports.searchUser = async (args) => {
     }
     
     return null
+}
+
+function getFamilyMemberIds(familyId) {
+    if (!familyId || familyId.length != 24) return []
+    return Family.findOne({ _id: mongoose.Types.ObjectId(familyId) })
+        .then((family) => {
+            if (family) {
+                return [family.ownerId, ...family.adminIds, ...family.memberIds, ...family.pendingIds]
+            }
+
+            return []
+        })
+}
+
+function getGroupMemberIds(groupId) {
+    if (!groupId || groupId.length != 24) return []
+    return Group.findOne({ _id: mongoose.Types.ObjectId(groupId) })
+        .then((group) => {
+            if (group) {
+                return [group.ownerId, ...group.adminIds, ...group.memberIds, ...group.pendingIds, ...group.invitedIds]
+            }
+
+            return []
+        })
 }
