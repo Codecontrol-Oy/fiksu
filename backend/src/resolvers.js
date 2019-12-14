@@ -15,7 +15,7 @@ import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOper
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -162,6 +162,10 @@ const resolvers = {
     getElectricityGraph: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getElectricityGraph(args, context)
+    },
+    getUserEcoActionsGraph: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getUserEcoActionsGraph(args, context)
     },
     searchUser: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()

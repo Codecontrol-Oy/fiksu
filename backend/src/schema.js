@@ -82,9 +82,10 @@ const typeDefs = gql`
     getUserInvitedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
     getElectricityGraph(householdId: ID!, from: Date!, to: Date!): [GraphData]
+    getUserEcoActionsGraph(userId: ID, from: Date!, to: Date!, fullRange: Boolean!): [GraphData]
     searchUser(search: String, familyId: ID, groupId: ID): [User]
     getEcoActionTypes: [EcoActionType]
-    getSavedEcoActions(userId: ID!, from: Date!, to: Date!): [SavedEcoAction]
+    getSavedEcoActions(userId: ID, from: Date!, to: Date!): [SavedEcoAction]
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
   }
 
