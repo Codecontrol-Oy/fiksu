@@ -6,8 +6,10 @@
 	},
 	"MUST_AUTHENTICATE": "Must authenticate",
 	"INSUFFICIENT_PRIVILEGES": "User doesn't have sufficient privileges.",
+
+	"EMAIL_SERVICE_DESCRIPTION": "Maecenas sed ante pellentesque, posuere leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque congue eros eu posuere. Praesent in felis ut velit pretium lobortis rhoncus ut&nbsp;erat.",
 	"EMAIL_NEW_FAMILYMEMBER_TITLE": "Hi {{firstName}}!",
-	"EMAIL_NEW_FAMILYMEMBER_CONTENT": "You have been invited to join the {{familyName}} family.",
+	"EMAIL_NEW_FAMILYMEMBER_CONTENT": "You have been invited to join the <strong>{{familyName}}</strong> family.",
 	"EMAIL_NEW_FAMILYMEMBER_BUTTON_TEXT": "Accept invitation",
 	"EMAIL_NEW_FAMILYMEMBER_SUBJECT": "Invitation to join {{familyName}} family",
 	"EMAIL_NEW_MEMBER_SUBJECT": "Thank you for registering",
@@ -18,15 +20,22 @@
 	"EMAIL_PASSWORD_RESET_TITLE": "Hi {{firstName}}!",
 	"EMAIL_PASSWORD_RESET_CONTENT": "You have requested a password reset for Fixu. Password reset link will be available for one day. Please click the button below to reset your password.",
 	"EMAIL_PASSWORD_RESET_BUTTON_TEXT": "Reset password",
+	"EMAIL_NEW_GROUPMEMBERINVITE_TITLE": "Hi {{firstName}}!",
+	"EMAIL_NEW_GROUPMEMBERINVITE_CONTENT": "You have been invited to join the <strong>{{groupName}}</strong> group.",
+	"EMAIL_NEW_GROUPMEMBERINVITE_BUTTON_TEXT": "Accept invitation",
+	"EMAIL_NEW_GROUPMEMBERINVITE_SUBJECT": "Invitation to join {{groupName}} group",
+	
 	"OBJECT_NOT_FOUND": "No such object!",
 	"FAMILY_NOT_FOUND": "Family not found.",
+	"GROUP_NOT_FOUND": "Group not found.",
+	"GROUP_MEMBER_NOT_FOUND": "Member is not part of the group.",
 	"NO_UPDATE_PERMISSION": "No permission to update.",
 	"PROFILE_NOT_FOUND": "Profile not found.",
 	"PROFILE_CREATE_ERROR": "Couldn't create profile.",
 	"PROFILE_INVALID_TOKEN": "Invalid token.",
 	"FRIEND_NOT_FOUND": "Friend not found.",
 	"FRIEND_CANT_ASK_YOURSELF": "Can't ask yourself as a friend.",
-
+	
 	"FIRSTNAME_REQUIRED": "Firstname is required",
 	"LASTNAME_REQUIRED": "Lastname is required",
 	"BIRTHDATE_REQUIRED": "Birthdate is required",
@@ -49,6 +58,7 @@
 	"EMAIL_UNIQUE": "Email is unavailable",
 	"MONGOOSE_UNIQUE": "{VALUE} is already taken",
 	"OWNER_UNIQUE": "User can be the creator of only one family",
+	"NAME_UNIQUE": "Group with the same name already exists",
 
 	"TOKEN_EXPIRED": "Login has expired",
 

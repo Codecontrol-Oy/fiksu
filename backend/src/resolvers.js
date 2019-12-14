@@ -5,6 +5,7 @@ import { logIn, refreshToken, emailTaken, createProfile, getProfile, getProfiles
 import { getLogin } from './actions/loginOperations'
 import { getRoles, addRole, removeRole } from './actions/roleOperations'
 import { getFamily, createFamily, addFamilyMember, updateFamily, removeFamilyMember, deleteFamily, getUserFamilies, getUserPendingFamilies, approveFamilyMember, promoteFamilyMember, demoteFamilyMember, getAllFamilies, isInFamily } from './actions/familyOperations'
+import { getGroup, createGroup, searchGroup, updateGroup, inviteUserToGroup, applyToGroup, approveUserToGroup, promoteGroupMember, demoteGroupMember, removeGroupMember, deleteGroup, getUserGroups, getUserInvitedGroups, getAllGroups } from './actions/groupOperations'
 import { getHousing, createOrUpdateHousing, removeHousing } from './actions/housingOperations'
 import { getMeasurements, createMeasurement, deleteMeasurement } from './actions/measurementOperations'
 import { getFriends, getFriendRequests, approveFriendRequest, addFriend, unFriend } from './actions/friendOperations'
@@ -12,6 +13,7 @@ import { getChallenges, getChallenge, createChallenge, removeChallenge, getTopLi
 import { getConsumptionTypes, getConsumptionType } from './actions/consumptionTypeOperations'
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
+import { getElectricityGraph } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -107,6 +109,57 @@ const resolvers = {
     },
     emailTaken: (org, args, context) => {
       return emailTaken(args.email)
+    },
+    getGroup: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getGroup(args)
+    },
+    searchGroup: async (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return searchGroup(args)
+        .then((data) => {
+          const limit = args.limit
+          const offset = args.offset ?? 0
+          const totalCount = data.length
+          const groups = limit === undefined ?
+            data.slice(offset) :
+            data.slice(offset, offset + limit)
+          const result = {
+            groups,
+            totalCount,
+          }
+          return result
+        })
+    },
+    getUserGroups: (org, args, context) => {
+      new AuthHelper(context.user).validateSelfOrAdmin(args._id)
+      return getUserGroups(args)
+    },
+    getUserInvitedGroups: (org, args, context) => {
+      let userId = args._id ?? context.user._id
+      new AuthHelper(context.user).validateSelfOrAdmin(userId)
+      return getUserInvitedGroups(userId)
+    },
+    getAllGroups: (org, args, context) => {
+      new AuthHelper(context.user).validateAdmin()
+      return getAllGroups(args)
+        .then((data) => {
+          const limit = args.limit
+          const offset = args.offset ?? 0
+          const totalCount = data.length
+          const groups = limit === undefined ?
+            data.slice(offset) :
+            data.slice(offset, offset + limit)
+          const result = {
+            groups,
+            totalCount,
+          }
+          return result
+        })
+    },
+    getElectricityGraph: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getElectricityGraph(args)
     },
   },
   Mutation: {
@@ -219,7 +272,43 @@ const resolvers = {
     deleteFamily: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return deleteFamily(args, context.user)
-    }
+    },
+    createGroup: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return createGroup(args, context.user)
+    },
+    updateGroup: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return updateGroup(args, context.user)
+    },
+    inviteToGroup: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return inviteUserToGroup(args, context.user)
+    },
+    applyToGroup: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return applyToGroup(args, context.user)
+    },
+    approveToGroup: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return approveUserToGroup(args, context.user)
+    },
+    promoteGroupMember: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return promoteGroupMember(args, context.user)
+    },
+    demoteGroupMember: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return demoteGroupMember(args, context.user)
+    },
+    removeGroupMember: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return removeGroupMember(args, context.user)
+    },
+    deleteGroup: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return deleteGroup(args, context.user)
+    },
   },
   Measurement: {
     user: (obj, args, context) => {
@@ -376,6 +465,41 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       if (!obj.pendingIds) return null
       return getProfiles(obj.pendingIds)
+    },
+    isOwner: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return context.user._id == obj.ownerId
+    },
+    isAdmin: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return obj.adminIds.some(adminId => adminId == context.user._id)
+    }
+  },
+  Group: {
+    owner: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      if (!obj.ownerId) return null
+      return getProfile(obj.ownerId)
+    },
+    members: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      if (!obj.memberIds) return null
+      return getProfiles(obj.memberIds)
+    },
+    admins: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      if (!obj.adminIds) return null
+      return getProfiles(obj.adminIds)
+    },
+    pending: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      if (!obj.pendingIds) return null
+      return getProfiles(obj.pendingIds)
+    },
+    invites: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      if (!obj.invitedIds) return null
+      return getProfiles(obj.invitedIds)
     }
   }
 }

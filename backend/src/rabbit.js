@@ -28,6 +28,8 @@ class Rabbit {
                         verificationLink: body.data?.verificationLink
                     }, {
                         name: body.family?.name
+                    }, {
+                        name: body.group?.name
                     }, () => { console.log('mail sent') }, (error) => { console.log(error) })
 
                     switch (body.template) {
@@ -39,6 +41,9 @@ class Rabbit {
                             break
                         case 'newFamilyMember':
                             handler.sendFamilyMemberRequest()
+                            break
+                        case 'newGroupMemberInvite':
+                            handler.sendGroupMemberInviteRequest()
                             break
                         case 'newFriendRequest':
                             handler.sendFriendRequest()

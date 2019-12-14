@@ -201,7 +201,7 @@ exports.removeFamilyMember = async (args, user) => {
                         throw new ApolloError(localeService.translate('FAMILY_NO_PERMISSION_MEMBER'))
                     }
 
-                    if ((family.ownerId == user._id && family.adminIds.some(adminId => adminId == user._id)) || family.memberIds.some(memberId => memberId == userId) || family.pendingIds.some(memberId => memberId == userId)) {
+                    if ((family.ownerId == user._id && family.adminIds.some(adminId => adminId == userId)) || family.memberIds.some(memberId => memberId == userId) || family.pendingIds.some(memberId => memberId == userId)) {
                         family.adminIds.remove(userId)
                         family.memberIds.remove(userId)
                         family.pendingIds.remove(userId)
