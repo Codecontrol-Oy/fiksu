@@ -1,6 +1,5 @@
 
 import gql from "graphql-tag"
-import { Mutation } from "react-apollo"
 
 const LOGIN_USER = gql`
     mutation LogIn($nickname: String!, $password: String!) {
@@ -58,7 +57,79 @@ const MUTATION_REMOVE_MEASUREMENT = gql`
               userId
           }
       }
-    `
+`
 
-export { LOGIN_USER, CREATE_USER, GET_REFRESH_TOKEN, MUTATION_ADD_NEW_CONSUMPTION, MUTATION_REMOVE_CONSUMPTION, MUTATION_ADD_NEW_MEASUREMENT, MUTATION_REMOVE_MEASUREMENT }
+const MUTATION_CREATE_FAMILY = gql`
+mutation CreateFamily($family: FamilyInput!) {
+  createFamily(family: $family) {
+      _id
+      createdAt
+      name
+      ownerId
+      memberIds
+      adminIds
+      owner {
+          ... User
+      }
+      members {
+          ... User
+      }
+      admins {
+          ... User
+      }
+  }
+}
+
+fragment User on User {
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}`
+
+const MUTATION_REMOVE_FAMILY = gql`
+mutation DeleteFamily($id: ID!) {
+    deleteFamily(_id: $id) {
+        _id
+    }
+  }
+`
+
+const MUTATION_REMOVE_FAMILY_MEMBER = gql`
+mutation RemoveFamilyMember($id: ID!, $familyId: ID!) {
+    removeFamilyMember(familyId: $familyId, userId: $id) {
+        _id
+    }
+  }
+`
+const MUTATION_PROMOTE_FAMILY_MEMBER = gql`
+mutation PromoteFamilyMember($familyId: ID!, $id: ID!) {
+    promoteFamilyMember(familyId: $familyId, userId: $id) {
+        _id
+    }
+}`
+
+const MUTATION_DEMOTE_FAMILY_MEMBER = gql`
+mutation DemoteFamilyMember($familyId: ID!, $id: ID!) {
+    demoteFamilyMember(familyId: $familyId, userId: $id) {
+        _id
+    }
+}`
+
+export { 
+  LOGIN_USER, 
+  CREATE_USER, 
+  GET_REFRESH_TOKEN, 
+  MUTATION_ADD_NEW_CONSUMPTION, 
+  MUTATION_REMOVE_CONSUMPTION, 
+  MUTATION_ADD_NEW_MEASUREMENT, 
+  MUTATION_REMOVE_MEASUREMENT,
+  MUTATION_CREATE_FAMILY,
+  MUTATION_REMOVE_FAMILY,
+  MUTATION_REMOVE_FAMILY_MEMBER,
+  MUTATION_PROMOTE_FAMILY_MEMBER,
+  MUTATION_DEMOTE_FAMILY_MEMBER
+}
 

@@ -13,7 +13,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400 !important;
 font-family: 'Nunito', sans-serif !important;
 text-align: center;
-text-transform: capitalize;
 
 }
 p {
@@ -21,7 +20,6 @@ font-family: 'Nunito', sans-serif;
   text-align: center;
   color: white;
   font-weight: 100;
-  text-transform: capitalize;
 }
 html {
     height: 100%;
@@ -655,16 +653,19 @@ input::placeholder {
   text-align: center;
   color: rgb(214, 82, 82);
 }
-.input-label-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.input-label-group, .input-heading-group {
+  text-align: center;
+  padding:5px;
 }
-.input-label {
+.input-label, input-heading {
   color: #8c8c8c;
   padding: 0.3rem;
   font-size: 0.9rem;
 }
+.input-heading {
+  display:inline;
+}
+
 .icon-input-wrapper {
   position: relative;
   width: 15rem;
@@ -690,7 +691,6 @@ input::placeholder {
   font-size: 0.8rem;
   font-family: 'Dosis';
   color: white;
-  width: 15rem;
   height: 2rem;
   background-color: rgb(82, 177, 82);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -720,6 +720,42 @@ input::placeholder {
   -ms-transition: box-shadow 0.1s ease, background-color 0.1s ease;
   -o-transition: box-shadow 0.1s ease, background-color 0.1s ease;
 }
+
+.button-alert {
+  position: relative;
+  font-size: 0.8rem;
+  font-family: 'Dosis';
+  color: white;
+  height: 2rem;
+  background-color: #c44741;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border: none !important;
+}
+.button-alert:focus {
+  outline:none;
+}
+.button-alert:active {
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -webkit-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -moz-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -ms-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -o-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    background-color: rgb(76, 160, 76);
+}
+.button-alert:not(:active) {
+  transition: box-shadow 0.1s ease, background-color 0.1s ease;
+  -webkit-transition: box-shadow 0.1s ease, background-color 0.1s ease;
+  -moz-transition: box-shadow 0.1s ease, background-color 0.1s ease;
+  -ms-transition: box-shadow 0.1s ease, background-color 0.1s ease;
+  -o-transition: box-shadow 0.1s ease, background-color 0.1s ease;
+}
+
 .ripple::before {
 	content: '';
 	position: absolute;
@@ -796,7 +832,7 @@ input::placeholder {
   text-align: center;
 }
 
-.profile-container {
+.profile-container, .family-container {
   overflow-y: scroll;
   max-width: 100%;
   overflow-x: hidden;
@@ -805,7 +841,7 @@ input::placeholder {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.329);
 
 }
-.profile-info {
+.profile-info, .family-info {
   display: flex;
   flex-direction: row;
   width: 95%;
@@ -851,6 +887,7 @@ input::placeholder {
   position: relative;
   display: flex;
   flex-direction: column;  
+  align-items: center;
 }
 .achievement-image {
   cursor: pointer;
@@ -1278,48 +1315,48 @@ input::placeholder {
 .u-grid-12 {min-width: 100%; flex-basis: 100%; max-width: 100%; padding: 0.5rem;  }
 
 @media screen and (max-width: 425px) {
-.s-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
-.s-grid-2 {max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
-.s-grid-3 {max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
-.s-grid-4 {max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
-.s-grid-5 {max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
-.s-grid-6 {max-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
-.s-grid-7 {max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
-.s-grid-8 {max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
-.s-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
-.s-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
-.s-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+.s-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+.s-grid-2 {min-width: 16.66% !important; max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+.s-grid-3 {min-width: 24.99% !important; max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+.s-grid-4 {min-width: 33.32% !important; max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+.s-grid-5 {min-width: 41.65% !important; max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+.s-grid-6 {min-width: 50% !important; max-width: 50% !important; flex-basis: 50% !important; padding: 0.5rem;  }
+.s-grid-7 {min-width: 58.31% !important; max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+.s-grid-8 {min-width: 66.64% !important; max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+.s-grid-9 {min-width: 74.97% !important; max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+.s-grid-10 {min-width: 83.3% !important; max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+.s-grid-11 {min-width: 91.63% !important; max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
 .s-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 
 }
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-.m-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
-.m-grid-2 {max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
-.m-grid-3 {max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
-.m-grid-4 {max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
-.m-grid-5 {max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
-.m-grid-6 {max-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
-.m-grid-7 {max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
-.m-grid-8 {max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
-.m-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
-.m-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
-.m-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+.m-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+.m-grid-2 {min-width: 16.66% !important; max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+.m-grid-3 {min-width: 24.99% !important; max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+.m-grid-4 {min-width: 33.32% !important; max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+.m-grid-5 {min-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+.m-grid-6 {min-width: 50% !important; max-width: 50% !important; flex-basis: 50% !important; padding: 0.5rem;  }
+.m-grid-7 {min-width: 58.31% !important; max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+.m-grid-8 {min-width: 66.64% !important; max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+.m-grid-9 {min-width: 74.97% !important; max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+.m-grid-10 {min-width: 83.3% !important; max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+.m-grid-11 {min-width: 91.63% !important; max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
 .m-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 }
 
-@media only screen and (min-device-width: 1024px) {
-  .l-grid-1 {max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
-  .l-grid-2 {max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
-  .l-grid-3 {max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
-  .l-grid-4 {max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
-  .l-grid-5 {max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
-  .l-grid-6 {max-width: 50% !important;  flex-basis: 50% !important; padding: 0.5rem;  }
-  .l-grid-7 {max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
-  .l-grid-8 {max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
-  .l-grid-9 {max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
-  .l-grid-10 {max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
-  .l-grid-11 {max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+@media only screen and (min-device-width: 1025px) {
+  .l-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+  .l-grid-2 {min-width: 16.66% !important; max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+  .l-grid-3 {min-width: 24.99% !important; max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+  .l-grid-4 {min-width: 33.32% !important; max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+  .l-grid-5 {min-width: 41.65% !important; max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+  .l-grid-6 {min-width: 50% !important; max-width: 50% !important; flex-basis: 50% !important; padding: 0.5rem;  }
+  .l-grid-7 {min-width: 58.31% !important; max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+  .l-grid-8 {min-width: 66.64% !important; max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+  .l-grid-9 {min-width: 74.97% !important; max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+  .l-grid-10 {min-width: 83.3% !important; max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+  .l-grid-11 {min-width: 91.63% !important; max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
   .l-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
   }
 
@@ -1604,6 +1641,8 @@ input:-webkit-autofill:active  {
 .list {
   width: 100%;
   display: block;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -1663,6 +1702,28 @@ input:-webkit-autofill:active  {
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
+}
+.badge {
+  position:relative;
+}
+.badge[data-badge]:after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -10px;
+  right: -30px;
+  font-size: .7em;
+  background: green;
+  color: white;
+  height: 18px;
+  padding: 2px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 10%;
+  box-shadow: 0 0 1px #333;
+}
+
+.rv-radial-chart {
+  margin: 0 auto;
 }
 
 @media only screen and (min-width: 768px) {

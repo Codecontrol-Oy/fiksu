@@ -22,7 +22,6 @@ const Profile = props => {
                     <ProfileAchievements />
                 </GridRow>
                 <GridRow justify={"center"}>
-                    <ProfileBenefits />
                 </GridRow>
             </GridContainer>
         </Block>

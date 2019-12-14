@@ -1,3 +1,3 @@
 import React from 'react'
-const List = props => <div className="list">{props.children}</div>
+const List = props => <ul className="list">{props.children}</ul>
 export default List
