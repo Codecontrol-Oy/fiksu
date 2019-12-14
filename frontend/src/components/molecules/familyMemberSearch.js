@@ -40,12 +40,12 @@ const FamilyMemberSearch = props => {
   )
   return ( <Block className="family-info">
         {familyData && familyData.getUserFamilies.length && (familyData.getUserFamilies.some(x => x.isOwner) || familyData.getUserFamilies.some(x => x.isAdmin)) && 
-        <GridContainer size={12}>
+        <GridContainer size={12} direction={"column"}>
             <GridRow size={12}>
             <Grid sizeS={12} sizeM={6} sizeL={6}>
             <Card>
-              <Heading color={"secondary"} variant={4}>Perheenjäsenten kutsuminen</Heading>
-              <Paragraph color={"secondary"}>Alla olevalla lomakkeella voit hakea perheenjäseniäsi ja kutsua heidät liittymään palvelussa olevaan perheeseesi.<br/>Voit hakea käyttäjiä käyttäjätunnuksella, tai etunimellä ja sukunimiellä.</Paragraph>
+              <Heading color={"secondary"} variant={4}>Talouden jäsenten kutsuminen</Heading>
+              <Paragraph color={"secondary"}>Alla olevalla lomakkeella voit hakea taloutesi jäseniä ja kutsua heidät liittymään palvelussa olevaan talouteesi.<br/>Voit hakea käyttäjiä käyttäjätunnuksella, tai etunimellä ja sukunimiellä.</Paragraph>
               <Block style={{textAlign: 'center'}}>
                 <Form
                   onSubmit={e => {
@@ -57,7 +57,7 @@ const FamilyMemberSearch = props => {
                     })
                   }}>
                <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
-               <Option key={'defaultFamily'} value={'default'} text={'Valitse perhe'} />
+               <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
                 {familyData.getUserFamilies &&
                  familyData.getUserFamilies.map((item => (item.isOwner || item.isAdmin) && <Option key={item._id} value={item._id} text={item.name} />))
                 }
@@ -94,8 +94,8 @@ const FamilyMemberSearch = props => {
             </Grid>
             <Grid sizeS={12} sizeM={6} sizeL={6}>
             <Card>
-              <Heading color={"secondary"} variant={4}>Vahvistamista odottavat perheenjäsenet</Heading>
-              <Paragraph color={"secondary"}>Alla olevasta listasta näet henkilöt, jotka eivät vielä ole vahvistaneet perhekutsua.</Paragraph>
+              <Heading color={"secondary"} variant={4}>Vahvistamista odottavat talouden jäsenet</Heading>
+              <Paragraph color={"secondary"}>Alla olevasta listasta näet henkilöt, jotka eivät vielä ole vahvistaneet kutsua talouteen.</Paragraph>
               {familyData && familyData.getUserFamilies.length && familyData.getUserFamilies.map((family) => (family.isAdmin || family.isOwner) && <Block>
                 {family && (!family.pending || !family.pending.length) && <Block>
                     <Heading color={"secondary"} variant={4}>Ei vahvistamattomia henkilöitä</Heading>

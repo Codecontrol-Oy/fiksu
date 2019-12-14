@@ -35,7 +35,7 @@ const RadioInput = props => {
       }}
       className="radio-input">
       {selected &&
-                <Block className="radio-input-inner" />
+            <Block className="radio-input-inner" />
       }
     </Block>
   )

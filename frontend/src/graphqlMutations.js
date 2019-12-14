@@ -45,7 +45,8 @@ const MUTATION_ADD_NEW_MEASUREMENT = gql`
     mutation CreateMeasurement($measurement: MeasurementInput!) {
       createMeasurement(measurement: $measurement) {
             _id,
-            userId
+            userId,
+
         }
     }
 `
@@ -133,6 +134,12 @@ mutation ApproveFamilyMember($familyId: ID!) {
     }
   }
 `
+const MUTATION_CHANGE_FAMILY_VISIBILTY = gql`
+mutation UpdateFamily($family: FamilyUpdateInput!) {
+    updateFamily(family: $family) {
+        _id
+    }
+  }`
 
 export { 
   LOGIN_USER, 
@@ -148,6 +155,7 @@ export {
   MUTATION_PROMOTE_FAMILY_MEMBER,
   MUTATION_DEMOTE_FAMILY_MEMBER,
   MUTATION_ADD_FAMILY_MEMBER,
-  MUTATION_APPROVE_FAMILY_INVITATION
+  MUTATION_APPROVE_FAMILY_INVITATION,
+  MUTATION_CHANGE_FAMILY_VISIBILTY
 }
 

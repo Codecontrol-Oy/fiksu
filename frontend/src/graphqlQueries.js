@@ -64,7 +64,7 @@ const GET_USER_CONSUMPTIONS = gql`
 
 const GET_USER_ENERGY_SAVINGS = gql`
 query GetEnergySavings($id: String!, $from: Date!, $to: Date!) {
-  getSavedConsumptions(userId: $id, from: $from, to: $to) {
+  getSavedConsumptions(householdId: $id, from: $from, to: $to) {
     consumptionType {
       title,
       description,
@@ -80,7 +80,7 @@ query GetEnergySavings($id: String!, $from: Date!, $to: Date!) {
 
 const GET_USER_MEASUREMENTS = gql`
 query Measurements($id: String!, $from: Date!, $to: Date!) {
-  measurements(userId: $id, from: $from, to: $to) {
+  measurements(householdId: $id, from: $from, to: $to) {
         _id,
         userId,
         value,
@@ -99,6 +99,9 @@ const GET_USER_FAMILIES = gql`
       adminIds
       isOwner
       isAdmin
+      permissions {
+        visibility
+      }
       owner {
       ... User
       }
@@ -134,6 +137,9 @@ const GET_USER_PENDING_FAMILIES = gql`
       memberIds
       adminIds
       pendingIds
+      permissions {
+        visibility
+      }
       owner {
       ... User
       }
@@ -159,8 +165,8 @@ const GET_USER_PENDING_FAMILIES = gql`
   }
 `
 const GET_USER_ELECTRICITY_GRAPH = gql`
-query GetElectricityGraph($id: String!, $from: Date!, $to: Date!) {
-  getElectricityGraph(userId: $id, from: $from, to: $to) {
+query GetElectricityGraph($id: ID!, $from: Date!, $to: Date!) {
+  getElectricityGraph(householdId: $id, from: $from, to: $to) {
       ...GraphData
   }
 }
