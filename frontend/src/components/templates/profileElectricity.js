@@ -105,7 +105,7 @@ const ProfileElectricity = props => {
                 {familyData && <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
                 <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
                     {familyData.getUserFamilies &&
-                    familyData.getUserFamilies.map((item => (item.isOwner || item.isAdmin) && <Option key={item._id} value={item._id} text={item.name} />))
+                    familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
                     }
                 </SelectGroup>}
                 </Block>
