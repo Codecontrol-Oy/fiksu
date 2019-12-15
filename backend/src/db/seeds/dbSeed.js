@@ -220,19 +220,19 @@ exports.seed = () => {
             }
         })
 
-    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi-/paperipussia.', 0.2, 'icofont-bag')
-    addEcoAction('Vähensin autoilua', 'Autoilu kuormittaa ympäristöä. Vähentämällä autoilua säästä ympäristöä ja parhaassa tapauksessa parannat myös omaa kuntoasi.', 0.2, 'icofont-car-alt-2')
-    addEcoAction('Ostin luomuelintarvikkeita', 'Luomuviljelyssä käytetään vähemmän sinulle ja ympäristölle vahingollisia kemikaaleja.', 0.2, 'icofont-food-basket')
-    addEcoAction('Söin itsekasvatettua ruokaa', 'Ruokaa itse kasvattamalla vähennät ruoan teolliseen tuottamiseen liittyviä päästöjä. Näin tiedät myös tarkalleen mitä syöt.', 0.2, 'icofont-farmer')
-    addEcoAction('Pesin täyden koneellisen', 'Pesemällä täyden koneellisen säästät rahaa ja ympäristöä.', 0.2, 'icofont-washing-machine')
-    addEcoAction('Säästin (lämmintä) vettä', 'Veden pumppaamiseen kuluva energia vähenee sekä jätevettä tarvitsee käsitellä vähemmän. Myös sähkölasku pienenee kun veden lämmittämiseen käytetyn sähkön määrä vähenee.', 0.2, 'icofont-water-drop')
-    addEcoAction('Lajittelin jätteet', 'Jätteitä pystytään hyödyntämään uudestaan, kun ne ny pysyvät puhtaana lajittelun avulla. Näin pystytään vähentämään luonnonvarojen käyttöä.', 0.2, 'icofont-trash')
-    addEcoAction('Vähensin lentomatkustusta', 'Lentämisestä aiheutuva ympäristökuorma on suuri, joten sen vähentäminen on hyvää ympäristölle.', 0.2, 'icofont-airplane-alt')
-    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa, voit säästää lämmityskuluissa.', 0.2, 'icofont-snow-temp')
-    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2, 'icofont-newspaper')
+    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi-/paperipussia.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-bag')
+    addEcoAction('Vähensin autoilua', 'Autoilu kuormittaa ympäristöä. Vähentämällä autoilua säästä ympäristöä ja parhaassa tapauksessa parannat myös omaa kuntoasi.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-car-alt-2')
+    addEcoAction('Ostin luomuelintarvikkeita', 'Luomuviljelyssä käytetään vähemmän sinulle ja ympäristölle vahingollisia kemikaaleja.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-food-basket')
+    addEcoAction('Söin itsekasvatettua ruokaa', 'Ruokaa itse kasvattamalla vähennät ruoan teolliseen tuottamiseen liittyviä päästöjä. Näin tiedät myös tarkalleen mitä syöt.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-farmer')
+    addEcoAction('Pesin täyden koneellisen', 'Pesemällä täyden koneellisen säästät rahaa ja ympäristöä.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-washing-machine')
+    addEcoAction('Säästin (lämmintä) vettä', 'Veden pumppaamiseen kuluva energia vähenee sekä jätevettä tarvitsee käsitellä vähemmän. Myös sähkölasku pienenee kun veden lämmittämiseen käytetyn sähkön määrä vähenee.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-water-drop')
+    addEcoAction('Lajittelin jätteet', 'Jätteitä pystytään hyödyntämään uudestaan, kun ne ny pysyvät puhtaana lajittelun avulla. Näin pystytään vähentämään luonnonvarojen käyttöä.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-trash')
+    addEcoAction('Vähensin lentomatkustusta', 'Lentämisestä aiheutuva ympäristökuorma on suuri, joten sen vähentäminen on hyvää ympäristölle.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-airplane-alt')
+    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa, voit säästää lämmityskuluissa.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-snow-temp')
+    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-newspaper')
 }
 
-function addEcoAction(title, description, amount, icon) {
+function addEcoAction(title, description, amount, achievementType, achievementDescription, icon) {
     EcoAction.findOne({ title: title })
         .then((result) => {
             if (!result) {
@@ -240,6 +240,8 @@ function addEcoAction(title, description, amount, icon) {
                     title: title,
                     description: description,
                     amount: amount,
+                    achievementType: achievementType,
+                    achievementDescription: achievementDescription,
                     icon: icon
                 })
             }

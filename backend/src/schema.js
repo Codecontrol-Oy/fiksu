@@ -438,6 +438,8 @@ const typeDefs = gql`
     points: Float
     icon: String
     level: ACHIEVEMENTLEVEL
+    type: String
+    description: String
   }
 
   """

@@ -4,6 +4,8 @@ const ecoActionTypeSchema = mongoose.Schema({
   title: { type: String },
   description: { type: String },
   amount: { type: Number },
+  achievementType: { type: String },
+  achievementDescription: { type: String },
   icon: { type: String }
 }, {
   timestamps: true

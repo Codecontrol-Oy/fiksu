@@ -15,7 +15,11 @@ module.exports = {
     ACHIEVEMENT_COMBINED_LEVEL_1: 4,
     ACHIEVEMENT_COMBINED_LEVEL_2: 6,
     ACHIEVEMENT_COMBINED_ECO_ICON: 'icofont-eco-environmen',
+    ACHIEVEMENT_COMBINED_ECO_TYPE: 'EcoPlaceholder',
+    ACHIEVEMENT_COMBINED_ECO_DESC: 'EcoDescPlaceholder',
     ACHIEVEMENT_COMBINED_ELECTRICITY_ICON: 'icofont-eco-energy',
+    ACHIEVEMENT_COMBINED_ELECTRICITY_TYPE: 'ElectricityPlaceholder',
+    ACHIEVEMENT_COMBINED_ELECTRICITY_DESC: 'ElectricityDescPlaceholder',
 
     /* Permission Enums */
     PERMISSION_NONE: 'NONE',
