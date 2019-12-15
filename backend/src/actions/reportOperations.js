@@ -12,7 +12,7 @@ exports.getElectricityGraph = async (args, context) => {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const from = new Date(args.from)
     const to = new Date(args.to)
@@ -89,7 +89,7 @@ exports.getUserEcoActionsGraph = async (args, context) => {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const userId = args?.userId ?? context.user._id
     const from = new Date(args.from)
@@ -136,7 +136,7 @@ async function getUserEcoPoints(args, context) {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const userId = args?.userId ?? context.user._id
     const from = new Date(args.from)
@@ -160,7 +160,7 @@ async function getUserElectricPoints(args, context) {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const userId = args?.userId ?? context.user._id
     const householdId = args.householdId
@@ -204,7 +204,7 @@ exports.getDetailedPoints = async (args) => {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const userId = args.userId
     const householdId = args.householdId
@@ -252,7 +252,7 @@ async function getFamilyResults(args) {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const familyId = args.familyId
     return getFamilyMemberIds(familyId, true)
@@ -276,25 +276,31 @@ async function getGroupResults(args) {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const groupId = args.groupId
     const groupMemberIds = await getGroupMemberIds(groupId, true)
 
     let totalPoints = 0
     for (let i = 0; i < groupMemberIds.length; i++) {
-        totalPoints += await getUserFamilyPoints(groupMemberIds[i], args.from, args.to)
-        totalPoints += await getUserEcoPoints({
+        totalPoints += parseFloat(await getUserFamilyPoints(groupMemberIds[i], args.from, args.to))
+        totalPoints += parseFloat(await getUserEcoPoints({
             userId: groupMemberIds[i],
             from: args.from,
             to: args.to
-        })
+        }))
     }
 
     return parseFloat(totalPoints).toFixed(2)
 }
 
 async function getUserFamilyPoints(userId, from, to) {
+    to = to ?? new Date()
+    if (!from) {
+        from = new Date()
+        from = new Date(from.setDate(to.getDate() - 31))
+    }
+
     // Family points
     let memberFamilies = await getUserFamilies(userId)
     let totalFamilyPoints = 0
@@ -317,7 +323,7 @@ exports.getTopFamilyResults = async (args, context) => {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const userId = context.user._id
     return getAllPublicFamilies()
@@ -368,7 +374,7 @@ exports.getTopGroupResults = async (args, context) => {
     args.to = args.to ?? new Date()
     if (!args?.from) {
         args.from = new Date()
-        args.from = args.from.setDate(args.to.getDate() - 31)
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
     }
     const userId = context.user._id
     return getAllPublicGroups()
@@ -455,6 +461,7 @@ function generateDataSet(fullRange, from, to, data) {
     return results
 }
 
+exports.getUserFamilyPoints = getUserFamilyPoints
 exports.getUserEcoPoints = getUserEcoPoints
 exports.getUserElectricPoints = getUserElectricPoints
 exports.getFamilyResults = getFamilyResults

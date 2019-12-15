@@ -15,7 +15,7 @@ import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOper
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getDetailedPoints, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getUserFamilyPoints, getDetailedPoints, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -617,7 +617,7 @@ const resolvers = {
     },
     elctricpoints: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      if (!obj.householdId) return getUserFamilyPoints(obj, context)
+      if (!obj.householdId) return getUserFamilyPoints(obj.userId, obj.from, obj.to)
       return getUserElectricPoints(obj, context)
     }
   },
