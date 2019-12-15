@@ -54,7 +54,7 @@ const StatisticsTopHouseHolds = props => {
                     <Heading variant={2} style={{textTransform: 'uppercase'}}>Taloudet</Heading>
                     <Paragraph>Parhaiten menestyneet taloudet. Pisteytyksessä huomiodaan talouden yhteenlasketut ekoteot ja sähköä säästävät toimenpiteet.</Paragraph>
                     <Block style={{ textAlign: 'center'}}>
-                        {householdData && householdData.getTopFamilyResults.length > 0 && householdData.getTopFamilyResults.map(household => <Grid sizeS={12} sizeM={6} sizeL={3}>
+                        {householdData && householdData.getTopFamilyResults.length > 0 && householdData.getTopFamilyResults.map(household => (household.position < 4) && <Grid sizeS={12} sizeM={6} sizeL={3}>
                             <Block>
                             <i className={`statistics-medal ${(household.position > 0 && household.position < 4 ? 'icofont-medal' : 'icofont-trophy statistics-diplom')} ${(household.position == 1 ? 'gold' : (household.position == 2 ? 'silver' : (household.position == 3 ? 'bronze' : 'diplom')) )}`}></i>
                             <Heading variant={2} style={{textTransform: 'uppercase'}} icon={true}>{`${household.household.name}`}</Heading>
