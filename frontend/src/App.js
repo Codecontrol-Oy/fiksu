@@ -32,12 +32,12 @@ const App = () => (
         <PrivateRoute exact path="/home" component={HomePage} />
         <PrivateRoute exact path="/logout" component={LogOut} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_PROFILE} component={ProfileController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ELECTRICITY} component={ProfileElectricityController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_FAMILY} component={FamilyController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_GROUP} component={GroupController} />
         <PrivateRoute exact pah={constants.ROUTE_ACCOUNT_ECO} component={EcoActionController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_GROUP} component={GroupController} />
-        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
         <Route component={NotFound} />
       </Switch>
     </Main>
