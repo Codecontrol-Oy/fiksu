@@ -67,10 +67,10 @@ const Register = props => {
                   }>
                   <GridContainer align="center" justify="center" height={12} grow direction="column" size={12}>
                     <GridRow justify="center" align="center">
-                      <InputGroup required error={errors ? true : false} underline id="nickname" type="text" />
+                      <InputGroup placeholder={"Käyttäjätunnus"} required error={errors ? true : false} underline id="nickname" type="text" />
                     </GridRow>
                     <GridRow justify="center" align="center">
-                      <InputGroup required error={errors} underline id="password" type="password" />
+                      <InputGroup placeholder={"Salasana"} required error={errors} underline id="password" type="password" />
                     </GridRow>
                     <GridRow justify="center" align="center">
 

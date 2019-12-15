@@ -19,7 +19,7 @@ import * as constants from '../constants'
 export default class LandingPage extends React.PureComponent {
   componentWillMount() {
     if (localStorage.getItem('token')) {
-      this.props.history.push(constants.ROUTE_ACCOUNT);
+
     }
   }
   render() {

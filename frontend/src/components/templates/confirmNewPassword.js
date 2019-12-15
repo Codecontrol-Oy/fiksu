@@ -15,6 +15,7 @@ import Paragraph from '../atoms/paragraph'
 import Divider from '../atoms/divider'
 import queryString from 'query-string'
 import { withRouter } from "react-router-dom"
+import * as constants from '../../constants'
 
 const NewPassword = props => {
 
@@ -27,6 +28,11 @@ const NewPassword = props => {
             verificationToken: token,
             newPassword: password
         },
+        onCompleted(data) {
+            setTimeout(() => {
+                props.history.push(constants.ROUTE_REGISTER)
+            }, 1500)
+        }
     })
     useEffect(() => {
         const values = queryString.parse(props.location.search)

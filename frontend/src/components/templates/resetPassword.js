@@ -13,7 +13,8 @@ import GridRow from '../grid/row'
 import Heading from '../atoms/heading'
 import Paragraph from '../atoms/paragraph'
 import Divider from '../atoms/divider'
-
+import { withRouter } from "react-router-dom"
+import * as constants from '../../constants'
 
 const ResetPassword = props => {
 
@@ -22,6 +23,11 @@ const ResetPassword = props => {
         variables: {
             nickname: user
         },
+        onCompleted(data) {
+            setTimeout(() => {
+                props.history.push(constants.ROUTE_REGISTER)
+            }, 1500)
+        }
     })
     return (
         <GridContainer justify={"center"} size={12}>
@@ -47,4 +53,4 @@ const ResetPassword = props => {
         </GridContainer>
     )
 }
-export default ResetPassword
+export default withRouter(ResetPassword)

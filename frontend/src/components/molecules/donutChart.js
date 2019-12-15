@@ -36,7 +36,7 @@ const DonutChart = props => {
           right: 0,
           padding: '5px',
         }}>
-          <span style={{ color: 'rgb(39, 140, 180)', fontSize: '72px' }}>{props.data.reduce(function (a, b) { return a.angle + b.angle })}</span>
+          <span style={{ color: 'rgb(39, 140, 180)', fontSize: '72px' }}>{props.data.length > 1 ? props.data.reduce(function (a, b) { return a.angle + b.angle }).toString() : props.data[0].angle}</span>
         </div>
       </RadialChart>
     </div>

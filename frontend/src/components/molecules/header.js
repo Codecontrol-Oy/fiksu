@@ -7,27 +7,52 @@ import { Link, withRouter } from "react-router-dom"
 import MobileNavbar from "../atoms/mobileNavbar"
 import * as constants from '../../constants'
 import Block from "../atoms/block"
-
+import { useQuery } from "@apollo/react-hooks"
+import { GET_MY_USER } from '../../graphqlQueries'
 
 const HeaderBar = props => {
 
     const [showMobileNav, setShowMobileNav] = useState(false)
 
-    const logOut = props => {
+    const { loading, error, data } = useQuery(GET_MY_USER, {
+        variables: {
+            id: localStorage.getItem("userId")
+        }
+    })
 
+    const logOut = () => {
+
+        props.history.push(constants.ROUTE_ACCOUNT)
         localStorage.removeItem("token")
         localStorage.removeItem("refreshToken")
         localStorage.removeItem("userId")
-        props.history.push(constants.ROUTE_REGISTER)
         setShowMobileNav(false)
     }
 
     return (
         <Header>
             <HeaderList>
-                <Grid size={3}>
-                    <HeaderItem onClick={() => props.history.push(constants.ROUTE_REGISTER)}>Kirjaudu sisään</HeaderItem>
+                <Grid size={2}>
+                    {!localStorage.getItem("token") &&
+                        <HeaderItem onClick={() => props.history.push(constants.ROUTE_REGISTER)}>Kirjaudu sisään</HeaderItem>
+                    }
+                    {localStorage.getItem("token") &&
+                        <HeaderItem onClick={() => logOut()}>
+                            {"Ulos "}
+                            <i class="icofont-logout"></i>
+                        </HeaderItem>
+                    }
+
                 </Grid>
+
+                {localStorage.getItem("token") &&
+                    <Grid size={2}>
+
+                        <HeaderItem onClick={() => props.history.push(constants.ROUTE_ACCOUNT)}>
+                            {data && data.user.firstName + " " + data.user.lastName + " "}
+                        </HeaderItem>
+                    </Grid>
+                }
                 <Grid size={2}>
                     <HeaderItem>UKK</HeaderItem>
                 </Grid>

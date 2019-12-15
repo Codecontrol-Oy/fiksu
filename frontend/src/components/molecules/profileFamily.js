@@ -6,6 +6,13 @@ import { useQuery } from "@apollo/react-hooks"
 import { GET_USER_FAMILIES } from '../../graphqlQueries'
 import HouseholdBadge from './householdBadge'
 import DonutChart from "./donutChart"
+import { GET_USER_ELECTRICITY_GRAPH, QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
+import { useMutation } from "@apollo/react-hooks"
+import Option from '../atoms/option'
+import Paragraph from '../atoms/paragraph'
+import SelectGroup from "../molecules/selectGroup"
+import Button from "../atoms/button"
+import HouseholdInfo from "./householdInfo"
 
 
 
@@ -16,9 +23,16 @@ const ProfileFamily = props => {
             id: localStorage.getItem("userId")
         },
         onCompleted(data) {
-            console.log(data)
         }
     })
+
+    const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
+        variables: {
+            id: localStorage.getItem('userId')
+        }
+    })
+
+
 
     const myData = [{ angle: 1, label: "1", subLabel: "ekopisteet" }, { angle: 5, label: "5", subLabel: "Sähkönkäyttöpisteet" }]
 
@@ -29,8 +43,9 @@ const ProfileFamily = props => {
                     <Heading align={"left"} color={"secondary"} variant={4}>Talouteni - {data.getUserFamilies.length}kpl</Heading>
                     <Divider />
                     {
+
                         data.getUserFamilies.map((household => {
-                            return <HouseholdBadge name={household.name} />
+                            return <HouseholdInfo data={household.detailedPoints} members={[...household.members, ...household.admins, household.owner]} name={household.name} id={household._id} />
                         }))
                     }
                 </>
