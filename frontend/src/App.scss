@@ -385,7 +385,6 @@ main {
   justify-content: flex-start;
   background-color: transparent;
   width: 100%;
-  min-height: 25rem;
   flex-grow: 1;
 
   border-radius: 5px;
@@ -847,7 +846,7 @@ input::placeholder {
   text-align: center;
 }
 
-.profile-container, .family-container, .eco-container {
+.profile-container, .family-container, .eco-container, .group-container {
   overflow-y: scroll;
   width: 100%;
   overflow-x: hidden;
@@ -857,7 +856,7 @@ input::placeholder {
   padding-bottom: 6rem;
 
 }
-.profile-info, .family-info, .eco-info {
+.profile-info, .family-info, .eco-info, .group-info {
   display: flex;
   flex-direction: row;
   width: 95%;
