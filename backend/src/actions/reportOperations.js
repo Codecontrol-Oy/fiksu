@@ -132,6 +132,66 @@ exports.getUserEcoActionsGraph = async (args, context) => {
         })
 }
 
+async function getUserAchievements(args, context) {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = new Date(args.from.setDate(args.to.getDate() - 31))
+    }
+    const userId = args?.userId ?? context.user._id
+    const from = new Date(args.from)
+    const to = new Date(args.to)
+    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lt": to } })
+        .sort({ date: 1 })
+        .populate('ecoActionTypeId')
+        .then(async (ecoActions) => {
+            let totalPoints = 0
+            if (ecoActions.length <= 0) { return totalPoints }
+
+            let results = []
+            ecoActions.map((ecoAction) => {
+                let points = parseFloat(ecoAction.value * ecoAction.ecoActionTypeId.amount).toFixed(2)
+
+                let index = results.findIndex((element) => element.id == ecoAction.ecoActionTypeId._id)
+                if (index > -1) {
+                    results[index].points = (parseFloat(results[index].points) + parseFloat(points)).toFixed(2)
+                }
+                else {
+                    results.push({
+                        id: ecoAction.ecoActionTypeId._id,
+                        userId: userId,
+                        points: parseFloat(points).toFixed(2),
+                        icon: ecoAction.ecoActionTypeId.icon,
+                        level: 'NONE'
+                    })
+                }
+
+                totalPoints += (ecoAction.value * ecoAction.ecoActionTypeId.amount)
+            })
+
+            results.map((ecoAction) => {
+                let points = parseFloat(ecoAction.points)
+                let level = 'NONE'
+                if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_2)) {
+                    level = Const.ACHIEVEMENT_LEVEL_2_ENUM
+                }
+                else if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_1)) {
+                    level = Const.ACHIEVEMENT_LEVEL_1_ENUM
+                }
+                else if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_0)) {
+                    level = Const.ACHIEVEMENT_LEVEL_0_ENUM
+                }
+
+                ecoAction.level = level
+            })
+
+            return {
+                totalPoints: totalPoints.toFixed(2),
+                data: results
+            }
+        })
+}
+
 async function getUserEcoPoints(args, context) {
     args.to = args.to ?? new Date()
     if (!args?.from) {
@@ -334,8 +394,8 @@ exports.getTopFamilyResults = async (args, context) => {
             for (let i = 0; i < publicFamilies.length; i++) {
                 let houseHold = publicFamilies[i]
                 results.push({
-                    isMember: (houseHold.ownerId == userId || 
-                        houseHold.adminIds.some(id => id === userId) || 
+                    isMember: (houseHold.ownerId == userId ||
+                        houseHold.adminIds.some(id => id === userId) ||
                         houseHold.memberIds.some(id => id === userId)),
                     householdId: houseHold._id,
                     points: parseFloat(await getFamilyResults({
@@ -385,8 +445,8 @@ exports.getTopGroupResults = async (args, context) => {
             for (let i = 0; i < publicGroups.length; i++) {
                 let group = publicGroups[i]
                 results.push({
-                    isMember: (group.ownerId == userId || 
-                        group.adminIds.some(id => id === userId) || 
+                    isMember: (group.ownerId == userId ||
+                        group.adminIds.some(id => id === userId) ||
                         group.memberIds.some(id => id === userId)),
                     groupId: group._id,
                     points: parseFloat(await getGroupResults({
@@ -416,7 +476,7 @@ exports.getTopGroupResults = async (args, context) => {
                     finalResults = [...finalResults, ...ownResults]
                 }
             }
-            
+
             return finalResults
         })
 }
@@ -461,6 +521,7 @@ function generateDataSet(fullRange, from, to, data) {
     return results
 }
 
+exports.getUserAchievements = getUserAchievements
 exports.getUserFamilyPoints = getUserFamilyPoints
 exports.getUserEcoPoints = getUserEcoPoints
 exports.getUserElectricPoints = getUserElectricPoints

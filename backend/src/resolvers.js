@@ -15,7 +15,7 @@ import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOper
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getUserFamilyPoints, getDetailedPoints, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserAchievements, getUserElectricPoints, getUserFamilyPoints, getDetailedPoints, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -191,6 +191,10 @@ const resolvers = {
     getUserEcoPoints: (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getUserEcoPoints(args, context)
+    },
+    getUserAchievements: (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getUserAchievements(args, context)
     },
     getDetailedPoints: async (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -426,7 +430,15 @@ const resolvers = {
         return obj.birthDate
       }
       return null
-    }
+    },
+    achievements: async (obj, args, context) => {
+      const authHelper = new AuthHelper(context.user)
+      authHelper.validateAuthorization()
+      if (await isInFamily(context.user._id, obj._id.toString()) || authHelper.isSelfOrAdmin(obj._id.toString())) {
+        return getUserAchievements({ userId: obj._id.toString() })
+      }
+      return null
+    },
   },
   Login: {
     profile: async (obj, args, context) => {

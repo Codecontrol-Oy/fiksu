@@ -220,20 +220,27 @@ exports.seed = () => {
             }
         })
 
-    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2)
-    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi/paperi -pussia.', 0.2)
-    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa voidaan säästää lämmityskuluissa.', 0.2)
-    addEcoAction('En mennyt tänäänkään töihin helikopterilla', 'Menemällä esimerkiksi pyörällä, säästät luontoa ja kuntosi kohenee.', 0.2)
+    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi-/paperipussia.', 0.2, 'icofont-bag')
+    addEcoAction('Vähensin autoilua', 'Autoilu kuormittaa ympäristöä. Vähentämällä autoilua säästä ympäristöä ja parhaassa tapauksessa parannat myös omaa kuntoasi.', 0.2, 'icofont-car-alt-2')
+    addEcoAction('Ostin luomuelintarvikkeita', 'Luomuviljelyssä käytetään vähemmän sinulle ja ympäristölle vahingollisia kemikaaleja.', 0.2, 'icofont-food-basket')
+    addEcoAction('Söin itsekasvatettua ruokaa', 'Ruokaa itse kasvattamalla vähennät ruoan teolliseen tuottamiseen liittyviä päästöjä. Näin tiedät myös tarkalleen mitä syöt.', 0.2, 'icofont-farmer')
+    addEcoAction('Pesin täyden koneellisen', 'Pesemällä täyden koneellisen säästät rahaa ja ympäristöä.', 0.2, 'icofont-washing-machine')
+    addEcoAction('Säästin (lämmintä) vettä', 'Veden pumppaamiseen kuluva energia vähenee sekä jätevettä tarvitsee käsitellä vähemmän. Myös sähkölasku pienenee kun veden lämmittämiseen käytetyn sähkön määrä vähenee.', 0.2, 'icofont-water-drop')
+    addEcoAction('Lajittelin jätteet', 'Jätteitä pystytään hyödyntämään uudestaan, kun ne ny pysyvät puhtaana lajittelun avulla. Näin pystytään vähentämään luonnonvarojen käyttöä.', 0.2, 'icofont-trash')
+    addEcoAction('Vähensin lentomatkustusta', 'Lentämisestä aiheutuva ympäristökuorma on suuri, joten sen vähentäminen on hyvää ympäristölle.', 0.2, 'icofont-airplane-alt')
+    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa, voit säästää lämmityskuluissa.', 0.2, 'icofont-snow-temp')
+    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2, 'icofont-newspaper')
 }
 
-function addEcoAction(title, description, amount) {
+function addEcoAction(title, description, amount, icon) {
     EcoAction.findOne({ title: title })
         .then((result) => {
             if (!result) {
                 EcoAction.create({
                     title: title,
                     description: description,
-                    amount: amount
+                    amount: amount,
+                    icon: icon
                 })
             }
         })

@@ -90,6 +90,7 @@ const typeDefs = gql`
     getSavedEcoActions(userId: ID, from: Date!, to: Date!): [SavedEcoAction]
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
     getUserEcoPoints(userId: ID, from: Date, to: Date): String
+    getUserAchievements(userId: ID, from: Date, to: Date): Achievements
     getDetailedPoints(userId: ID, householdId: ID, groupId: ID, from: Date, to: Date): [ResultsGraph]
     getFamilyResults(familyId: ID, from: Date, to: Date): Float
     getGroupResults(groupId: ID, from: Date, to: Date): Float
@@ -280,6 +281,7 @@ const typeDefs = gql`
       permissions: Permissions
       loginId: ID
       loginInfo: Login
+      achievements: Achievements
   }
 
   type Login {
@@ -373,6 +375,7 @@ const typeDefs = gql`
     title: String
     description: String
     amount: Float
+    icon: String
   }
 
   type SavedConsumption {
@@ -424,6 +427,18 @@ const typeDefs = gql`
     isMember: Boolean
   }
 
+  type Achievements {
+    totalPoints: Float
+    data: [Achievement]
+  }
+
+  type Achievement {
+    userId: ID
+    points: Float
+    icon: String
+    level: ACHIEVEMENTLEVEL
+  }
+
   """
   Enums
   """
@@ -449,6 +464,13 @@ const typeDefs = gql`
   enum VISIBILITYPERMISSION {
     NONE
     PUBLIC
+  }
+
+  enum ACHIEVEMENTLEVEL {
+    NONE
+    BRONZE
+    SILVER
+    GOLD
   }
 
   """
