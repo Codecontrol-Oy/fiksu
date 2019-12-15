@@ -83,18 +83,18 @@ const typeDefs = gql`
     getUserInvitedGroups(_id: ID): [Group]
     getUserAppliedGroups(_id: ID): [Group]
     getAllGroups(limit: Int, offset: Int): Groups
-    getElectricityGraph(householdId: ID!, from: Date!, to: Date!): [GraphData]
-    getUserEcoActionsGraph(userId: ID, from: Date!, to: Date!, fullRange: Boolean!): [GraphData]
+    getElectricityGraph(householdId: ID!, from: Date, to: Date): [GraphData]
+    getUserEcoActionsGraph(userId: ID, from: Date, to: Date, fullRange: Boolean!): [GraphData]
     searchUser(search: String, familyId: ID, groupId: ID): [User]
     getEcoActionTypes: [EcoActionType]
     getSavedEcoActions(userId: ID, from: Date!, to: Date!): [SavedEcoAction]
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
-    getUserEcoPoints(userId: ID, from: Date!, to: Date!): String
-    getResults(userId: ID, householdId: ID, from: Date!, to: Date!): [ResultsGraph]
-    getFamilyResults(familyId: ID, from: Date!, to: Date!): Float
-    getGroupResults(groupId: ID, from: Date!, to: Date!): Float
-    getTopFamilyResults(top: Int!, from: Date!, to: Date!): [TopResultsGraph]
-    getTopGroupResults(top: Int!, from: Date!, to: Date!): [TopResultsGraph]
+    getUserEcoPoints(userId: ID, from: Date, to: Date): String
+    getDetailedPoints(userId: ID, householdId: ID, groupId: ID, from: Date, to: Date): [ResultsGraph]
+    getFamilyResults(familyId: ID, from: Date, to: Date): Float
+    getGroupResults(groupId: ID, from: Date, to: Date): Float
+    getTopFamilyResults(top: Int!, from: Date, to: Date): [TopResultsGraph]
+    getTopGroupResults(top: Int!, from: Date, to: Date): [TopResultsGraph]
   }
 
   """
@@ -234,6 +234,8 @@ const typeDefs = gql`
     pending: [User]
     isOwner: Boolean
     isAdmin: Boolean
+    points: Float
+    detailedPoints: [ResultsGraph]
     permissions: VisibilityPermissions
   }
 
@@ -253,6 +255,8 @@ const typeDefs = gql`
     invites: [User]
     isOwner: Boolean
     isAdmin: Boolean
+    points: Float
+    detailedPoints: [ResultsGraph]
     permissions: VisibilityPermissions
   }
 
@@ -417,6 +421,7 @@ const typeDefs = gql`
     group: Group
     position: Int
     points: Float
+    isMember: Boolean
   }
 
   """

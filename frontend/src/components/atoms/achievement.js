@@ -8,7 +8,6 @@ const Achievement = props => {
     const [classes, setClasses] = useState([])
 
     const openAchievement = e => {
-        console.log("test")
         let newClasses = []
         newClasses.push("achievement-open")
         setClasses(newClasses)

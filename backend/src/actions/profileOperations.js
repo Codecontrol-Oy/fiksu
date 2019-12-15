@@ -197,7 +197,7 @@ exports.createProfile = async (args) => {
                     email: loginResult.email
                 },
                 data: {
-                    verificationLink: `verify/${loginResult.nickname}/${loginResult.verificationToken}`
+                    verificationLink: `verify-profile?token=${loginResult.verificationToken}&nickname=${loginResult.nickname}`
                 }
             })
 
@@ -289,7 +289,7 @@ exports.createPasswordReset = async (username) => {
                                 email: result.email
                             },
                             data: {
-                                resetLink: `reset/${result.nickname}/${pwReset.verificationToken}`
+                                resetLink: `new-password?token=${pwReset.verificationToken}`
                             }
                         })
 
@@ -302,6 +302,8 @@ exports.createPasswordReset = async (username) => {
 }
 
 exports.confirmPasswordReset = async (username, verificationToken, newPassword) => {
+    validatePassword(newPassword)
+
     return Login.findOne({ normalizedNickName: username.toUpperCase() }).populate('passwordReset').then((user) => {
         if (user == null || user.passwordReset == null || user.passwordReset.verificationToken != verificationToken) {
             throw new ApolloError(localeService.translate('PROFILE_INVALID_TOKEN'))
