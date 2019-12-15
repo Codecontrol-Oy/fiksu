@@ -98,6 +98,7 @@ const FamilyMemberSearch = props => {
               <Paragraph color={"secondary"}>Alla olevasta listasta näet henkilöt, jotka eivät vielä ole vahvistaneet kutsua talouteen.</Paragraph>
               {familyData && familyData.getUserFamilies.length && familyData.getUserFamilies.map((family) => (family.isAdmin || family.isOwner) && <Block>
                 {family && (!family.pending || !family.pending.length) && <Block>
+                   <Heading color={"secondary"} variant={3}>{family.name}</Heading>
                     <Heading color={"secondary"} variant={4}>Ei vahvistamattomia henkilöitä</Heading>
                     )}
               </Block>}
