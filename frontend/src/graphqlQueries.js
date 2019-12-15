@@ -520,10 +520,41 @@ query GetMyUser($id: ID!){
   }
 }`
 
-export { 
-  GET_ME, 
-  QUERY_CONSUMPTION_TYPES, 
-  GET_USER_CONSUMPTIONS, 
+const GET_TOP_FAMILIES = gql`
+query getTopFamilyResults($top: Int!, $from: Date!, $to: Date!) {
+  getTopFamilyResults(top: $top, from: $from, to:$to) {
+    household {
+      _id
+      name
+      members {
+        _id
+      }
+    }
+    position
+    points
+  }
+}
+`
+const GET_TOP_GROUPS = gql`
+  query getTopGroupResults($top: Int!, $from: Date!, $to: Date!) {
+  getTopGroupResults(top: $top, from: $from, to: $to) {
+    household {
+      _id
+      name
+      members {
+        _id
+      }
+    }
+    position
+    points
+  }
+}
+`
+
+export {
+  GET_ME,
+  QUERY_CONSUMPTION_TYPES,
+  GET_USER_CONSUMPTIONS,
   GET_USER_ENERGY_SAVINGS,
   GET_USER_MEASUREMENTS,
   GET_USER_FAMILIES,
@@ -532,6 +563,8 @@ export {
   SEARCH_USER,
   GET_USER_ECOACTIONS,
   GET_ECOACTION_TYPES,
+  GET_TOP_FAMILIES,
+  GET_TOP_GROUPS,
   GET_USER_ECOACTION_GRAPH,
   GET_ALL_GROUPS,
   GET_GROUP,
