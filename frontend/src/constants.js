@@ -12,6 +12,7 @@ export const ROUTE_ACCOUNT_STATISTICS = "/account/statistics"
 export const ROUTE_RESET_PASSWORD = "/reset-password"
 export const ROUTE_NEW_PASSWORD = "/new-password"
 export const ROUTE_VERIFY_PROFILE = "/verify-profile"
+export const ROUTE_GDPR = "/privacy-information"
 
 /* PUBLICITY SETTINGS */
 export const PUBLICITY_SETTINGS = [
