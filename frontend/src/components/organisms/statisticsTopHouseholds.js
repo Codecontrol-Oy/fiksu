@@ -31,7 +31,7 @@ const StatisticsTopHouseHolds = props => {
         let electricPoints = 0
         data.household.detailedPoints.map(h => {
             ecoPoints += h.ecopoints
-            electricPoints += h.elctricpoints
+            electricPoints += h.electricpoints
         })
         result.push({
             angle: ecoPoints,

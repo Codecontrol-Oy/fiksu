@@ -31,7 +31,7 @@ const StatisticsTopGroups = props => {
         let electricPoints = 0
         data.group.detailedPoints.map(h => {
             ecoPoints += h.ecopoints
-            electricPoints += h.elctricpoints
+            electricPoints += h.electricpoints
         })
         result.push({
             angle: ecoPoints,

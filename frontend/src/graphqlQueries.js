@@ -119,7 +119,7 @@ const GET_USER_FAMILIES = gql`
         ... User
       }
       ecopoints
-      elctricpoints
+      electricpoints
     }
     }
   }
@@ -417,7 +417,7 @@ query GetUserGroups($id: ID!) {
         ... User
       }
       ecopoints
-      elctricpoints
+      electricpoints
     }
   }
 }
@@ -545,7 +545,7 @@ const GET_TOP_FAMILIES = gql`
       }
       detailedPoints {
         ecopoints
-        elctricpoints
+        electricpoints
       }
     }
     position
@@ -566,7 +566,7 @@ const GET_TOP_GROUPS = gql`
       }
       detailedPoints {
         ecopoints
-        elctricpoints
+        electricpoints
       }
     }
     position
