@@ -5,7 +5,7 @@ import GridRow from '../grid/row'
 import StatisticsCard from "../molecules/statisticsCard"
 import Heading from "../atoms/heading"
 import StatisticsTopGroups from '../organisms/statisticsTopGroups'
-import StatisticsTopHouseHolds from '../organisms/statisticsTopHouseHolds'
+import StatisticsTopHouseHolds from '../organisms/statisticsTopHouseholds'
 import Divider from '../atoms/divider'
 import Paragraph from '../atoms/paragraph'
 const Statistics = props => {
