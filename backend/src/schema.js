@@ -428,8 +428,9 @@ const typeDefs = gql`
   }
 
   type Achievements {
-    totalEcoPoints: Float
     ecoAchievements: [Achievement]
+    combinedEcoAchievement: Achievement
+    combinedElectricityAchievement: Achievement
   }
 
   type Achievement {

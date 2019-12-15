@@ -14,6 +14,8 @@ module.exports = {
     ACHIEVEMENT_COMBINED_LEVEL_0: 2,
     ACHIEVEMENT_COMBINED_LEVEL_1: 4,
     ACHIEVEMENT_COMBINED_LEVEL_2: 6,
+    ACHIEVEMENT_COMBINED_ECO_ICON: 'icofont-eco-environmen',
+    ACHIEVEMENT_COMBINED_ELECTRICITY_ICON: 'icofont-eco-energy',
 
     /* Permission Enums */
     PERMISSION_NONE: 'NONE',

@@ -186,26 +186,45 @@ async function getUserAchievements(args, context) {
             })
 
             // Combined EcoAction achievements
-            let points = parseFloat(ecoAction.points)
+            let points = parseFloat(totalPoints)
             let combinedEcoAchievement = {
                 userId: userId,
                 points: parseFloat(totalPoints).toFixed(2),
-                icon: ecoAction.ecoActionTypeId.icon,
+                icon: Const.ACHIEVEMENT_COMBINED_ECO_ICON,
                 level: 'NONE'
             }
-            if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_2)) {
-                level = Const.ACHIEVEMENT_LEVEL_2_ENUM
+            if (points >= parseFloat(Const.ACHIEVEMENT_COMBINED_LEVEL_2)) {
+                combinedEcoAchievement.level = Const.ACHIEVEMENT_LEVEL_2_ENUM
             }
-            else if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_1)) {
-                level = Const.ACHIEVEMENT_LEVEL_1_ENUM
+            else if (points >= parseFloat(Const.ACHIEVEMENT_COMBINED_LEVEL_1)) {
+                combinedEcoAchievement.level = Const.ACHIEVEMENT_LEVEL_1_ENUM
             }
-            else if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_0)) {
-                level = Const.ACHIEVEMENT_LEVEL_0_ENUM
+            else if (points >= parseFloat(Const.ACHIEVEMENT_COMBINED_LEVEL_0)) {
+                combinedEcoAchievement.level = Const.ACHIEVEMENT_LEVEL_0_ENUM
             }
 
+            // Combined electricity archievement
+            let electricityPoints = parseFloat(await getUserFamilyPoints(userId, from, to))
+            let combinedElectricityAchievement = {
+                userId: userId,
+                points: parseFloat(electricityPoints).toFixed(2),
+                icon: Const.ACHIEVEMENT_COMBINED_ELECTRICITY_ICON,
+                level: 'NONE'
+            }
+            if (electricityPoints >= parseFloat(Const.ACHIEVEMENT_COMBINED_LEVEL_2)) {
+                combinedElectricityAchievement.level = Const.ACHIEVEMENT_LEVEL_2_ENUM
+            }
+            else if (electricityPoints >= parseFloat(Const.ACHIEVEMENT_COMBINED_LEVEL_1)) {
+                combinedElectricityAchievement.level = Const.ACHIEVEMENT_LEVEL_1_ENUM
+            }
+            else if (electricityPoints >= parseFloat(Const.ACHIEVEMENT_COMBINED_LEVEL_0)) {
+                combinedElectricityAchievement.level = Const.ACHIEVEMENT_LEVEL_0_ENUM
+            }
+            
             return {
                 ecoAchievements: results,
-                combinedEcoAchievement: combinedEcoAchievement
+                combinedEcoAchievement: combinedEcoAchievement,
+                combinedElectricityAchievement: combinedElectricityAchievement
             }
         })
 }
