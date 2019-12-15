@@ -210,19 +210,21 @@ exports.getResults = async (args) => {
 
 async function getFamilyResults(args) {
     const familyId = args.familyId
-    const familyMemberIds = await getFamilyMemberIds(familyId, true)
+    return getFamilyMemberIds(familyId, true)
+        .then(async (familyMemberIds) => {
+            let totalPoints = 0
+            for (let i = 0; i < familyMemberIds.length; i++) {
+                totalPoints += await getUserFamilyPoints(familyMemberIds[i], args.from, args.to)
+                totalPoints += await getUserEcoPoints({
+                    userId: familyMemberIds[i],
+                    from: args.from,
+                    to: args.to
+                })
+            }
 
-    let totalPoints = 0
-    for (let i = 0; i < familyMemberIds.length; i++) {
-        totalPoints += await getUserFamilyPoints(familyMemberIds[i], args.from, args.to)
-        totalPoints += await getUserEcoPoints({
-            userId: familyMemberIds[i],
-            from: args.from,
-            to: args.to
+            //console.log(`Total points for ${familyId} = ${totalPoints} with args from ${args.from} to ${args.to}`)
+            return totalPoints.toFixed(2)
         })
-    }
-
-    return totalPoints
 }
 
 async function getGroupResults(args) {
@@ -239,7 +241,7 @@ async function getGroupResults(args) {
         })
     }
 
-    return totalPoints
+    return totalPoints.toFixed(2)
 }
 
 async function getUserFamilyPoints(userId, from, to) {
@@ -268,14 +270,52 @@ exports.getTopFamilyResults = async (args) => {
 
             let results = []
             for (let i = 0; i < publicFamilies.length; i++) {
-                results.push(await getFamilyResults({
-                    familyId: publicFamilies[i]._id,
-                    from: args.from,
-                    to: args.to
-                }))
+                results.push({
+                    householdId: publicFamilies[i]._id,
+                    points: parseFloat(await getFamilyResults({
+                        familyId: publicFamilies[i]._id.toString(),
+                        from: args.from,
+                        to: args.to
+                    })).toFixed(2)
+                })
             }
 
+            // Sort by highest to lowest
+            results.sort((a, b) => b.points - a.points);
 
+            for (let i = 0; i < results.length; i++) {
+                results[i].position = i + 1
+            }
+
+            return results
+        })
+}
+
+exports.getTopGroupResults = async (args) => {
+    return getAllPublicGroups()
+        .then(async (publicGroups) => {
+            if (!publicGroups || !publicGroups.length) return null
+
+            let results = []
+            for (let i = 0; i < publicGroups.length; i++) {
+                results.push({
+                    groupId: publicGroups[i]._id,
+                    points: parseFloat(await getGroupResults({
+                        groupId: publicGroups[i]._id.toString(),
+                        from: args.from,
+                        to: args.to
+                    })).toFixed(2)
+                })
+            }
+
+            // Sort by highest to lowest
+            results.sort((a, b) => b.points - a.points);
+
+            for (let i = 0; i < results.length; i++) {
+                results[i].position = i + 1
+            }
+            
+            return results
         })
 }
 
