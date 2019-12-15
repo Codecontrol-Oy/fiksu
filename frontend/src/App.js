@@ -38,7 +38,6 @@ const App = () => (
         <PrivateRoute exact pah={constants.ROUTE_ACCOUNT_ECO} component={EcoActionController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_GROUP} component={GroupController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
-        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ECO} component={EcoActionController} />
         <Route component={NotFound} />
       </Switch>
     </Main>
