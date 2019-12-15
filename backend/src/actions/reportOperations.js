@@ -2,6 +2,7 @@ import Measurement from '../db/models/measurementModel'
 import Family from '../db/models/familyModel'
 import Group from '../db/models/groupModel'
 import SavedConsumption from '../db/models/savedConsumptionModel'
+import EcoActionType from '../db/models/ecoActionTypeModel'
 import SavedEcoActions from '../db/models/savedEcoActionModel'
 import { getFamilyMemberIds, getGroupMemberIds } from './profileOperations'
 import mongoose from 'mongoose'
@@ -187,6 +188,22 @@ async function getUserAchievements(args, context) {
 
                 ecoAction.level = level
             })
+
+            await EcoActionType.find({})
+                .then((ecoActionType) => {
+                    let index = results.findIndex((element) => element.id == ecoActionType._id)
+                    if (index == -1) {
+                        results.push({
+                            id: ecoActionType._id,
+                            userId: userId,
+                            points: 0,
+                            icon: ecoActionType.icon,
+                            level: 'NONE',
+                            type: ecoActionType.achievementType,
+                            description: ecoActionType.achievementDescription
+                        })
+                    }
+                })
 
             // Combined EcoAction achievements
             let points = parseFloat(totalPoints)
