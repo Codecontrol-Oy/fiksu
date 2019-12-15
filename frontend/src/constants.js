@@ -8,6 +8,7 @@ export const ROUTE_ACCOUNT_FAMILY = "/account/family"
 export const ROUTE_ACCOUNT_ECO = "/account/eco-life"
 export const ROUTE_ACCOUNT_GROUP = "/account/groups"
 export const ROUTE_ACCOUNT_SETTINGS = "/account/settings"
+export const ROUTE_ACCOUNT_STATISTICS = "/account/statistics"
 
 /* PUBLICITY SETTINGS */
 export const PUBLICITY_SETTINGS = [

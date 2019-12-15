@@ -16,6 +16,7 @@ import FamilyController from './components/controllers/familyController'
 import ProfileElectricityController from "./components/controllers/profileElectricityController"
 import ProfileSettingsController from "./components/controllers/profileSettingsController"
 import EcoActionController from './components/controllers/ecoActionController'
+import StatisticsController from "./components/controllers/statisticsController"
 const App = () => (
   <>
     <HeaderBar />
@@ -33,7 +34,8 @@ const App = () => (
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ELECTRICITY} component={ProfileElectricityController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_FAMILY} component={FamilyController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
-        <PrivateRoute exact pah={constants.ROUTE_ACCOUNT_ECO} component={EcoActionController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ECO} component={EcoActionController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_STATISTICS} component={StatisticsController} />
         <Route component={NotFound} />
       </Switch>
     </Main>

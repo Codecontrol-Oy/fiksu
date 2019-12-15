@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Snackbar from "./snackbar";
+import SnackbarPortal from "../atoms/snackbarPortal"
 const withSnackbar = (Component, props) => {
     let messagesNew = [];
     let que = [];
@@ -22,22 +23,25 @@ const withSnackbar = (Component, props) => {
         };
 
         const buildStyle = position => {
-            let horizontal = "20%";
+            let horizontal = "flex-start"
             let vertical = "flex-start";
+            let top = 0;
+            let bottom = 0;
+
 
             if (position) {
-                if (position.horizontal === "top") horizontal = "20%";
-                else if (position.horizontal === "center") horizontal = "50%";
-                else if (position.horizontal === "bottom") horizontal = "80%";
+                if (position.horizontal === "top") top = "10%"
+                else if (position.horizontal === "center") top = "20%"
+                else if (position.horizontal === "bottom") top = "83%";
 
-                if (position.vertical === "left") vertical = "flex-start";
+                if (position.vertical === "top") vertical = "flex-start";
                 else if (position.vertical === "center") vertical = "center";
-                else if (position.vertical === "right") vertical = "flex-end";
+                else if (position.vertical === "bottom") vertical = "flex-end";
             }
 
             setStyle({
-                top: horizontal,
-                alignItems: vertical
+                justifyContent: horizontal,
+                top: top,
             });
         };
 
@@ -116,9 +120,9 @@ const withSnackbar = (Component, props) => {
 
         return (
             <>
-                <div style={style} id="snackbar-wrapper" className="snackbar-wrapper">
+                <SnackbarPortal style={style}>
                     {messagesNew}
-                </div>
+                </SnackbarPortal>
                 <Component
                     {...props}
                     que={que.length}
