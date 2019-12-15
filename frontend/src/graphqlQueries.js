@@ -114,6 +114,13 @@ const GET_USER_FAMILIES = gql`
       admins {
       ... User
       }
+          detailedPoints {
+      info {
+        ... User
+      }
+      ecopoints
+      elctricpoints
+    }
     }
   }
 
@@ -165,7 +172,7 @@ const GET_USER_PENDING_FAMILIES = gql`
   }
 `
 const GET_USER_ELECTRICITY_GRAPH = gql`
-query GetElectricityGraph($id: ID!, $from: Date!, $to: Date!) {
+query GetElectricityGraph($id: ID!, $from: Date, $to: Date) {
   getElectricityGraph(householdId: $id, from: $from, to: $to) {
       ...GraphData
   }
@@ -404,6 +411,13 @@ query GetUserGroups($id: ID!) {
     }
     admins {
      ... User
+    }
+    detailedPoints {
+      info {
+        ... User
+      }
+      ecopoints
+      elctricpoints
     }
   }
 }

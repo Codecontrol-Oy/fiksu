@@ -601,6 +601,12 @@ mutation confirmPasswordReset($nickname: String!, $verificationToken: String!, $
     confirmPasswordReset(nickname: $nickname, verificationToken: $verificationToken, newPassword: $newPassword)
 }
 `
+const MUTATION_VERIFY_PROFILE = gql`
+mutation ConfirmUser($nickname: String!, $verificationToken: String!) {
+    confirmUser(nickname: $nickname, verificationToken: $verificationToken)
+}
+`
+
 
 export {
     LOGIN_USER,
@@ -633,6 +639,7 @@ export {
     MUTATION_UPDATE_USER,
     MUTATION_DELETE_USER,
     MUTATION_RESET_PASSWORD,
-    MUTATION_CONFIRM_NEW_PASSWORD
+    MUTATION_CONFIRM_NEW_PASSWORD,
+    MUTATION_VERIFY_PROFILE
 }
 

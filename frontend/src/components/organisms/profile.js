@@ -6,6 +6,7 @@ import ProfileAchievements from "../molecules/profileAchievements"
 import ProfileFamily from '../molecules/profileFamily'
 import ProfileBenefits from '../molecules/profileBenefits'
 import ProfileInfo from "../molecules/profileInfo"
+import ProfileGroups from "../molecules/profileGroups"
 
 const Profile = props => {
 
@@ -18,12 +19,13 @@ const Profile = props => {
                     <ProfileInfo />
                 </GridRow>
                 <GridRow justify={"center"}>
-                    <ProfileFamily />
-                </GridRow>
-                <GridRow justify={"center"}>
                     <ProfileAchievements />
                 </GridRow>
                 <GridRow justify={"center"}>
+                    <ProfileFamily />
+                </GridRow>
+                <GridRow justify={"center"}>
+                    <ProfileGroups />
                 </GridRow>
             </GridContainer>
         </Block>
