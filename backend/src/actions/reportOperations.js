@@ -9,6 +9,11 @@ import { ApolloError } from 'apollo-server'
 import Const from '#constants'
 
 exports.getElectricityGraph = async (args, context) => {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const from = new Date(args.from)
     const to = new Date(args.to)
     return Measurement.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
@@ -81,6 +86,11 @@ exports.getElectricityGraph = async (args, context) => {
 }
 
 exports.getUserEcoActionsGraph = async (args, context) => {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const userId = args?.userId ?? context.user._id
     const from = new Date(args.from)
     const to = new Date(args.to)
@@ -123,6 +133,11 @@ exports.getUserEcoActionsGraph = async (args, context) => {
 }
 
 async function getUserEcoPoints(args, context) {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const userId = args?.userId ?? context.user._id
     const from = new Date(args.from)
     const to = new Date(args.to)
@@ -137,11 +152,16 @@ async function getUserEcoPoints(args, context) {
                 totalPoints += (ecoAction.value * ecoAction.ecoActionTypeId.amount)
             })
 
-            return totalPoints
+            return totalPoints.toFixed(2)
         })
 }
 
 async function getUserElectricPoints(args, context) {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const userId = args?.userId ?? context.user._id
     const householdId = args.householdId
     const from = new Date(args.from)
@@ -176,13 +196,19 @@ async function getUserElectricPoints(args, context) {
 
             const calculatedPercentage = ((lastPlusSavings * 100 / last) - 100).toFixed(2)
 
-            return (parseFloat(Const.ELECTRICITY_SAVING_MULTIPLIER) * calculatedPercentage)
+            return (parseFloat(Const.ELECTRICITY_SAVING_MULTIPLIER) * calculatedPercentage).toFixed(2)
         })
 }
 
-exports.getResults = async (args) => {
+exports.getDetailedPoints = async (args) => {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const userId = args.userId
     const householdId = args.householdId
+    const groupId = args.groupId
 
     // Household stats
     if (householdId) {
@@ -192,6 +218,20 @@ exports.getResults = async (args) => {
             results.push({
                 userId: familyMemberId,
                 householdId: args.householdId,
+                from: args.from,
+                to: args.to
+            })
+        })
+
+        return results
+    }
+    // Group stats
+    else if (groupId) {
+        const groupMemberIds = await getGroupMemberIds(groupId, true)
+        let results = []
+        groupMemberIds.map((groupMemberId) => {
+            results.push({
+                userId: groupMemberId,
                 from: args.from,
                 to: args.to
             })
@@ -209,25 +249,35 @@ exports.getResults = async (args) => {
 }
 
 async function getFamilyResults(args) {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const familyId = args.familyId
     return getFamilyMemberIds(familyId, true)
         .then(async (familyMemberIds) => {
             let totalPoints = 0
             for (let i = 0; i < familyMemberIds.length; i++) {
-                totalPoints += await getUserFamilyPoints(familyMemberIds[i], args.from, args.to)
-                totalPoints += await getUserEcoPoints({
+                totalPoints += parseFloat(await getUserFamilyPoints(familyMemberIds[i], args.from, args.to))
+                totalPoints += parseFloat(await getUserEcoPoints({
                     userId: familyMemberIds[i],
                     from: args.from,
                     to: args.to
-                })
+                }))
             }
 
             //console.log(`Total points for ${familyId} = ${totalPoints} with args from ${args.from} to ${args.to}`)
-            return totalPoints.toFixed(2)
+            return parseFloat(totalPoints).toFixed(2)
         })
 }
 
 async function getGroupResults(args) {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
     const groupId = args.groupId
     const groupMemberIds = await getGroupMemberIds(groupId, true)
 
@@ -241,7 +291,7 @@ async function getGroupResults(args) {
         })
     }
 
-    return totalPoints.toFixed(2)
+    return parseFloat(totalPoints).toFixed(2)
 }
 
 async function getUserFamilyPoints(userId, from, to) {
@@ -263,17 +313,27 @@ async function getUserFamilyPoints(userId, from, to) {
     return totalFamilyPoints
 }
 
-exports.getTopFamilyResults = async (args) => {
+exports.getTopFamilyResults = async (args, context) => {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
+    const userId = context.user._id
     return getAllPublicFamilies()
         .then(async (publicFamilies) => {
             if (!publicFamilies || !publicFamilies.length) return null
 
             let results = []
             for (let i = 0; i < publicFamilies.length; i++) {
+                let houseHold = publicFamilies[i]
                 results.push({
-                    householdId: publicFamilies[i]._id,
+                    isMember: (houseHold.ownerId == userId || 
+                        houseHold.adminIds.some(id => id === userId) || 
+                        houseHold.memberIds.some(id => id === userId)),
+                    householdId: houseHold._id,
                     points: parseFloat(await getFamilyResults({
-                        familyId: publicFamilies[i]._id.toString(),
+                        familyId: houseHold._id.toString(),
                         from: args.from,
                         to: args.to
                     })).toFixed(2)
@@ -287,21 +347,44 @@ exports.getTopFamilyResults = async (args) => {
                 results[i].position = i + 1
             }
 
-            return results
+            // Take only top X
+            let limit = Math.min(args.top, results.length)
+            let finalResults = results.slice(0, limit)
+
+            // Add own results if not already there
+            let ownResults = results.slice(limit)
+            if (ownResults && ownResults.length) {
+                ownResults = ownResults.filter(result => result.isMember)
+                if (ownResults && ownResults.length) {
+                    finalResults = [...finalResults, ...ownResults]
+                }
+            }
+
+            return finalResults
         })
 }
 
-exports.getTopGroupResults = async (args) => {
+exports.getTopGroupResults = async (args, context) => {
+    args.to = args.to ?? new Date()
+    if (!args?.from) {
+        args.from = new Date()
+        args.from = args.from.setDate(args.to.getDate() - 31)
+    }
+    const userId = context.user._id
     return getAllPublicGroups()
         .then(async (publicGroups) => {
             if (!publicGroups || !publicGroups.length) return null
 
             let results = []
             for (let i = 0; i < publicGroups.length; i++) {
+                let group = publicGroups[i]
                 results.push({
-                    groupId: publicGroups[i]._id,
+                    isMember: (group.ownerId == userId || 
+                        group.adminIds.some(id => id === userId) || 
+                        group.memberIds.some(id => id === userId)),
+                    groupId: group._id,
                     points: parseFloat(await getGroupResults({
-                        groupId: publicGroups[i]._id.toString(),
+                        groupId: group._id.toString(),
                         from: args.from,
                         to: args.to
                     })).toFixed(2)
@@ -314,8 +397,21 @@ exports.getTopGroupResults = async (args) => {
             for (let i = 0; i < results.length; i++) {
                 results[i].position = i + 1
             }
+
+            // Take only top X
+            let limit = Math.min(args.top, results.length)
+            let finalResults = results.slice(0, limit)
+
+            // Add own results if not already there
+            let ownResults = results.slice(limit)
+            if (ownResults && ownResults.length) {
+                ownResults = ownResults.filter(result => result.isMember)
+                if (ownResults && ownResults.length) {
+                    finalResults = [...finalResults, ...ownResults]
+                }
+            }
             
-            return results
+            return finalResults
         })
 }
 

@@ -15,7 +15,7 @@ import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOper
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getResults, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getDetailedPoints, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -192,9 +192,9 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return getUserEcoPoints(args, context)
     },
-    getResults: async (org, args, context) => {
+    getDetailedPoints: async (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return getResults(args)
+      return getDetailedPoints(args)
     },
     getFamilyResults: async (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
@@ -206,11 +206,11 @@ const resolvers = {
     },
     getTopFamilyResults: async (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return getTopFamilyResults(args)
+      return getTopFamilyResults(args, context)
     },
     getTopGroupResults: async (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      return getTopGroupResults(args)
+      return getTopGroupResults(args, context)
     },
   },
   Mutation: {
@@ -546,6 +546,18 @@ const resolvers = {
     isAdmin: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return obj.adminIds.some(adminId => adminId == context.user._id)
+    },
+    points: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getFamilyResults({
+        familyId: obj._id.toString()
+      })
+    },
+    detailedPoints: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getDetailedPoints({
+        householdId: obj._id.toString()
+      })
     }
   },
   Group: {
@@ -581,6 +593,18 @@ const resolvers = {
     isAdmin: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return obj.adminIds.some(adminId => adminId == context.user._id)
+    },
+    points: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getGroupResults({
+        groupId: obj._id.toString()
+      })
+    },
+    detailedPoints: (obj, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getDetailedPoints({
+        groupId: obj._id.toString()
+      })
     }
   },
   ResultsGraph: {
@@ -593,7 +617,7 @@ const resolvers = {
     },
     elctricpoints: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
-      if (!obj.householdId) return null
+      if (!obj.householdId) return getUserFamilyPoints(obj, context)
       return getUserElectricPoints(obj, context)
     }
   },
