@@ -137,11 +137,6 @@ exports.applyToGroup = async (args, user) => {
                 throw new ApolloError(localeService.translate('GROUP_NOT_FOUND'))
             }
 
-            // If not owner or admin
-            if (group.ownerId != user._id && !group.adminIds.some(adminId => adminId == user._id)) {
-                throw new ApolloError(localeService.translate('NO_UPDATE_PERMISSION'))
-            }
-
             // Add to pending list (if not exists)
             if (group.pendingIds == null) {
                 group.pendingIds = []

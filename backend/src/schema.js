@@ -91,7 +91,10 @@ const typeDefs = gql`
     getAllSavedEcoActions(userId: ID!): [SavedEcoAction]
     getUserEcoPoints(userId: ID, from: Date!, to: Date!): String
     getResults(userId: ID, householdId: ID, from: Date!, to: Date!): [ResultsGraph]
-    getGroupResults(groupId: ID, from: Date!, to: Date!): ResultsGraph
+    getFamilyResults(familyId: ID, from: Date!, to: Date!): Float
+    getGroupResults(groupId: ID, from: Date!, to: Date!): Float
+    getTopFamilyResults(top: Int!, from: Date!, to: Date!): [TopResultsGraph]
+    getTopGroupResults(top: Int!, from: Date!, to: Date!): [TopResultsGraph]
   }
 
   """
@@ -407,6 +410,13 @@ const typeDefs = gql`
     info: User
     ecopoints: Float
     elctricpoints: Float
+  }
+
+  type TopResultsGraph {
+    household: Family
+    group: Group
+    position: Int
+    points: Float
   }
 
   """

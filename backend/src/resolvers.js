@@ -15,7 +15,7 @@ import { getEcoActionTypes, getEcoActionType } from './actions/ecoActionTypeOper
 import { getSavedConsumptions, getAllSavedConsumptions, createSavedConsumption, removeSavedConsumption } from './actions/savedConsumptionTypeOperations'
 import { getSavedEcoActions, getAllSavedEcoActions, createSavedEcoAction, removeSavedEcoAction } from './actions/savedEcoActionTypeOperations'
 import { getTip, getAllTips, createTip, updateTip, deleteTip } from './actions/tipOperations'
-import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getResults, getGroupResults } from './actions/reportOperations'
+import { getElectricityGraph, getUserEcoActionsGraph, getUserEcoPoints, getUserElectricPoints, getResults, getFamilyResults, getGroupResults, getTopFamilyResults, getTopGroupResults } from './actions/reportOperations'
 import Const from './constants'
 
 const resolvers = {
@@ -196,9 +196,21 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return getResults(args)
     },
+    getFamilyResults: async (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getFamilyResults(args)
+    },
     getGroupResults: async (org, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getGroupResults(args)
+    },
+    getTopFamilyResults: async (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getTopFamilyResults(args)
+    },
+    getTopGroupResults: async (org, args, context) => {
+      new AuthHelper(context.user).validateAuthorization()
+      return getTopGroupResults(args)
     },
   },
   Mutation: {
@@ -584,7 +596,17 @@ const resolvers = {
       if (!obj.householdId) return null
       return getUserElectricPoints(obj, context)
     }
-  }
+  },
+  TopResultsGraph: {
+    household: (obj, args, context) => {
+      if (!obj?.householdId) return null
+      return getFamily(obj.householdId)
+    },
+    group: (obj, args, context) => {
+      if (!obj?.groupId) return null
+      return getGroup(obj.groupId)
+    },
+  },
 }
 
 module.exports = {

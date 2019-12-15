@@ -1,5 +1,6 @@
 import Measurement from '../db/models/measurementModel'
 import Family from '../db/models/familyModel'
+import Group from '../db/models/groupModel'
 import SavedConsumption from '../db/models/savedConsumptionModel'
 import SavedEcoActions from '../db/models/savedEcoActionModel'
 import { getFamilyMemberIds, getGroupMemberIds } from './profileOperations'
@@ -179,9 +180,6 @@ async function getUserElectricPoints(args, context) {
         })
 }
 
-exports.getUserEcoPoints = getUserEcoPoints
-exports.getUserElectricPoints = getUserElectricPoints
-
 exports.getResults = async (args) => {
     const userId = args.userId
     const householdId = args.householdId
@@ -210,28 +208,87 @@ exports.getResults = async (args) => {
     }]
 }
 
-exports.getGroupResults = async (args) => {
+async function getFamilyResults(args) {
+    const familyId = args.familyId
+    const familyMemberIds = await getFamilyMemberIds(familyId, true)
+
+    let totalPoints = 0
+    for (let i = 0; i < familyMemberIds.length; i++) {
+        totalPoints += await getUserFamilyPoints(familyMemberIds[i], args.from, args.to)
+        totalPoints += await getUserEcoPoints({
+            userId: familyMemberIds[i],
+            from: args.from,
+            to: args.to
+        })
+    }
+
+    return totalPoints
+}
+
+async function getGroupResults(args) {
     const groupId = args.groupId
     const groupMemberIds = await getGroupMemberIds(groupId, true)
 
     let totalPoints = 0
-    groupMemberIds.map(async (groupMemberId) => {
-        let memberFamilies = await Family.find({ $or: [{ ownerId: groupMemberId }, { memberIds: groupMemberId }, { adminIds: groupMemberId }] })
-        memberFamilies.map((household) => {
-            let points = getUserElectricPoints({
-                userId: groupMemberId,
-                householdId: household._id,
-                from: args.from,
-                to: args.to
-            })
-
-            console.log(`Member ${groupMemberId} in household ${household.name} has ${points} points`)
-
-            totalPoints += points
+    for (let i = 0; i < groupMemberIds.length; i++) {
+        totalPoints += await getUserFamilyPoints(groupMemberIds[i], args.from, args.to)
+        totalPoints += await getUserEcoPoints({
+            userId: groupMemberIds[i],
+            from: args.from,
+            to: args.to
         })
-    })
+    }
 
     return totalPoints
+}
+
+async function getUserFamilyPoints(userId, from, to) {
+    // Family points
+    let memberFamilies = await getUserFamilies(userId)
+    let totalFamilyPoints = 0
+    for (let y = 0; y < memberFamilies.length; y++) {
+        let points = await getUserElectricPoints({
+            userId: userId,
+            householdId: memberFamilies[y]._id,
+            from: from,
+            to: to
+        })
+
+        //console.log(`Member ${userId} in household ${memberFamilies[y].name} has ${points} points`)
+        totalFamilyPoints += points
+    }
+
+    return totalFamilyPoints
+}
+
+exports.getTopFamilyResults = async (args) => {
+    return getAllPublicFamilies()
+        .then(async (publicFamilies) => {
+            if (!publicFamilies || !publicFamilies.length) return null
+
+            let results = []
+            for (let i = 0; i < publicFamilies.length; i++) {
+                results.push(await getFamilyResults({
+                    familyId: publicFamilies[i]._id,
+                    from: args.from,
+                    to: args.to
+                }))
+            }
+
+
+        })
+}
+
+function getAllPublicFamilies() {
+    return Family.find({ 'permissions.visibility': Const.PERMISSION_PUBLIC })
+}
+
+function getAllPublicGroups() {
+    return Group.find({ 'permissions.visibility': Const.PERMISSION_PUBLIC })
+}
+
+function getUserFamilies(groupMemberId) {
+    return Family.find({ $or: [{ ownerId: groupMemberId }, { memberIds: groupMemberId }, { adminIds: groupMemberId }] })
 }
 
 function generateDataSet(fullRange, from, to, data) {
@@ -261,3 +318,8 @@ function generateDataSet(fullRange, from, to, data) {
 
     return results
 }
+
+exports.getUserEcoPoints = getUserEcoPoints
+exports.getUserElectricPoints = getUserElectricPoints
+exports.getFamilyResults = getFamilyResults
+exports.getGroupResults = getGroupResults
