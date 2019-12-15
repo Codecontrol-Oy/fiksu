@@ -12,6 +12,8 @@ const Profile = props => {
     return (
         <Block className="profile-container">
             <GridContainer height={12} width={12} direction={"column"}>
+                <Block id={"snackbars"} />
+
                 <GridRow justify={"center"}>
                     <ProfileInfo />
                 </GridRow>

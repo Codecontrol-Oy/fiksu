@@ -92,6 +92,7 @@ const render = () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
       <Router history={history}>
+        <Block id="mobile-navbar" />
         <App />
       </Router>
     </ApolloProvider>,

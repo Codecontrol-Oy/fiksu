@@ -15,11 +15,11 @@ import Transition from '../components/transition/transition';
 import InformationBlock from '../components/molecules/informationBlock';
 import GridRow from '../components/grid/row';
 import InformationBlockReverse from '../components/molecules/informationBlockReverse';
-
+import * as constants from '../constants'
 export default class LandingPage extends React.PureComponent {
   componentWillMount() {
     if (localStorage.getItem('token')) {
-      this.props.history.push('/home');
+      this.props.history.push(constants.ROUTE_ACCOUNT);
     }
   }
   render() {
