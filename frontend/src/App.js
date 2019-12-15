@@ -25,18 +25,15 @@ import Block from "./components/atoms/block"
 const App = () => (
   <>
     <HeaderBar />
-    <Block id="mobile-navbar" />
     <Main>
       <PrivateRoute path={constants.ROUTE_ACCOUNT} component={HeaderAccount} />
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path={constants.ROUTE_RESET_PASSWORD} component={ResetPasswordController} />
         <Route exact path={constants.ROUTE_NEW_PASSWORD} component={NewPasswordController} />
         <Redirect exact from="/account" to="/account/profile" />
         <PrivateRoute exact path="/account/profile" component={ProfileContainer} />
-        <PrivateRoute exact path="/home" component={HomePage} />
         <PrivateRoute exact path="/logout" component={LogOut} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_PROFILE} component={ProfileController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
