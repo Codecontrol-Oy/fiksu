@@ -575,6 +575,15 @@ const GET_TOP_GROUPS = gql`
 }
 `
 
+const GET_DAILY_TIP = gql`
+query getAllTips($filter: TipFilterInput!) {
+  getAllTips(filter: $filter) {
+    _id
+    title
+    description
+  }
+}
+`
 export {
   GET_ME,
   QUERY_CONSUMPTION_TYPES,
@@ -596,5 +605,6 @@ export {
   GET_USER_GROUPS,
   GET_USER_INVITED_GROUPS,
   GET_USER_APPLIED_GROUPS,
-  GET_MY_USER
+  GET_MY_USER,
+  GET_DAILY_TIP
 }

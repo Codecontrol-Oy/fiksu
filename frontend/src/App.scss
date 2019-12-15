@@ -326,6 +326,7 @@ main {
 
 }
 .menu-item {
+  overflow: hidden;
   transition: all 0.2s ease;
   cursor: pointer;
   height: 10%;
@@ -1073,6 +1074,7 @@ input::placeholder {
     display: none;
 }
 .menu-item {
+  overflow: hidden;
   margin: 0;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -1272,7 +1274,7 @@ input::placeholder {
   .information-block-text-reverse {
     width: 80%;
   }
-  .profile-container {
+  .profile-container, .family-container, .eco-container, .group-container {
     width: 93%;
   border-radius: 0.5rem;
   -webkit-border-radius: 0.5rem;
