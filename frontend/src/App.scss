@@ -1115,13 +1115,16 @@ input::placeholder {
 }
 @media only screen and (min-width: 769px) {
 .mobile-navbar-button {
+
   display: none;
 }
 }
 .mobile-navbar-button >i {
   font-size: 2rem;
 }
-
+.mobile-navbar-button {
+    margin: 1rem;
+}
 @keyframes mobileNav {
   0% {
     transform: translateX(300px);

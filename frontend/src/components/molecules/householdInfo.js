@@ -41,7 +41,7 @@ const HouseholdInfo = props => {
             <Block className="household-info-wrapper">
                 <GridContainer size={12}>
                     <GridRow wrap>
-                        <Grid sizeS={12} sizeM={4} sizeL={4}>
+                        <Grid sizeS={12} sizeM={3} sizeL={4}>
                             <Heading variant={2} color={"secondary"}>Talous {props.name}</Heading>
                             {props.members && props.members.length > 0 &&
 
@@ -54,7 +54,7 @@ const HouseholdInfo = props => {
                             }
 
                         </Grid>
-                        <Grid sizeS={12} sizeM={4} sizeL={4}>
+                        <Grid sizeS={12} sizeM={5} sizeL={4}>
                             <Block>
                                 {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
                             </Block>
