@@ -60,11 +60,12 @@ const HeaderBar = props => {
                     <HeaderItem>Yhteystiedot</HeaderItem>
                 </Grid>
                 <Grid size={2}>
+                    <HeaderItem onClick={() => props.history.push(constants.ROUTE_GDPR)}>Tietosuojaseloste</HeaderItem>
                 </Grid>
                 <Grid size={2}>
                 </Grid>
                 <Grid size={2}>
-                    <HeaderItem>Fiksu</HeaderItem>
+                    <HeaderItem onClick={() => props.history.push(constants.ROUTE_HOMEPAGE)}>Fiksu</HeaderItem>
                 </Grid>
             </HeaderList>
             <Block className={"mobile-navbar-button"}>

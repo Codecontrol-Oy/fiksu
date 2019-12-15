@@ -16,7 +16,8 @@ import InformationBlock from '../components/molecules/informationBlock';
 import GridRow from '../components/grid/row';
 import InformationBlockReverse from '../components/molecules/informationBlockReverse';
 import * as constants from '../constants'
-export default class LandingPage extends React.PureComponent {
+import { withRouter } from "react-router-dom"
+class LandingPage extends React.PureComponent {
   componentWillMount() {
     if (localStorage.getItem('token')) {
 
@@ -28,17 +29,27 @@ export default class LandingPage extends React.PureComponent {
 
         <GridContainer direction="row" justify="center">
           <GridContainer size={6} justify="center" align="center">
-            <Grid size={6}>
+            <Grid sizeM={6} sizeL={6} sizeS={12}>
+              <GridRow direction={"column"}>
+                <Card>
+                  <Transition transition={"slow-fade-from-top"}>
+                    <GridContainer height={12} justify="around" align="center" direction="column">
+                      <Heading variant={1}>Fiksu</Heading>
+                      <Heading variant={3}>
+                        Kestävän arjen ei tarvitse olla vaikeaa!
+                </Heading>
+                      <Paragraph>
+                        Fiksu auttaa sinua säästämään luontoa sekä lompakkoasi.
+                </Paragraph>
 
-              <Card>
-                <Transition transition={"slow-fade-from-top"}>
-                  <GridContainer height={12} justify="around" align="center" direction="column">
-                    <Heading variant={1}>Fixu</Heading>
-                    <Paragraph>Säästä rahaa. Säästä luontoa. Ole Fixu.</Paragraph>
-                    <Button>Liity Nyt</Button>
-                  </GridContainer>
-                </Transition>
-              </Card>
+                      <Paragraph>Säästä rahaa. Säästä luontoa. Ole Fiksu.</Paragraph>
+                      <Button onClick={() => this.props.history.push(constants.ROUTE_REGISTER)} basic rounded style={{ width: '15rem', marginTop: '2rem', height: '2rem', fontSize: '1.2rem', textTransform: 'capitalize' }}>Liity Nyt</Button>
+                    </GridContainer>
+                  </Transition>
+                </Card>
+
+              </GridRow>
+
             </Grid>
 
 
@@ -69,3 +80,4 @@ export default class LandingPage extends React.PureComponent {
     );
   }
 }
+export default withRouter(LandingPage)

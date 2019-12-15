@@ -326,6 +326,7 @@ main {
 
 }
 .menu-item {
+  overflow: hidden;
   transition: all 0.2s ease;
   cursor: pointer;
   height: 10%;
@@ -1073,6 +1074,7 @@ input::placeholder {
     display: none;
 }
 .menu-item {
+  overflow: hidden;
   margin: 0;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -1272,7 +1274,7 @@ input::placeholder {
   .information-block-text-reverse {
     width: 80%;
   }
-  .profile-container {
+  .profile-container, .family-container, .eco-container, .group-container {
     width: 93%;
   border-radius: 0.5rem;
   -webkit-border-radius: 0.5rem;
@@ -1964,4 +1966,35 @@ select, input {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
+}
+
+.statistics {
+  background-color: #5a5a5a !important;
+}
+
+.statistics-header-icon {
+  color: gold;
+  font-size: 4em;
+  text-align: center;
+  display: block;
+}
+
+.statistics-medal {
+  margin-right: 10px;
+  font-size: 1.7em;
+}
+.gold {
+  color: gold;
+}
+.silver {
+  color: silver;
+}
+.bronze {
+  color: darkgoldenrod;
+}
+.diplom {
+  color: lightcyan;
+}
+.header-icon {
+  display: inline-block
 }

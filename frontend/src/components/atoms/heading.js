@@ -10,6 +10,7 @@ const Heading = props => {
     if (props.align === "center") classes.push("text-center")
     if (props.align === "left") classes.push("text-left")
     if (props.align === "right") classes.push("text-right")
+    if (props.icon) classes.push("header-icon")
     if (props.group) classes.push("input-heading")
     if (props.badge) classes.push("badge")
     return classes
@@ -17,7 +18,7 @@ const Heading = props => {
 
   const Tag = `h${props.variant ? props.variant : 1}`
 
-  return <Tag className={classes.join(" ")} data-badge={props.badge}>{props.children}</Tag>
+  return <Tag style={props.style} className={classes.join(" ")} data-badge={props.badge}>{props.children}</Tag>
 
 }
 export default Heading

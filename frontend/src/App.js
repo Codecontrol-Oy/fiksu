@@ -22,6 +22,7 @@ import ResetPasswordController from "./components/controllers/resetPasswordContr
 import NewPasswordController from "./components/controllers/newPasswordController"
 import Block from "./components/atoms/block"
 import VerifyProfileController from "./components/controllers/verifyProfileController"
+import GdprPage from "./components/templates/gdprPage"
 
 const App = () => (
   <>
@@ -34,6 +35,7 @@ const App = () => (
         <Route exact path={constants.ROUTE_RESET_PASSWORD} component={ResetPasswordController} />
         <Route exact path={constants.ROUTE_NEW_PASSWORD} component={NewPasswordController} />
         <Route exact path={constants.ROUTE_VERIFY_PROFILE} component={VerifyProfileController} />
+        <Route exact path={constants.ROUTE_GDPR} component={GdprPage} />
         <Redirect exact from="/account" to="/account/profile" />
         <PrivateRoute exact path="/account/profile" component={ProfileContainer} />
         <PrivateRoute exact path="/logout" component={LogOut} />

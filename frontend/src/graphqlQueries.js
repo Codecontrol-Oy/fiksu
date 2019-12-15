@@ -535,28 +535,17 @@ query GetMyUser($id: ID!){
 }`
 
 const GET_TOP_FAMILIES = gql`
-query getTopFamilyResults($top: Int!, $from: Date!, $to: Date!) {
-  getTopFamilyResults(top: $top, from: $from, to:$to) {
+  query getTopGroupResults($top: Int!, $from: Date, $to: Date) {
+  getTopFamilyResults(top: $top, from: $from, to: $to) {
     household {
       _id
       name
       members {
         _id
       }
-    }
-    position
-    points
-  }
-}
-`
-const GET_TOP_GROUPS = gql`
-  query getTopGroupResults($top: Int!, $from: Date!, $to: Date!) {
-  getTopGroupResults(top: $top, from: $from, to: $to) {
-    household {
-      _id
-      name
-      members {
-        _id
+      detailedPoints {
+        ecopoints
+        elctricpoints
       }
     }
     position
@@ -565,6 +554,36 @@ const GET_TOP_GROUPS = gql`
 }
 `
 
+const GET_TOP_GROUPS = gql`
+  query getTopGroupResults($top: Int!, $from: Date, $to: Date) {
+  getTopGroupResults(top: $top, from: $from, to: $to) {
+    group {
+      _id
+      name
+      description
+      members {
+        _id
+      }
+      detailedPoints {
+        ecopoints
+        elctricpoints
+      }
+    }
+    position
+    points
+  }
+}
+`
+
+const GET_DAILY_TIP = gql`
+query getAllTips($filter: TipFilterInput!) {
+  getAllTips(filter: $filter) {
+    _id
+    title
+    description
+  }
+}
+`
 export {
   GET_ME,
   QUERY_CONSUMPTION_TYPES,
@@ -586,5 +605,6 @@ export {
   GET_USER_GROUPS,
   GET_USER_INVITED_GROUPS,
   GET_USER_APPLIED_GROUPS,
-  GET_MY_USER
+  GET_MY_USER,
+  GET_DAILY_TIP
 }
