@@ -149,7 +149,7 @@ const [familyName, setFamilyname] = useState(undefined)
                        }) 
                       }>
                       <Option key={'visibility-NONE'} selected={family.permissions.visibility == 'NONE' ? 'selected': undefined} value={'NONE'} text={'Piilotettu'} />
-                      <Option key={'visibility-Public'} value={'PUBLIC'} text={'Julkinen'} />
+                      <Option key={'visibility-Public'} selected={family.permissions.visibility == 'PUBLIC' ? 'selected': undefined} value={'PUBLIC'} text={'Julkinen'} />
                     </SelectGroup>
                     </Block>
                   </Block> }
@@ -164,7 +164,7 @@ const [familyName, setFamilyname] = useState(undefined)
             </GridRow>
             )}
             {familyData && (!familyData.getUserFamilies.length || !familyData.getUserFamilies.some(x => x.isOwner)) && <Block>
-              <Heading color={"secondary"} variant={4}>Et ole perustanut talutta palveluun.</Heading>
+              <Heading color={"secondary"} variant={4}>Et ole perustanut taloutta palveluun.</Heading>
               <Paragraph color={"secondary"}>Voit luoda uuden talouden alla olevalla lomakkeella. <br /> Talouden luonnin jälkeen, voit kutsua henkilöitä liittymään talouteesi.</Paragraph>
               <Block style={{textAlign: 'center'}}>
                 <Form

@@ -168,7 +168,402 @@ mutation RemoveSavedEcoAction($id: ID!) {
       ecoActionTypeId
       value
       date
-  } `
+}`
+
+const MUTATION_CREATE_GROUP = gql`
+mutation CreateGroup($group: GroupInput!) {
+    createGroup(group: $group) {
+        ... Group
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+  
+  fragment Group on Group {
+      _id
+      createdAt
+      name
+      description
+      ownerId
+      memberIds
+      adminIds
+      owner {
+        ... User
+      }
+      members {
+        ... User
+      }
+      admins {
+        ... User
+      }
+      permissions {
+          visibility
+      }
+  }`
+
+  const MUTATION_UPDATE_GROUP = gql`
+  mutation UpdateGroup($group: GroupUpdateInput!) {
+    updateGroup(group: $group) {
+        ... Group
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+  
+  fragment Group on Group {
+      _id
+      createdAt
+      name
+      description
+      ownerId
+      memberIds
+      adminIds
+      owner {
+        ... User
+      }
+      members {
+        ... User
+      }
+      admins {
+        ... User
+      }
+      permissions {
+          visibility
+      }
+  }`
+
+const MUTATION_APPLY_TO_GROUP = gql`
+mutation ApplyToGroup($groupId: ID!, $userId: ID!) {
+    applyToGroup(groupId: $groupId, userId: $userId) {
+        ... Group
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+  
+  fragment Group on Group {
+      _id
+      createdAt
+      name
+      description
+      ownerId
+      memberIds
+      adminIds
+      owner {
+        ... User
+      }
+      members {
+        ... User
+      }
+      admins {
+        ... User
+      }
+      invites {
+        ... User
+      }
+      pending {
+        ... User
+      }
+      permissions {
+          visibility
+      }
+  }`
+
+const MUTATION_INVITE_TO_GROUP = gql`
+mutation InviteToGroup($groupId: ID!, $userId: ID!) {
+    inviteToGroup(groupId: $groupId, userId: $userId) {
+        ... Group
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+  
+  
+  fragment Group on Group {
+      _id
+      createdAt
+      name
+      description
+      ownerId
+      memberIds
+      adminIds
+      owner {
+        ... User
+      }
+      members {
+        ... User
+      }
+      admins {
+        ... User
+      }
+      invites {
+        ... User
+      }
+      pending {
+        ... User
+      }
+      permissions {
+          visibility
+      }
+  }`
+
+const MUTATION_APPROVE_TO_GROUP = gql`
+mutation ApproveToGroup($groupId: ID!, $userId: ID!) {
+    approveToGroup(groupId: $groupId, userId: $userId) {
+        ... Group
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }
+  
+  
+  fragment Group on Group {
+      _id
+      createdAt
+      name
+      description
+      ownerId
+      memberIds
+      adminIds
+      owner {
+        ... User
+      }
+      members {
+        ... User
+      }
+      admins {
+        ... User
+      }
+      invites {
+        ... User
+      }
+      pending {
+        ... User
+      }
+      permissions {
+          visibility
+      }
+  }`
+
+const MUTATION_PROMOTE_GROUP_MEMBER = gql`
+mutation PromoteGroupMember($groupId: ID!, $userId: ID!) {
+    promoteGroupMember(groupId: $groupId, userId: $userId) {
+        _id
+        createdAt
+        name
+        ownerId
+        memberIds
+        adminIds
+        pendingIds
+        owner {
+            ... User
+        }
+        members {
+            ... User
+        }
+        admins {
+            ... User
+        }
+        pending {
+            ... User
+        }
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }`
+
+const MUTATION_DEMOTE_GROUP_MEMBER = gql`
+mutation DemoteGroupMember($groupId: ID!, $userId: ID!) {
+    demoteGroupMember(groupId: $groupId, userId: $userId) {
+        _id
+        createdAt
+        name
+        ownerId
+        memberIds
+        adminIds
+        pendingIds
+        owner {
+            ... User
+        }
+        members {
+            ... User
+        }
+        admins {
+            ... User
+        }
+        pending {
+            ... User
+        }
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+}`
+const MUTATION_REMOVE_GROUP_MEMBER = gql`
+mutation RemoveGroupMember($groupId: ID!, $userId: ID!) {
+    removeGroupMember(groupId: $groupId, userId: $userId) {
+        _id
+        createdAt
+        name
+        ownerId
+        memberIds
+        adminIds
+        pendingIds
+        owner {
+            ... User
+        }
+        members {
+            ... User
+        }
+        admins {
+            ... User
+        }
+        pending {
+            ... User
+        }
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }`
+
+const MUTATION_REMOVE_GROUP = gql`
+mutation DeleteGroup($id: ID!) {
+    deleteGroup(_id: $id) {
+      _id
+      createdAt
+      name
+      ownerId
+      memberIds
+      adminIds
+      owner {
+       ... User
+      }
+      members {
+       ... User
+      }
+      admins {
+       ... User
+      }
+    }
+  }
+  
+  fragment User on User {
+      _id
+      firstName
+      lastName
+      loginInfo {
+          nickname
+          email
+      }
+  }`
+
+const MUTATION_APPROVE_GROUP_INVITATION = gql`mutation AcceptGroupInvitation($groupId: ID!) {
+  acceptGroupInvitation(groupId: $groupId) {
+     ... Group
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}
+
+
+fragment Group on Group {
+    _id
+    createdAt
+    name
+    description
+    ownerId
+    memberIds
+    adminIds
+    owner {
+      ... User
+    }
+    members {
+      ... User
+    }
+    admins {
+      ... User
+    }
+    invites {
+      ... User
+    }
+    pending {
+      ... User
+    }
+    permissions {
+        visibility
+    }
+}`
 
 export { 
   LOGIN_USER, 
@@ -187,6 +582,16 @@ export {
   MUTATION_APPROVE_FAMILY_INVITATION,
   MUTATION_CHANGE_FAMILY_VISIBILTY,
   MUTATION_CREATE_ECOACTION,
-  MUTATION_REMOVE_ECO_ACTION
+  MUTATION_REMOVE_ECO_ACTION,
+  MUTATION_CREATE_GROUP,
+  MUTATION_UPDATE_GROUP,
+  MUTATION_APPLY_TO_GROUP,
+  MUTATION_INVITE_TO_GROUP,
+  MUTATION_APPROVE_TO_GROUP,
+  MUTATION_PROMOTE_GROUP_MEMBER,
+  MUTATION_DEMOTE_GROUP_MEMBER,
+  MUTATION_REMOVE_GROUP_MEMBER,
+  MUTATION_APPROVE_GROUP_INVITATION,
+  MUTATION_REMOVE_GROUP
 }
 

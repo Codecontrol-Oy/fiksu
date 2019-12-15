@@ -178,6 +178,20 @@ fragment GraphData on GraphData {
     }
 }`
 
+const GET_USER_ECOACTION_GRAPH = gql`
+query GetUserEcoActionsGraph($userId: ID, $from: Date!, $to: Date!, $fullRange: Boolean!) {
+  getUserEcoActionsGraph(userId: $userId, from: $from, to: $to, fullRange: $fullRange) {
+      ...GraphData
+  }
+}
+
+fragment GraphData on GraphData {
+    data {
+        x
+        y
+    }
+}`
+
 const SEARCH_USER = gql`
 query SearchUser($search: String, $familyId: ID, $groupId: ID) {
   searchUser(search: $search, familyId: $familyId, groupId: $groupId) {
@@ -231,6 +245,248 @@ fragment EcoAction on EcoActionType {
     _id
 }`
 
+const GET_ALL_GROUPS = gql`
+query GetAllGroups($limit: Int, $offset: Int) {
+  getAllGroups(limit: $limit, offset: $offset) {
+      ... Groups
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}
+
+fragment Groups on Groups {
+    groups {
+        ... Group
+    }
+    totalCount
+}
+
+fragment Group on Group {
+    _id
+    createdAt
+    name
+    description
+    ownerId
+    memberIds
+    adminIds
+    owner {
+      ... User
+    }
+    members {
+      ... User
+    }
+    admins {
+      ... User
+    }
+    permissions {
+        visibility
+    }
+}`
+
+const GET_GROUP = gql`
+query GetGroup($id: ID!) {
+  getGroup(_id: $id) {
+      ... Group
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}
+
+fragment Group on Group {
+    _id
+    createdAt
+    name
+    description
+    ownerId
+    memberIds
+    adminIds
+    owner {
+      ... User
+    }
+    members {
+      ... User
+    }
+    admins {
+      ... User
+    }
+    permissions {
+        visibility
+    }
+}`
+
+const SEARCH_GROUP = gql`
+query SearchGroup($search: String!, $limit: Int, $offset: Int) {
+  searchGroup(search: $search, limit: $limit, offset: $offset) {
+      ... Groups
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}
+
+fragment Groups on Groups {
+    groups {
+        ... Group
+    }
+    totalCount
+}
+
+fragment Group on Group {
+    _id
+    createdAt
+    name
+    description
+    ownerId
+    memberIds
+    adminIds
+    owner {
+      ... User
+    }
+    members {
+      ... User
+    }
+    admins {
+      ... User
+    }
+    permissions {
+        visibility
+    }
+}`
+
+const GET_USER_GROUPS = gql`
+query GetUserGroups($id: ID!) {
+  getUserGroups(_id: $id) {
+    _id
+    createdAt
+    name
+    ownerId
+    memberIds
+    adminIds
+    invites {
+      ... User
+    }
+    pending {
+      ... User
+    }
+    isOwner
+    permissions {
+      visibility
+    }
+    isAdmin
+    owner {
+     ... User
+    }
+    members {
+     ... User
+    }
+    admins {
+     ... User
+    }
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}`
+
+const GET_USER_INVITED_GROUPS = gql`
+query GetUserInvitedGroups($id: ID) {
+  getUserInvitedGroups(_id: $id) {
+    _id
+    createdAt
+    name
+    ownerId
+    memberIds
+    adminIds
+    pendingIds
+    owner {
+     ... User
+    }
+    members {
+     ... User
+    }
+    admins {
+     ... User
+    }
+    pending {
+     ... User
+    }
+  }
+}
+
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}`
+
+const GET_USER_APPLIED_GROUPS = gql`
+query GetUserAppliedGroups($id: ID) {
+  getUserAppliedGroups(_id: $id) {
+    _id
+    createdAt
+    name
+    ownerId
+    memberIds
+    adminIds
+    pendingIds
+    owner {
+     ... User
+    }
+    members {
+     ... User
+    }
+    admins {
+     ... User
+    }
+    pending {
+     ... User
+    }
+  }
+}
+fragment User on User {
+    _id
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+}`
+
 export { 
   GET_ME, 
   QUERY_CONSUMPTION_TYPES, 
@@ -242,5 +498,12 @@ export {
   GET_USER_ELECTRICITY_GRAPH,
   SEARCH_USER,
   GET_USER_ECOACTIONS,
-  GET_ECOACTION_TYPES
+  GET_ECOACTION_TYPES,
+  GET_USER_ECOACTION_GRAPH,
+  GET_ALL_GROUPS,
+  GET_GROUP,
+  SEARCH_GROUP,
+  GET_USER_GROUPS,
+  GET_USER_INVITED_GROUPS,
+  GET_USER_APPLIED_GROUPS
 }
