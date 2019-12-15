@@ -71,7 +71,7 @@ class EmailHandler {
                 preheader_text: localeService.translate('EMAIL_PASSWORD_RESET_CONTENT'),
                 button_text: localeService.translate('EMAIL_PASSWORD_RESET_BUTTON_TEXT'),
                 service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
-                resetLink: config.publicUrl + `/${resetLink}`
+                resetLink: (process.env.FRONTEND_URL ?? config.publicUrl) + `/${resetLink}`
             }
         })
             .then(callback)
@@ -110,7 +110,7 @@ class EmailHandler {
                 preheader_text: localeService.translate('EMAIL_NEW_MEMBER_CONTENT'),
                 button_text: localeService.translate('EMAIL_NEW_MEMBER_BUTTON_TEXT'),
                 service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
-                verificationLink: config.publicUrl + `/${verificationLink}`
+                verificationLink: (process.env.FRONTEND_URL ?? config.publicUrl) + `/${verificationLink}`
             }
         })
             .then(callback)
@@ -150,7 +150,7 @@ class EmailHandler {
                 preheader_text: localeService.translate('EMAIL_NEW_FAMILYMEMBER_CONTENT', { familyName: familyName }),
                 button_text: localeService.translate('EMAIL_NEW_FAMILYMEMBER_BUTTON_TEXT'),
                 service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
-                confirmLink: config.publicUrl + `/family`
+                confirmLink: (process.env.FRONTEND_URL ?? config.publicUrl) + `/account/family`
             }
         })
             .then(callback)
@@ -190,7 +190,7 @@ class EmailHandler {
                 preheader_text: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_CONTENT', { groupName: groupName }),
                 button_text: localeService.translate('EMAIL_NEW_GROUPMEMBERINVITE_BUTTON_TEXT'),
                 service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
-                confirmLink: config.publicUrl + `/groups`
+                confirmLink: (process.env.FRONTEND_URL ?? config.publicUrl) + `/account/groups`
             }
         })
             .then(callback)
@@ -230,7 +230,7 @@ class EmailHandler {
                 preheader_text: localeService.translate('EMAIL_NEW_FRIENDREQUEST_CONTENT', { familyName: familyName }),
                 button_text: localeService.translate('EMAIL_NEW_FRIENDREQUEST_BUTTON_TEXT'),
                 service_description: localeService.translate('EMAIL_SERVICE_DESCRIPTION'),
-                confirmLink: config.publicUrl + `/friends`
+                confirmLink: (process.env.FRONTEND_URL ?? config.publicUrl) + `/account/friends`
             }
         })
             .then(callback)
