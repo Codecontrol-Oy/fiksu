@@ -487,6 +487,39 @@ fragment User on User {
     }
 }`
 
+const GET_MY_USER = gql`
+query GetMyUser($id: ID!){
+  user(id: $id) {
+    _id
+    createdAt
+    firstName
+    lastName
+    loginInfo {
+        nickname
+        email
+    }
+    birthDate
+    address {
+        city
+    }
+    permissions {
+        showRealName
+        showEmail
+        showBirthDate
+        allowPushNotifications
+        allowEmailNotifications
+    }
+    token
+    challenges {
+      createdAt
+      title
+      description
+      from
+      to
+    }
+  }
+}`
+
 export { 
   GET_ME, 
   QUERY_CONSUMPTION_TYPES, 
@@ -505,5 +538,6 @@ export {
   SEARCH_GROUP,
   GET_USER_GROUPS,
   GET_USER_INVITED_GROUPS,
-  GET_USER_APPLIED_GROUPS
+  GET_USER_APPLIED_GROUPS,
+  GET_MY_USER
 }

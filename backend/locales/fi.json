@@ -64,6 +64,7 @@
 	"FAMILY_MEMBER_NOT_FOUND": "Käyttäjä ei ole osa taloutta.",
 	"FAMILY_NO_PERMISSION_MEMBER": "Käyttäjällä ei ole oikeutta poistaa jäsentä.",
 	"FAMILY_NO_PERMISSION_OWNER": "Käyttäjällä ei ole oikeutta poistaa omistajaa.",
+	"GROUP_NO_PERMISSION_MEMBER": "Käyttäjällä ei ole oikeutta poistaa jäsentä.",
 
 	"ECOACTIONTYPE_NOT_FOUND": "Ekoteon tyyppiä ei löytynyt."
 }

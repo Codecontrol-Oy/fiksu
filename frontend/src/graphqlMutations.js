@@ -119,6 +119,31 @@ mutation DemoteFamilyMember($familyId: ID!, $id: ID!) {
     }
 }`
 
+const MUTATION_UPDATE_USER = gql`
+mutation UpdateUser($User: UserUpdateInput!) {
+   updateUser(user:$User) {
+      _id
+    firstName
+    lastName
+    birthDate
+    permissions {
+      showEmail
+      showRealName
+      showBirthDate
+      allowEmailNotifications
+    }
+    address {
+      city
+    }
+  }
+}`
+const MUTATION_DELETE_USER = gql`
+mutation deleteUser($id: String!) {
+  deleteUser(_id: $id) {
+    _id
+  }
+}`
+
 const MUTATION_ADD_FAMILY_MEMBER = gql`
 mutation AddFamilyMember($familyId: ID!, $id: ID!) {
     addFamilyMember(familyId: $familyId, userId: $id) {
@@ -592,6 +617,8 @@ export {
   MUTATION_DEMOTE_GROUP_MEMBER,
   MUTATION_REMOVE_GROUP_MEMBER,
   MUTATION_APPROVE_GROUP_INVITATION,
-  MUTATION_REMOVE_GROUP
+  MUTATION_REMOVE_GROUP,
+  MUTATION_UPDATE_USER,
+  MUTATION_DELETE_USER
 }
 
