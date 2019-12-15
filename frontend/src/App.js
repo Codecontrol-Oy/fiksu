@@ -21,6 +21,7 @@ import GroupController from './components/controllers/groupController'
 import ResetPasswordController from "./components/controllers/resetPasswordController"
 import NewPasswordController from "./components/controllers/newPasswordController"
 import Block from "./components/atoms/block"
+import VerifyProfileController from "./components/controllers/verifyProfileController"
 
 const App = () => (
   <>
@@ -32,6 +33,7 @@ const App = () => (
         <Route exact path="/register" component={Register} />
         <Route exact path={constants.ROUTE_RESET_PASSWORD} component={ResetPasswordController} />
         <Route exact path={constants.ROUTE_NEW_PASSWORD} component={NewPasswordController} />
+        <Route exact path={constants.ROUTE_VERIFY_PROFILE} component={VerifyProfileController} />
         <Redirect exact from="/account" to="/account/profile" />
         <PrivateRoute exact path="/account/profile" component={ProfileContainer} />
         <PrivateRoute exact path="/logout" component={LogOut} />
