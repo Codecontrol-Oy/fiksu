@@ -535,13 +535,17 @@ query GetMyUser($id: ID!){
 }`
 
 const GET_TOP_FAMILIES = gql`
-query getTopFamilyResults($top: Int!, $from: Date!, $to: Date!) {
-  getTopFamilyResults(top: $top, from: $from, to:$to) {
+  query getTopGroupResults($top: Int!, $from: Date, $to: Date) {
+  getTopFamilyResults(top: $top, from: $from, to: $to) {
     household {
       _id
       name
       members {
         _id
+      }
+      detailedPoints {
+        ecopoints
+        elctricpoints
       }
     }
     position
@@ -549,14 +553,20 @@ query getTopFamilyResults($top: Int!, $from: Date!, $to: Date!) {
   }
 }
 `
+
 const GET_TOP_GROUPS = gql`
-  query getTopGroupResults($top: Int!, $from: Date!, $to: Date!) {
+  query getTopGroupResults($top: Int!, $from: Date, $to: Date) {
   getTopGroupResults(top: $top, from: $from, to: $to) {
-    household {
+    group {
       _id
       name
+      description
       members {
         _id
+      }
+      detailedPoints {
+        ecopoints
+        elctricpoints
       }
     }
     position

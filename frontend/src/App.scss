@@ -1965,3 +1965,34 @@ select, input {
   -ms-border-radius: 0;
   -o-border-radius: 0;
 }
+
+.statistics {
+  background-color: #5a5a5a !important;
+}
+
+.statistics-header-icon {
+  color: gold;
+  font-size: 4em;
+  text-align: center;
+  display: block;
+}
+
+.statistics-medal {
+  margin-right: 10px;
+  font-size: 1.7em;
+}
+.gold {
+  color: gold;
+}
+.silver {
+  color: silver;
+}
+.bronze {
+  color: darkgoldenrod;
+}
+.diplom {
+  color: lightcyan;
+}
+.header-icon {
+  display: inline-block
+}
