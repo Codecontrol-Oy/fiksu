@@ -59,6 +59,13 @@ const HeaderBar = props => {
                 <Grid size={2}>
                     <HeaderItem>Yhteystiedot</HeaderItem>
                 </Grid>
+                <Grid size={2}>
+                </Grid>
+                <Grid size={2}>
+                </Grid>
+                <Grid size={2}>
+                    <HeaderItem>Fiksu</HeaderItem>
+                </Grid>
             </HeaderList>
             <Block className={"mobile-navbar-button"}>
                 <i onClick={() => setShowMobileNav(!showMobileNav)} class="icofont-navigation-menu"></i>
