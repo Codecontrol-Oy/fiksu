@@ -62,29 +62,37 @@ const Register = props => {
                 <Heading variant={4}>Tervetuloa takaisin!</Heading>
               </CardTitle>
               <CardBody>
-                <GridContainer align="center" justify="center" height={12} grow direction="column" size={12}>
-                  <GridRow justify="center" align="center">
-                    <InputGroup error={errors ? true : false} underline id="nickname" type="text" />
-                  </GridRow>
-                  <GridRow justify="center" align="center">
-                    <InputGroup error={errors} underline id="password" type="password" />
-                  </GridRow>
-                  <GridRow justify="center" align="center">
-                    <Button
-                      onClick={(e) => { postLogin({ variables: { nickname: document.getElementById("nickname").value, password: document.getElementById("password").value } }) }}
-                      type="button" basic>
-                      {mutationLoading ?
-                        <LoadingSpinner />
-                        :
-                        "Kirjaudu"
+                <Form
+                  onSubmit={() => { postLogin({ variables: { nickname: document.getElementById("nickname").value, password: document.getElementById("password").value } }) }
+                  }>
+                  <GridContainer align="center" justify="center" height={12} grow direction="column" size={12}>
+                    <GridRow justify="center" align="center">
+                      <InputGroup required error={errors ? true : false} underline id="nickname" type="text" />
+                    </GridRow>
+                    <GridRow justify="center" align="center">
+                      <InputGroup required error={errors} underline id="password" type="password" />
+                    </GridRow>
+                    <GridRow justify="center" align="center">
 
-                      }
-                    </Button>
-                  </GridRow>
-                </GridContainer>
+                      <Button
+                        style={{ width: "15rem", marginTop: "2rem" }}
+                        type={"submit"}
+                        basic>
+                        {mutationLoading ?
+                          <LoadingSpinner />
+                          :
+                          "Kirjaudu"
+
+                        }
+                      </Button>
+                    </GridRow>
+                  </GridContainer>
+                </Form>
               </CardBody>
               <CardFooter>
                 <Paragraph onClick={(e) => setRegister(true)} weight={3} size={2}>Uusi käyttäjä? Luo tilisi täältä!</Paragraph>
+                <Paragraph onClick={(e) => props.history.push(constants.ROUTE_RESET_PASSWORD)} weight={3} size={2}>Unohtuiko salasana! Luo uusi täältä</Paragraph>
+
               </CardFooter>
             </Transition>
           }

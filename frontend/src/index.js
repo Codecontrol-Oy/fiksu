@@ -22,6 +22,7 @@ import { GET_REFRESH_TOKEN } from './graphqlMutations';
 
 //import './theme/theme.scss';
 //import 'theme/colors.scss';
+import Block from "./components/atoms/block"
 
 
 // Create customFetch function for handling re-authorization

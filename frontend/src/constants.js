@@ -8,6 +8,8 @@ export const ROUTE_ACCOUNT_FAMILY = "/account/family"
 export const ROUTE_ACCOUNT_ECO = "/account/eco-life"
 export const ROUTE_ACCOUNT_GROUP = "/account/groups"
 export const ROUTE_ACCOUNT_SETTINGS = "/account/settings"
+export const ROUTE_RESET_PASSWORD = "/reset-password"
+export const ROUTE_NEW_PASSWORD = "/new-password"
 
 /* PUBLICITY SETTINGS */
 export const PUBLICITY_SETTINGS = [
