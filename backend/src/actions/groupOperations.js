@@ -105,6 +105,28 @@ exports.inviteUserToGroup = async (args, user) => {
         })
 }
 
+exports.acceptGroupInvitation = async (args, user) => {
+    let groupId = args.groupId
+    let userId = user._id
+
+    return Group.findOne({ _id: mongoose.Types.ObjectId(groupId) })
+        .then((group) => {
+            if (!group) {
+                throw new ApolloError(localeService.translate('GROUP_NOT_FOUND'))
+            }
+
+            // Move from invited to members
+            if (group.invitedIds.some(memberId => memberId == userId)) {
+                group.invitedIds.remove(userId)
+                group.memberIds.push(userId)
+                return Group.findOneAndUpdate({ _id: mongoose.Types.ObjectId(groupId) }, group, { new: true, returnNewDocument: true, useFindAndModify: false })
+            }
+
+            return null
+        })
+}
+
+
 exports.applyToGroup = async (args, user) => {
     let groupId = args.groupId
     let userId = args.userId
@@ -113,11 +135,6 @@ exports.applyToGroup = async (args, user) => {
         .then(async (group) => {
             if (!group) {
                 throw new ApolloError(localeService.translate('GROUP_NOT_FOUND'))
-            }
-
-            // If not owner or admin
-            if (group.ownerId != user._id && !group.adminIds.some(adminId => adminId == user._id)) {
-                throw new ApolloError(localeService.translate('NO_UPDATE_PERMISSION'))
             }
 
             // Add to pending list (if not exists)
@@ -252,10 +269,10 @@ exports.removeGroupMember = async (args, user) => {
                         throw new ApolloError(localeService.translate('GROUP_NO_PERMISSION_MEMBER'))
                     }
 
-                    if ((group.ownerId == user._id && group.adminIds.some(adminId => adminId == user._id)) ||
+                    if ((group.ownerId == user._id && group.adminIds.some(adminId => adminId == userId)) ||
                         group.memberIds.some(memberId => memberId == userId) ||
                         group.pendingIds.some(memberId => memberId == userId) ||
-                        group.pendingIds.some(memberId => memberId == userId)) {
+                        group.invitedIds.some(memberId => memberId == userId)) {
 
                         group.adminIds.remove(userId)
                         group.memberIds.remove(userId)
@@ -300,6 +317,10 @@ exports.getUserGroups = async (args) => {
             { memberIds: userId },
             { adminIds: userId }
         ])
+}
+
+exports.getUserAppliedGroups = async (userId) => {
+    return Group.find({ pendingIds: userId })
 }
 
 exports.getUserInvitedGroups = async (userId) => {

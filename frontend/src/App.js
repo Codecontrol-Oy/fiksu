@@ -17,22 +17,32 @@ import ProfileElectricityController from "./components/controllers/profileElectr
 import ProfileSettingsController from "./components/controllers/profileSettingsController"
 import EcoActionController from './components/controllers/ecoActionController'
 import StatisticsController from "./components/controllers/statisticsController"
+import GroupController from './components/controllers/groupController'
+import ResetPasswordController from "./components/controllers/resetPasswordController"
+import NewPasswordController from "./components/controllers/newPasswordController"
+import Block from "./components/atoms/block"
+
 const App = () => (
   <>
     <HeaderBar />
+    <Block id="mobile-navbar" />
     <Main>
       <PrivateRoute path={constants.ROUTE_ACCOUNT} component={HeaderAccount} />
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path={constants.ROUTE_RESET_PASSWORD} component={ResetPasswordController} />
+        <Route exact path={constants.ROUTE_NEW_PASSWORD} component={NewPasswordController} />
         <Redirect exact from="/account" to="/account/profile" />
         <PrivateRoute exact path="/account/profile" component={ProfileContainer} />
         <PrivateRoute exact path="/home" component={HomePage} />
         <PrivateRoute exact path="/logout" component={LogOut} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_PROFILE} component={ProfileController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ELECTRICITY} component={ProfileElectricityController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_FAMILY} component={FamilyController} />
+        <PrivateRoute exact path={constants.ROUTE_ACCOUNT_GROUP} component={GroupController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_SETTINGS} component={ProfileSettingsController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_ECO} component={EcoActionController} />
         <PrivateRoute exact path={constants.ROUTE_ACCOUNT_STATISTICS} component={StatisticsController} />

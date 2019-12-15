@@ -22,6 +22,8 @@ import Fieldset from './atoms/fieldset';
 import IconInput from './molecules/iconInput';
 import GridRow from './grid/row';
 import InputGroup from './molecules/inputGroup';
+import { withRouter } from "react-router-dom"
+import * as constants from '../constants'
 
 const Register = props => {
 
@@ -31,6 +33,12 @@ const Register = props => {
       onError(error) {
         console.log(error.graphQLErrors[0].extensions.exception.errors)
         setErrors(error.graphQLErrors[0].extensions.exception.errors)
+      },
+      onCompleted(data) {
+
+        setTimeout(() => {
+          props.history.push(constants.ROUTE_HOMEPAGE)
+        }, 1500)
       }
     },
 
@@ -67,32 +75,32 @@ const Register = props => {
         }}>
           <GridContainer align="center" direction="column">
             <GridRow align="center" justify="center">
-              <InputGroup placeholder="Etunimi" error={errors && errors.firstName && errors.firstName} underline id="firstName" type="text" />
+              <InputGroup required placeholder="Etunimi" error={errors && errors.firstName && errors.firstName} underline id="firstName" type="text" />
             </GridRow>
             <GridRow align="center" justify="center">
-              <InputGroup placeholder="Sukunimi" error={errors && errors.lastName && errors.lastName} underline id="lastName" type="text" />
+              <InputGroup required placeholder="Sukunimi" error={errors && errors.lastName && errors.lastName} underline id="lastName" type="text" />
             </GridRow>
             <GridRow align="center" justify="center">
-              <InputGroup placeholder="Syntymäaika" error={errors && errors.birthDate && errors.birthDate} underline id="birthDate" type="date" />
+              <InputGroup required placeholder="Syntymäaika" error={errors && errors.birthDate && errors.birthDate} underline id="birthDate" type="date" />
             </GridRow>
 
             <GridRow align="center" justify="center">
 
-              <InputGroup placeholder="Kaupunki" error={errors && errors["address.city"] && errors["address.city"]} underline id="city" type="text" />
+              <InputGroup required placeholder="Kaupunki" error={errors && errors["address.city"] && errors["address.city"]} underline id="city" type="text" />
             </GridRow>
           </GridContainer>
           <Fieldset title={"Käyttäjätunnus"}>
             <GridContainer align="center" direction="column">
 
               <GridRow align="center" justify="center">
-                <IconInput id="nickName" type="text" icon="icofont-user-alt-4" placeholder="Käyttäjänimi" underline />
+                <IconInput required id="nickName" type="text" icon="icofont-user-alt-4" placeholder="Käyttäjänimi" underline />
               </GridRow>
               <GridRow align="center" justify="center">
-                <IconInput id="email" type="email" icon="icofont-email" placeholder="Sähköpostiosoite" underline />
+                <IconInput required id="email" type="email" icon="icofont-email" placeholder="Sähköpostiosoite" underline />
 
               </GridRow>
               <GridRow align="center" justify="center">
-                <IconInput id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
+                <IconInput required id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
               </GridRow>
 
 
@@ -104,7 +112,7 @@ const Register = props => {
           </Fieldset>
 
           <GridContainer justify="center" align="center" direction="column" size={12}>
-            <Button type="submit" basic>Kirjaudu</Button>
+            <Button style={{ width: '15rem', margin: '1.5rem' }} type="submit" basic>Luo käyttäjä</Button>
           </GridContainer>
 
 
@@ -119,4 +127,4 @@ const Register = props => {
     </Transition>
   );
 }
-export default Register
+export default withRouter(Register)

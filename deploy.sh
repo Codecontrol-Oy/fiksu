@@ -9,4 +9,6 @@ ssh $SERVER_USERNAME@fiksu.codecontrol.fi -p 20150 $FRONTEND
 ssh $SERVER_USERNAME@fiksu.codecontrol.fi -p 20150 $BACKEND
 echo "***********[ Cleanup ]***********"
 CLEANUP="docker system prune -f"
+IMAGE_CLEANUP="docker image prune --all -f"
 ssh $SERVER_USERNAME@fiksu.codecontrol.fi -p 20150 $CLEANUP
+ssh $SERVER_USERNAME@fiksu.codecontrol.fi -p 20150 $IMAGE_CLEANUP

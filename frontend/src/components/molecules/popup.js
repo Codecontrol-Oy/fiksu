@@ -16,7 +16,7 @@ const Popup = props => {
     })
     console.log(variant)
     return (
-        <Block className={"popup " + variant}>
+        <Block style={props.style} className={"popup " + variant}>
             <Block className="popup-text">
                 <Paragraph weight={4} size={2}>{props.message}</Paragraph>
             </Block>

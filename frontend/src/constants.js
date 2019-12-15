@@ -9,6 +9,8 @@ export const ROUTE_ACCOUNT_ECO = "/account/eco-life"
 export const ROUTE_ACCOUNT_GROUP = "/account/groups"
 export const ROUTE_ACCOUNT_SETTINGS = "/account/settings"
 export const ROUTE_ACCOUNT_STATISTICS = "/account/statistics"
+export const ROUTE_RESET_PASSWORD = "/reset-password"
+export const ROUTE_NEW_PASSWORD = "/new-password"
 
 /* PUBLICITY SETTINGS */
 export const PUBLICITY_SETTINGS = [

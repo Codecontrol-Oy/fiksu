@@ -9,7 +9,7 @@ const InputGroup = props => {
 
 
     return (
-        <Block className="input-group-wrapper">
+        <Block style={props.style} className="input-group-wrapper">
             <Input
                 required={props.required}
                 basic={props.basic}

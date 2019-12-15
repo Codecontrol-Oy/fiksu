@@ -4,6 +4,7 @@ module.exports = {
     DEFAULT_MIN_PASSWORD_LENGTH: 8,
     REFRESH_ENDPOINT: "/refreshToken",
     HERO_FILENAME: "hero.png",
+    ELECTRICITY_SAVING_MULTIPLIER: 0.5,
 
     /* Permission Enums */
     PERMISSION_NONE: 'NONE',

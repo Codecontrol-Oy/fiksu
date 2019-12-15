@@ -39,7 +39,7 @@ const FamilyMemberSearch = props => {
     }
   )
   return ( <Block className="family-info">
-        {familyData && familyData.getUserFamilies.length && (familyData.getUserFamilies.some(x => x.isOwner) || familyData.getUserFamilies.some(x => x.isAdmin)) && 
+        {familyData && familyData.getUserFamilies.length > 0 && (familyData.getUserFamilies.some(x => x.isOwner) || familyData.getUserFamilies.some(x => x.isAdmin)) && 
         <GridContainer size={12} direction={"column"}>
             <GridRow size={12}>
             <Grid sizeS={12} sizeM={6} sizeL={6}>
@@ -98,6 +98,7 @@ const FamilyMemberSearch = props => {
               <Paragraph color={"secondary"}>Alla olevasta listasta näet henkilöt, jotka eivät vielä ole vahvistaneet kutsua talouteen.</Paragraph>
               {familyData && familyData.getUserFamilies.length && familyData.getUserFamilies.map((family) => (family.isAdmin || family.isOwner) && <Block>
                 {family && (!family.pending || !family.pending.length) && <Block>
+                   <Heading color={"secondary"} variant={3}>{family.name}</Heading>
                     <Heading color={"secondary"} variant={4}>Ei vahvistamattomia henkilöitä</Heading>
                     )}
               </Block>}

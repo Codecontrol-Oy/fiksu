@@ -12,9 +12,9 @@ const DonutChart = props => {
     <div>
       <h3 className="text-secondary">{props.title}</h3>
       <RadialChart
-        width={props.width ? props.width : 320}
+        width={320}
         padAngle={0.1}
-        height={props.height ? props.height : 320}
+        height={320}
         innerRadius={100}
         radius={140}
         onValueMouseOver={v => setRadialValue(v)}
@@ -30,8 +30,8 @@ const DonutChart = props => {
         <div style={{
           position: 'absolute',
           top: '36%',
-          marginLeft: 'auto',
-          marginRight: 'auto',
+          marginleft: 'auto',
+          marginright: 'auto',
           left: 0,
           right: 0,
           padding: '5px',
