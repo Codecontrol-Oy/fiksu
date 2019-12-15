@@ -30,8 +30,8 @@ const DonutChart = props => {
               <div style={{
               position: 'absolute',
               top: '36%',
-              marginLeft: 'auto',
-              marginRight: 'auto',
+              marginleft: 'auto',
+              marginright: 'auto',
               left: 0,
               right: 0,
               padding: '5px',

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Block from '../atoms/block'
-import { GET_ECOACTION_TYPES} from '../../graphqlQueries'
+import { GET_ECOACTION_TYPES, GET_USER_ECOACTION_GRAPH} from '../../graphqlQueries'
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import { MUTATION_CREATE_ECOACTION } from '../../graphqlMutations'
 import Heading from '../atoms/heading'
@@ -25,11 +25,20 @@ const EcoInfo = props => {
     yesterday.setDate(today.getDate() - 1)
     lastMonth.setDate(today.getDate() - 31)
     const [ ecoDate, setEcoDate] = useState(new Date().toJSON().slice(0, 10))
+    const [ ecoDateGraphTo, setEcoDateGraphTo] = useState(tomorrow)
+    const [ ecoDateGraphFrom, setEcoDateGraphFrom] = useState(lastMonth)
     const [ selectedEcoAction, setSelectedEcoAction ] = useState('default')
     const [ ecoActionTypeDescription, setEcoActionTypeDescription ] = useState(undefined)
+    const { loading: ecoGraphLoading, error: ecoGraphError, data: ecoGraphData} = useQuery(GET_USER_ECOACTION_GRAPH,{
+        variables: {
+            from: ecoDateGraphFrom,
+            to: ecoDateGraphTo,
+            fullRange: true
+        }
+    })
     const { loading: ecoActionTypeLoading, error: ecoActionTypeError, data: ecoActionTypeData} = useQuery(GET_ECOACTION_TYPES)
     const [ createEcoAction, {loading: createEcoActionLoading, error: createEcoActionError, data: createEcoActionData}] = useMutation(MUTATION_CREATE_ECOACTION, {
-        refetchQueries: ['EcoActions','UserEcoActions'],
+        refetchQueries: ['EcoActions','UserEcoActions','GetUserEcoActionsGraph'],
         onCompleted: data => {
             setEcoDate(new Date().toJSON().slice(0, 10))
             setSelectedEcoAction('default')
@@ -66,36 +75,7 @@ const EcoInfo = props => {
           <Card>
           <Block style={{textAlign: 'center'}}>
             <Heading variant={2} color={"secondary"}>Kuukauden ekotekosi</Heading>
-            <BarChart data={[
-            {
-                "data": [
-                    {
-                        "x": "2019-01-01",
-                        "y": 5
-                    },
-                    {
-                        "x": "2019-01-02",
-                        "y": 10
-                    },
-                    {
-                        "x": "2019-01-03",
-                        "y": 30
-                    }
-                ]
-            },
-            {
-                "data": [
-                    {
-                        "x": "2019-01-01",
-                        "y": 5
-                    },
-                    {
-                        "x": "2019-01-03",
-                        "y": 67.5
-                    }
-                ]
-            }
-        ]} title="30 päivän tiedot" />
+            {ecoGraphData && ecoGraphData.getUserEcoActionsGraph && <BarChart rangeA={ecoDateGraphFrom.getTime()} rangeB={ecoDateGraphTo.getTime()} data={ecoGraphData.getUserEcoActionsGraph} title="Kuukauden tiedot" />}
             </Block>
           </Card>  
         </Grid>
