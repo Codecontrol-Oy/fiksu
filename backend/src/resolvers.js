@@ -627,7 +627,7 @@ const resolvers = {
       new AuthHelper(context.user).validateAuthorization()
       return getUserEcoPoints(obj, context)
     },
-    elctricpoints: (obj, args, context) => {
+    electricpoints: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       if (!obj.householdId) return getUserFamilyPoints(obj.userId, obj.from, obj.to)
       return getUserElectricPoints(obj, context)
@@ -641,6 +641,11 @@ const resolvers = {
     group: (obj, args, context) => {
       if (!obj?.groupId) return null
       return getGroup(obj.groupId)
+    },
+  },
+  Achievement: {
+    user: async (obj, args, context) => {
+      return getProfile(obj?.userId ?? context.user._id)
     },
   },
 }

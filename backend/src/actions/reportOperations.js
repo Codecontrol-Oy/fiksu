@@ -185,9 +185,27 @@ async function getUserAchievements(args, context) {
                 ecoAction.level = level
             })
 
+            // Combined EcoAction achievements
+            let points = parseFloat(ecoAction.points)
+            let combinedEcoAchievement = {
+                userId: userId,
+                points: parseFloat(totalPoints).toFixed(2),
+                icon: ecoAction.ecoActionTypeId.icon,
+                level: 'NONE'
+            }
+            if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_2)) {
+                level = Const.ACHIEVEMENT_LEVEL_2_ENUM
+            }
+            else if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_1)) {
+                level = Const.ACHIEVEMENT_LEVEL_1_ENUM
+            }
+            else if (points >= parseFloat(Const.ACHIEVEMENT_LEVEL_0)) {
+                level = Const.ACHIEVEMENT_LEVEL_0_ENUM
+            }
+
             return {
-                totalPoints: totalPoints.toFixed(2),
-                data: results
+                ecoAchievements: results,
+                combinedEcoAchievement: combinedEcoAchievement
             }
         })
 }
@@ -256,7 +274,7 @@ async function getUserElectricPoints(args, context) {
 
             const calculatedPercentage = ((lastPlusSavings * 100 / last) - 100).toFixed(2)
 
-            return (parseFloat(Const.ELECTRICITY_SAVING_MULTIPLIER) * calculatedPercentage).toFixed(2)
+            return parseFloat((parseFloat(Const.ELECTRICITY_SAVING_MULTIPLIER) * calculatedPercentage).toFixed(2))
         })
 }
 

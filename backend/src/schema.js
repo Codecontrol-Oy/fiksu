@@ -416,7 +416,7 @@ const typeDefs = gql`
   type ResultsGraph {
     info: User
     ecopoints: Float
-    elctricpoints: Float
+    electricpoints: Float
   }
 
   type TopResultsGraph {
@@ -428,12 +428,12 @@ const typeDefs = gql`
   }
 
   type Achievements {
-    totalPoints: Float
-    data: [Achievement]
+    totalEcoPoints: Float
+    ecoAchievements: [Achievement]
   }
 
   type Achievement {
-    userId: ID
+    user: User
     points: Float
     icon: String
     level: ACHIEVEMENTLEVEL
