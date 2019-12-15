@@ -49,7 +49,7 @@ const GroupMemberSearch = props => {
             <GridRow size={12}>
             <Grid sizeS={12} sizeM={4} sizeL={4}>
             <Card>
-              <Heading color={"secondary"} variant={4}>Kutsuminen ryhmään</Heading>
+              <Heading color={"secondary"} variant={3}>Kutsuminen ryhmään</Heading>
               <Paragraph color={"secondary"}>Alla olevalla lomakkeella voit hakea ryhmääsi jäseniä ja kutsua heidät liittymään ryhmääsi.<br/>Voit hakea käyttäjiä käyttäjätunnuksella, tai etunimellä ja sukunimiellä.</Paragraph>
               <Block style={{textAlign: 'center'}}>
                 <Form
