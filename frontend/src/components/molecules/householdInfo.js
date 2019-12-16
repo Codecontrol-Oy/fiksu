@@ -10,6 +10,7 @@ import Divider from '../atoms/divider'
 import Heading from "../atoms/heading"
 import DonutChart from './donutChart'
 import Paragraph from '../atoms/paragraph'
+import FamilyPoints from '../molecules/familyPoints'
 
 const HouseholdInfo = props => {
 
@@ -47,7 +48,7 @@ const HouseholdInfo = props => {
                                                     <Paragraph color={"secondary"}>{(member.info.firstName && member.info.lastName ? member.info.firstName + " " + member.info.lastName : '[ Piilotettu ]')}</Paragraph>
                                                 </Grid>
                                                 <Grid sizeS={4} sizeM={4} sizeL={4}>
-                                                     <Paragraph color={"secondary"}>{member.ecopoints + " pistettä"}</Paragraph>
+                                                     <Paragraph color={"secondary"}>{member.ecopoints + member.electricpoints + " pistettä"}</Paragraph>
                                                 </Grid>
                                             </GridRow>
                                             <Divider color={"secondary"} />
@@ -64,7 +65,7 @@ const HouseholdInfo = props => {
                             {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
                             </Grid>
                             <Grid sizeS={12} sizeM={6} sizeL={6}>
-                            {data.length > 0 && <DonutChart width={320} height={320} data={data} title={"Ekopisteet"} />}
+                            {data.length > 0 && <FamilyPoints family={{_id: props.id}} title={"Talouden pisteet"} />}
                             </Grid>
                             </GridRow>
                             </Block> 

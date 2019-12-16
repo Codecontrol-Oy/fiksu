@@ -36,7 +36,7 @@ const DonutChart = props => {
           right: 0,
           padding: '5px',
         }}>
-          <span style={{ color: `${(props.primary ? props.primary : 'rgb(39, 140, 180')}`, fontSize: '72px' }}>{props.data.length > 1 ? props.data.reduce((a, b) => typeof(a) == 'object' ? a.angle + b.angle : a + b.angle).toFixed(1) : props.data[0].angle}</span>
+          <span style={{ color: `${(props.primary ? props.primary : 'rgb(39, 140, 180')}`, fontSize: '72px' }}>{props.data.length > 1 ? props.data.reduce((a, b) => typeof(a) == 'object' ? a.angle + b.angle : a + b.angle).toFixed(1) : props.data[0].angle.toFixed(1)}</span>
         </div>
       </RadialChart>
     </div>

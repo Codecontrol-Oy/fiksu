@@ -20,7 +20,6 @@ const ProfileInfo = props => {
     const [myData, setData] = useState([{ angle: 1, label: "0", subLabel: "Energiankulutus" }, { angle: 2, label: "0", subLabel: "EkoTeot" }])
 
     useEffect(() => {
-
         if (props.data) {
             setData([
                 { angle: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points: 0, 

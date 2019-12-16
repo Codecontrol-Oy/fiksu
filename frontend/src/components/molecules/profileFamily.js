@@ -33,7 +33,6 @@ const ProfileFamily = props => {
                     <Heading align={"left"} color={"secondary"} variant={4}>Talouteni - {data.getUserFamilies.length}kpl</Heading>
                     <Divider />
                     {
-
                         data.getUserFamilies.map((household => {
                             return <HouseholdInfo data={household.detailedPoints} members={[...household.members, ...household.admins, household.owner]} name={household.name} id={household._id} />
                         }))

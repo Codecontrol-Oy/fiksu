@@ -38,7 +38,7 @@ const EcoInfo = props => {
     })
     const { loading: ecoActionTypeLoading, error: ecoActionTypeError, data: ecoActionTypeData} = useQuery(GET_ECOACTION_TYPES)
     const [ createEcoAction, {loading: createEcoActionLoading, error: createEcoActionError, data: createEcoActionData}] = useMutation(MUTATION_CREATE_ECOACTION, {
-        refetchQueries: ['EcoActions','UserEcoActions','GetUserEcoActionsGraph'],
+        refetchQueries: ['EcoActions','UserEcoActions','GetUserEcoActionsGraph','GetUserAchievements'],
         onCompleted: data => {
             setEcoDate(new Date().toJSON().slice(0, 10))
             setSelectedEcoAction('default')

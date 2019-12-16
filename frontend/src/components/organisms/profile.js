@@ -42,6 +42,7 @@ const Profile = props => {
             to: today.toJSON().slice(0, 10),
             from: prevMonth.toJSON().slice(0, 10),
         },
+        fetchPolicy: 'network-only',
         onCompleted(data) {
             console.log(data)
         },

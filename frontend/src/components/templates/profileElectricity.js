@@ -71,12 +71,12 @@ const ProfileElectricity = props => {
                 setDate(today)
                 setReading(undefined)
             },
-            refetchQueries: ['GetEnergySavings', 'GetElectricityGraph']
+            refetchQueries: ['GetEnergySavings', 'GetElectricityGraph', 'GetUserAchievements','getTopGroupResults']
         }
     )
 
     const [removeConsumption, { loading: rLoading, error: rError, data: rData }] = useMutation(MUTATION_REMOVE_CONSUMPTION, {
-        refetchQueries: ['GetEnergySavings', 'GetElectricityGraph']
+        refetchQueries: ['GetEnergySavings', 'GetElectricityGraph','GetUserAchievements','getTopGroupResults']
     })
 
     const [saveMeasurement, { loading: measurementLoading, error: measurementError, data: measurementData }] = useMutation(MUTATION_ADD_NEW_MEASUREMENT,
@@ -85,12 +85,12 @@ const ProfileElectricity = props => {
                 setMeasurementDate(today)
                 setMeasurement(undefined)
             },
-            refetchQueries: ['Measurements', 'GetElectricityGraph']
+            refetchQueries: ['Measurements', 'GetElectricityGraph','GetUserAchievements','getTopGroupResults']
         }
     )
 
     const [removeMeasurement, { loading: rmLoading, error: rmError, data: rmData }] = useMutation(MUTATION_REMOVE_MEASUREMENT, {
-        refetchQueries: ['Measurements', 'GetElectricityGraph']
+        refetchQueries: ['Measurements', 'GetElectricityGraph','getTopGroupResults']
     })
 
     return (

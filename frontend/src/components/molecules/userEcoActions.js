@@ -30,7 +30,7 @@ const UserEcoActions = props => {
         }
     })
     const [ removeEcoAction, {loading: removeEcoActionLoading, error: removeEcoActionError, data: removeEcoActionData}] = useMutation(MUTATION_REMOVE_ECO_ACTION, {
-      refetchQueries: ['EcoActions','UserEcoActions','GetUserEcoActionsGraph'],
+      refetchQueries: ['EcoActions','UserEcoActions','GetUserEcoActionsGraph','GetUserAchievements'],
     })
     return <Block className="eco-info">
     <GridContainer size={12} direction="column">
