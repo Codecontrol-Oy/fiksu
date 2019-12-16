@@ -50,6 +50,7 @@
 	"TITLE_REQUIRED": "Otsikko on pakollinen",
 	"DESCRIPTION_REQUIRED": "Kuvaus on pakollinen",
 	"VISIBLEDATE_REQUIRED": "Näkyvyys on pakollinen",
+	"MEASUREMENT_NEGATIVE": "Sähkömittarilukema ei voi olla negatiivinen.",
 
 	"PASSWORD_MIN_REQUIRED": "Salasanan täytyy olla vähintään {{minLen}} merkkiä pitkä.",
 	"PASSWORD_COMPLEXITY_FAILED": "Salasana ei vastaa monimutkaisuus vaatimuksia.",
