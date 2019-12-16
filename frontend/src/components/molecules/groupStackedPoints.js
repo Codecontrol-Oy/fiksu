@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import StackedBarChart from './stackedBarChart'
 import { GET_DETAILED_POINTS } from '../../graphqlQueries'
 import { useQuery } from "@apollo/react-hooks"
+import continuousColorLegend from 'react-vis/dist/legends/continuous-color-legend'
 
 const GroupStackedPoints = props => {
     const today = new Date()
@@ -14,7 +15,7 @@ const GroupStackedPoints = props => {
     const [ dateLastMonth, setDateLastMonth ] = useState(lastMonth)
     const {loading, error, data } = useQuery(GET_DETAILED_POINTS, {
         variables: {
-            groupId: props.group._id,
+            groupId: props.group,
             to: dateTomorrow,
             from: dateLastMonth
         }
@@ -22,6 +23,7 @@ const GroupStackedPoints = props => {
     const handleData = () => {
         let resultA = []
         let resultB = []
+        console.log(props)
         data.getDetailedPoints.map((item) => {
             resultA.push({
                 x: `${(item.info.firstName && item.info.lastName ? item.info.firstName + " " + item.info.lastName : '[Piilotettu]')}`,

@@ -14,7 +14,7 @@ const GroupPoints = props => {
     const [ dateLastMonth, setDateLastMonth ] = useState(lastMonth)
     const {loading, error, data } = useQuery(GET_DETAILED_POINTS, {
         variables: {
-            groupId: props.group._id,
+            groupId: props.group,
             to: dateTomorrow,
             from: dateLastMonth
         }
