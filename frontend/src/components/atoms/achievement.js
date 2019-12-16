@@ -32,7 +32,7 @@ const Achievement = props => {
             </Block>
 
             <Paragraph color={"secondary"} >{props.name || "Testi"}</Paragraph>
-            <Paragraph style={{ margin: "0" }} color={"secondary"} size={4}>{props.points + " - pistettä" || "0 - pistettä"}   </Paragraph>
+            <Paragraph style={{ margin: "0" }} color={"secondary"} size={4}>{(props.points ? props.points : 0) + " - pistettä" || "0 - pistettä"}   </Paragraph>
             <Divider color={"secondary"} />
             <Paragraph size={4} color={"secondary"}>{props.description || "Tämä on testi kuvaus"}</Paragraph>
         </Block>

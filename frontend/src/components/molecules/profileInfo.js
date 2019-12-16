@@ -9,7 +9,6 @@ import GridRow from '../grid/row'
 import Grid from "../grid/grid"
 import DonutChart from "./donutChart"
 import withSnackbar from "./withSnackbar"
-import Button from "../atoms/button"
 import Achievement from '../atoms/achievement'
 import Divider from '../atoms/divider'
 import Paragraph from "../atoms/paragraph"
@@ -23,7 +22,13 @@ const ProfileInfo = props => {
     useEffect(() => {
 
         if (props.data) {
-            setData([{ angle: props.data.combinedElectricityAchievement.points, label: props.data.combinedElectricityAchievement.points.toString(), subLabel: "Energiankulutus" }, { angle: props.data.combinedEcoAchievement.points, label: props.data.combinedEcoAchievement.points.toString(), subLabel: "EkoTeot" }])
+            setData([
+                { angle: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points: 0, 
+                  label: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points.toString(): "0", 
+                  subLabel: "Energiankulutus" }, 
+                { angle: props.data.combinedEcoAchievement ? props.data.combinedEcoAchievement.points: 0, 
+                  label: props.data.combinedEcoAchievement ? props.data.combinedEcoAchievement.points.toString() : "0", 
+                  subLabel: "EkoTeot" }])
         }
 
     }, [props.data])
@@ -35,8 +40,8 @@ const ProfileInfo = props => {
                 <GridRow wrap >
                     <Grid sizeS={12} sizeL={6} sizeM={6}>
                         <GridRow wrap>
-                            <Grid sizeS={6} sizeM={6} sizeL={6}>
-                                {props.data &&
+                                {props.data && props.data.combinedEcoAchievement &&
+                                <Grid sizeS={6} sizeM={6} sizeL={6}>
                                     <Block className="profile-combined-achievement">
                                         <Heading color={"secondary"} variant={3}>Ekoteot</Heading>
                                         <i className={props.data.combinedEcoAchievement.icon} />
@@ -51,10 +56,10 @@ const ProfileInfo = props => {
                                         }
 
                                     </Block>
+                                    </Grid>
                                 }
-                            </Grid>
-                            <Grid sizeS={6} sizeM={6} sizeL={6}>
-                                {props.data &&
+                                {props.data && props.data.combinedElectricityAchievement &&
+                                <Grid sizeS={6} sizeM={6} sizeL={6}>
                                     <Block className="profile-combined-achievement">
                                         <Heading color={"secondary"} variant={3}>Energiankulutus</Heading>
                                         <i className={props.data.combinedElectricityAchievement.icon} />
@@ -69,8 +74,18 @@ const ProfileInfo = props => {
                                         }
                                     </Block>
 
-                                }
-                            </Grid>
+                                </Grid>}
+                            
+                            {props.data && (!props.data.combinedEcoAchievement && !props.data.combinedElectricityAchievement) &&
+                             <Grid sizeS={12} sizeM={12} sizeL={12}>
+                                <Block className="profile-combined-achievement">
+                            <Heading color={"secondary"} variant={3}>Hei, {props.user.firstName}</Heading>
+                                         <Paragraph color={"secondary"}>Kuukauden ajalta ei löydy merkattuja ekotekoja tai talouden sähkönsäästömerkintöjä.</Paragraph>
+                                         <Paragraph color={"secondary"}>Ekotekoja voit kirjata EKOTEOT -välilehdeltä, ja mikäli olet mukana taloudessa, sähkömerkintöjä voit merkata ENERGIANKULUTUS välilehdeltä!</Paragraph>
+                                        <Paragraph color={"secondary"}>Jos haluat perustaa oman talouden, voit tehdä sen TALOUDET -välilehdeltä.</Paragraph>
+                                </Block>
+                                </Grid>
+                            }
                             <Grid sizeS={12} sizeM={12} sizeL={12}>
                                 {props.data &&
                                     <Block className="profile-tip">

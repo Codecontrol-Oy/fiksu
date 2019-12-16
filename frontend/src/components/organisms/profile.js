@@ -30,6 +30,12 @@ const Profile = props => {
         }
     })
 
+    const { loading: uLoading, error: uError, data: uData } = useQuery(GET_MY_USER, {
+        variables: {
+            id: localStorage.getItem('userId')
+        }
+    })
+
     const { loading, error, data } = useQuery(GET_USER_ACHIEVEMENTS, {
         variables: {
             userId: localStorage.getItem("userId"),
@@ -48,10 +54,11 @@ const Profile = props => {
 
     return (
         <Block className="profile-container">
+            {uData && uData.user &&
             <GridContainer height={12} width={12} direction={"column"}>
                 <Block id={"snackbars"} />
                 <GridRow justify={"center"}>
-                    <ProfileInfo data={data && data.getUserAchievements} />
+                     <ProfileInfo user={uData.user} data={data && data.getUserAchievements} />
                 </GridRow>
                 <GridRow justify={"center"}>
                     <ProfileAchievements data={data && data.getUserAchievements} />
@@ -62,7 +69,7 @@ const Profile = props => {
                 <GridRow justify={"center"}>
                     <ProfileGroups />
                 </GridRow>
-            </GridContainer>
+            </GridContainer>}
         </Block>
     )
 
