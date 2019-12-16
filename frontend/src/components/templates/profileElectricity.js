@@ -51,7 +51,12 @@ const ProfileElectricity = props => {
     const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
         variables: {
           id: localStorage.getItem('userId')
-        }
+        },
+        onCompleted(data) {
+            if(selectedFamily == 'default' && data && data.getUserFamilies.length == 1) {
+                setSelectedFamily(data.getUserFamilies[0]._id)
+            }
+          },
       })
     const { loading: mLoading, error: mError, data: mData } = useQuery(GET_USER_MEASUREMENTS, {
         variables: {
@@ -97,12 +102,13 @@ const ProfileElectricity = props => {
         <ProfileCard>
             <Heading variant={3} color={"secondary"}>Sähkön säästötoimet</Heading>
             <GridContainer size={12} direction={"column"}>
+           {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 &&
             <GridRow wrap direction="row">
                 <Grid sizeS={12} sizeM={12} sizeL={12}>
                 <Heading variant={4} color={"secondary"}>Valitse talous</Heading>
                 <Paragraph color={"secondary"}>Valitse mille taloudelle haluat merkata sähkölukemia tai säästötoimia</Paragraph>
                 <Block style={{textAlign: 'center'}}>
-                {familyData && <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
+                <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
                 <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
                     {familyData.getUserFamilies &&
                     familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
@@ -110,7 +116,7 @@ const ProfileElectricity = props => {
                 </SelectGroup>}
                 </Block>
                 </Grid>
-            </GridRow>
+            </GridRow>}
             {familyData && familyData.getUserFamilies.length > 0 && selectedFamily != 'default' && <Block>
             <GridRow wrap direction="row">
                 <Grid sizeS={12} sizeM={4} sizeL={4}>

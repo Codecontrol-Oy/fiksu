@@ -22,6 +22,10 @@ exports.createMeasurement = async (args, context) => {
             throw new ApolloError(localeService.translate('FAMILY_MEMBER_NOT_FOUND'))
         }
 
+        if (args.value < 0) {
+            throw new ApolloError(localeService.translate('MEASUREMENT_NEGATIVE'))
+        }
+
         const date = new Date(args.date)
         const measurement = {
             value: args.value,
