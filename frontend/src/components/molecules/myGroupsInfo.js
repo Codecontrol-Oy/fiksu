@@ -20,9 +20,7 @@ const MyGroupsInfo = props => {
                         <Grid sizeS={12} sizeM={12} sizeL={4}>
                             <Heading variant={2} color={"secondary"}>Ryhmä {props.name}</Heading>
                             {props.members && props.members.length > 0 &&
-
                                 props.data.map((member => {
-
                                     return (
                                         <>
                                             <GridRow>
@@ -30,11 +28,10 @@ const MyGroupsInfo = props => {
                                                     <Paragraph color={"secondary"}>{(member.info.firstName && member.info.lastName ? member.info.firstName + " " + member.info.lastName : '[ Piilotettu ]')}</Paragraph>
                                                 </Grid>
                                                 <Grid sizeS={4} sizeM={4} sizeL={4}>
-                                                    <Paragraph color={"secondary"}>{member.ecopoints + "pts"}</Paragraph>
+                                                    <Paragraph color={"secondary"}>{member.ecopoints + "pistettä"}</Paragraph>
                                                 </Grid>
                                             </GridRow>
                                             <Divider color={"secondary"} />
-
                                         </>
                                     )
                                 }))

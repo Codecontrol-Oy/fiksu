@@ -38,7 +38,7 @@ const ProfileInfo = props => {
                             <Grid sizeS={6} sizeM={6} sizeL={6}>
                                 {props.data &&
                                     <Block className="profile-combined-achievement">
-                                        <Heading color={"secondary"} variant={3}>Energiankulutus</Heading>
+                                        <Heading color={"secondary"} variant={3}>Ekoteot</Heading>
                                         <i className={props.data.combinedEcoAchievement.icon} />
                                         <Heading variant={4} color={"secondary"}>{props.data.combinedEcoAchievement.points || 0}{" - pistettä"}</Heading>
                                         {props.data && props.data.combinedEcoAchievement.level !== "NONE" &&
@@ -56,7 +56,7 @@ const ProfileInfo = props => {
                             <Grid sizeS={6} sizeM={6} sizeL={6}>
                                 {props.data &&
                                     <Block className="profile-combined-achievement">
-                                        <Heading color={"secondary"} variant={3}>Ekoteot</Heading>
+                                        <Heading color={"secondary"} variant={3}>Energiankulutus</Heading>
                                         <i className={props.data.combinedElectricityAchievement.icon} />
                                         <Heading variant={4} color={"secondary"}>{props.data.combinedElectricityAchievement.points || 0}{" - pistettä"}</Heading>
                                         {props.data && props.data.combinedElectricityAchievement.level !== "NONE" &&
@@ -89,7 +89,7 @@ const ProfileInfo = props => {
                     <Grid sizeS={12} sizeM={6} sizeL={6}>
                         {props.data &&
                             <Block style={{ textAlign: 'center' }}>
-                                <DonutChart width={320} height={320} data={myData} title={"Sinun Ekopisteet"} />
+                                <DonutChart width={320} height={320} data={myData} title={"Sinun Ekopisteesi"} />
                             </Block>
                         }
 

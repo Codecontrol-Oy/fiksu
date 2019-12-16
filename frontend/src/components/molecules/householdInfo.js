@@ -36,28 +36,38 @@ const HouseholdInfo = props => {
             <Block className="household-info-wrapper">
                 <GridContainer size={12}>
                     <GridRow wrap>
-                        <Grid sizeS={12} sizeM={3} sizeL={4}>
+                    <Grid sizeS={12} sizeM={12} sizeL={4}>
                             <Heading variant={2} color={"secondary"}>Talous {props.name}</Heading>
                             {props.members && props.members.length > 0 &&
-
-                                props.members.map((member => {
-
+                                props.data.map((member => {
                                     return (
-                                        <Paragraph color={"secondary"}>{member.firstName + " " + member.lastName}</Paragraph>
+                                        <>
+                                            <GridRow>
+                                                <Grid sizeS={7} sizeM={7} sizeL={7}>
+                                                    <Paragraph color={"secondary"}>{(member.info.firstName && member.info.lastName ? member.info.firstName + " " + member.info.lastName : '[ Piilotettu ]')}</Paragraph>
+                                                </Grid>
+                                                <Grid sizeS={4} sizeM={4} sizeL={4}>
+                                                     <Paragraph color={"secondary"}>{member.ecopoints + " pistettä"}</Paragraph>
+                                                </Grid>
+                                            </GridRow>
+                                            <Divider color={"secondary"} />
+                                        </>
                                     )
                                 }))
                             }
-
                         </Grid>
-                        <Grid sizeS={12} sizeM={5} sizeL={4}>
-                            <Block>
-                                {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
-                            </Block>
-                        </Grid>
-                        <Grid size={12} sizeM={4} sizeL={4}>
-                            <Block style={{ textAlign: 'center' }}>
-                                {data.length > 0 && <DonutChart width={320} height={320} data={data} title={"Ekopisteet"} />}
-                            </Block>
+                        <Grid sizeS={12} sizeM={12} sizeL={8}>
+                            <Block style={{textAlign: 'center'}}>
+                            <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
+                            <GridRow size={12}>
+                            <Grid sizeS={12} sizeM={6} sizeL={6}>
+                            {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
+                            </Grid>
+                            <Grid sizeS={12} sizeM={6} sizeL={6}>
+                            {data.length > 0 && <DonutChart width={320} height={320} data={data} title={"Ekopisteet"} />}
+                            </Grid>
+                            </GridRow>
+                            </Block> 
                         </Grid>
                     </GridRow>
                 </GridContainer>
