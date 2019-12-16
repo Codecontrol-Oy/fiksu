@@ -4,17 +4,7 @@ import Heading from "../atoms/heading"
 import Divider from '../atoms/divider'
 import { useQuery } from "@apollo/react-hooks"
 import { GET_USER_FAMILIES } from '../../graphqlQueries'
-import HouseholdBadge from './householdBadge'
-import DonutChart from "./donutChart"
-import { GET_USER_ELECTRICITY_GRAPH, QUERY_CONSUMPTION_TYPES, GET_USER_ENERGY_SAVINGS, GET_USER_MEASUREMENTS } from '../../graphqlQueries'
-import { useMutation } from "@apollo/react-hooks"
-import Option from '../atoms/option'
-import Paragraph from '../atoms/paragraph'
-import SelectGroup from "../molecules/selectGroup"
-import Button from "../atoms/button"
 import HouseholdInfo from "./householdInfo"
-
-
 
 const ProfileFamily = props => {
 

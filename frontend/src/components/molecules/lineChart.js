@@ -48,7 +48,7 @@ class LineChart extends React.Component {
           width={320}
           yDomain={[Math.min(...YRange) - 100, Math.max(...YRange) + 100]}
           height={320}>
-          <XAxis />
+          <XAxis tickLabelAngle={-45} />
           <YAxis />
           {series}
         </XYPlot>

@@ -12,7 +12,8 @@ import InputHeading from '../molecules/inputHeading'
 import Button from '../atoms/button'
 import Heading from '../atoms/heading'
 import FamilyMember from './familyMember'
-import DonutChart from '../molecules/donutChart'
+import GroupPoints from './groupPoints'
+import GroupStackedPoints from './groupStackedPoints'
 import Option from '../atoms/option'
 import SelectGroup from "../molecules/selectGroup"
 import Paragraph from "../atoms/paragraph"
@@ -140,7 +141,14 @@ const GroupInfo = props => {
                 <Grid sizeS={12} sizeM={6} sizeL={6}>
                 <Block style={{textAlign: 'center'}}>
                   <Heading variant={2} color={"secondary"}>Ryhmän kuukausitulos</Heading>
-                  <DonutChart data={myData} title={"Ryhmäpisteet"} />
+                  <GridRow size={12}>
+                  <Grid sizeS={12} sizeM={6} sizeL={6}>
+                    <GroupPoints group={group} title={'Pisteet henkilöittäin'}/>
+                  </Grid>
+                  <Grid sizeS={12} sizeM={6} sizeL={6}>
+                    <GroupStackedPoints group={group} title={'jaottelu henkilöittäin'}/>
+                  </Grid>
+                </GridRow>
                   </Block> 
                 </Grid>
               <Divider />

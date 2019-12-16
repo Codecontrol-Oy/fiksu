@@ -13,7 +13,7 @@ import Paragraph from '../atoms/paragraph'
 
 const MyGroupsInfo = props => {
 
-    const [data, setData] = useState([{ angle: 8, label: "1", subLabel: "Jaakko" }, { angle: 5, label: "5", subLabel: "Teppo" }, { angle: 10, label: "5", subLabel: "Jippo" }])
+    const [data, setData] = useState([])
     const { loading: gLoading, error: gError, data: gData } = useQuery(GET_USER_ELECTRICITY_GRAPH, {
         variables: {
             id: props.id
@@ -21,15 +21,9 @@ const MyGroupsInfo = props => {
     })
 
     useEffect(() => {
-
-        console.log(props.data)
         const newData = props.data.map((item => {
             return { angle: item.ecopoints, label: item.ecopoints.toString(), subLabel: item.info.firstName }
         }))
-
-        const myData = [{ angle: 8, label: "1", subLabel: "Jaakko" }, { angle: 5, label: "5", subLabel: "Teppo" }, { angle: 10, label: "5", subLabel: "Jippo" }]
-
-        console.log(newData)
         setData(newData)
     }, [props.data])
     return (
@@ -66,7 +60,7 @@ const MyGroupsInfo = props => {
                         </Grid>
                         <Grid size={12} sizeM={4} sizeL={4}>
                             <Block style={{ textAlign: 'center' }}>
-                                <DonutChart width={320} height={320} data={data} title={"Ryhmän pisteet"} />
+                                {data.length > 0 && <DonutChart width={320} height={320} data={data} title={"Ryhmän pisteet"} /> }
                             </Block>
                         </Grid>
                     </GridRow>
