@@ -37,7 +37,7 @@ const HouseholdInfo = props => {
             <Block className="household-info-wrapper">
                 <GridContainer size={12}>
                     <GridRow wrap>
-                    <Grid sizeS={12} sizeM={12} sizeL={4}>
+                        <Grid sizeS={12} sizeM={12} sizeL={4}>
                             <Heading variant={2} color={"secondary"}>Talous {props.name}</Heading>
                             {props.members && props.members.length > 0 &&
                                 props.data.map((member => {
@@ -48,7 +48,7 @@ const HouseholdInfo = props => {
                                                     <Paragraph color={"secondary"}>{(member.info.firstName && member.info.lastName ? member.info.firstName + " " + member.info.lastName : '[ Piilotettu ]')}</Paragraph>
                                                 </Grid>
                                                 <Grid sizeS={4} sizeM={4} sizeL={4}>
-                                                     <Paragraph color={"secondary"}>{member.ecopoints + member.electricpoints + " pistettä"}</Paragraph>
+                                                    <Paragraph color={"secondary"}>{member.ecopoints + member.electricpoints + " pistettä"}</Paragraph>
                                                 </Grid>
                                             </GridRow>
                                             <Divider color={"secondary"} />
@@ -58,17 +58,17 @@ const HouseholdInfo = props => {
                             }
                         </Grid>
                         <Grid sizeS={12} sizeM={12} sizeL={8}>
-                            <Block style={{textAlign: 'center'}}>
-                            <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
-                            <GridRow size={12}>
-                            <Grid sizeS={12} sizeM={6} sizeL={6}>
-                            {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
-                            </Grid>
-                            <Grid sizeS={12} sizeM={6} sizeL={6}>
-                            {data.length > 0 && <FamilyPoints family={{_id: props.id}} title={"Talouden pisteet"} />}
-                            </Grid>
-                            </GridRow>
-                            </Block> 
+                            <Block style={{ textAlign: 'center' }}>
+                                <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
+                                <GridRow size={12}>
+                                    <Grid sizeS={12} sizeM={6} sizeL={6}>
+                                        {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
+                                    </Grid>
+                                    <Grid sizeS={12} sizeM={6} sizeL={6}>
+                                        {data.length > 0 && <FamilyPoints family={{ _id: props.id }} title={"Talouden pisteet"} />}
+                                    </Grid>
+                                </GridRow>
+                            </Block>
                         </Grid>
                     </GridRow>
                 </GridContainer>

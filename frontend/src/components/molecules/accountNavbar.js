@@ -28,9 +28,9 @@ const AccountNavbar = props => {
       {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 0 && <MenuItem active={props.location.pathname === constants.ROUTE_ACCOUNT_ELECTRICITY} icon={"icofont-energy-savings"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_ELECTRICITY)}>Energiankulutus</MenuItem>}
       <MenuItem active={props.location.pathname === constants.ROUTE_ACCOUNT_ECO} icon={"icofont-leaf"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_ECO)}>Ekoteot</MenuItem>
       <MenuItem alert={invitationsData && invitationsData.getUserPendingFamilies && invitationsData.getUserPendingFamilies.length > 0 ? true : false} active={props.location.pathname === constants.ROUTE_ACCOUNT_FAMILY} icon={"icofont-users-alt-1"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_FAMILY)}>Taloudet</MenuItem>
-      <MenuItem alert={groupInvitationsData && groupInvitationsData.getUserInvitedGroups && groupInvitationsData.getUserInvitedGroups.length > 0  ? true : false} active={props.location.pathname === constants.ROUTE_ACCOUNT_GROUP} icon={"icofont-users-social"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_GROUP)}>Ryhmät</MenuItem>
+      <MenuItem alert={groupInvitationsData && groupInvitationsData.getUserInvitedGroups && groupInvitationsData.getUserInvitedGroups.length > 0 ? true : false} active={props.location.pathname === constants.ROUTE_ACCOUNT_GROUP} icon={"icofont-users-social"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_GROUP)}>Ryhmät</MenuItem>
+      <MenuItem hidden={"m-down"} active={props.location.pathname === constants.ROUTE_ACCOUNT_SETTINGS} icon={"icofont-ui-settings"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_SETTINGS)}>Asetukset</MenuItem>
       <MenuItem active={props.location.pathname === constants.ROUTE_ACCOUNT_STATISTICS} icon={"icofont-win-trophy"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_STATISTICS)}>Tulokset</MenuItem>
-      <MenuItem active={props.location.pathname === constants.ROUTE_ACCOUNT_SETTINGS} icon={"icofont-ui-settings"} onClick={() => props.history.push(constants.ROUTE_ACCOUNT_SETTINGS)}>Asetukset</MenuItem>
     </MenuList>
   </AccountHeader>
   )

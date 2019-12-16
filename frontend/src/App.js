@@ -50,7 +50,6 @@ const App = () => (
         <Route component={NotFound} />
       </Switch>
     </Main>
-    <Footer />
   </>
 );
 

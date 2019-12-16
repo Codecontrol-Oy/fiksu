@@ -9,6 +9,8 @@ import * as constants from '../../constants'
 import Block from "../atoms/block"
 import { useQuery } from "@apollo/react-hooks"
 import { GET_MY_USER } from '../../graphqlQueries'
+import Heading from '../atoms/heading'
+import Divider from "../atoms/divider"
 
 const HeaderBar = props => {
 
@@ -69,16 +71,26 @@ const HeaderBar = props => {
                 </Grid>
             </HeaderList>
             <Block className={"mobile-navbar-button"}>
-                <i onClick={() => setShowMobileNav(!showMobileNav)} class="icofont-navigation-menu"></i>
+                <Grid sizeS={3} sizeM={2}>
+                    <Heading variant={3}>Valikko</Heading>
+                </Grid>
+                <Grid style={{ display: "flex", justifyContent: "center" }} sizeS={2} sizeM={1}>
+                    <i onClick={() => setShowMobileNav(!showMobileNav)} class="icofont-navigation-menu"></i>
+
+                </Grid>
             </Block>
             <MobileNavbar display={showMobileNav}>
                 <HeaderList>
+                    <Heading variant={3}>
+                        Hei {data && data.user.firstName + " " + data.user.lastName + " "}!
+                    </Heading>
                     {!localStorage.getItem("token") &&
                         <HeaderItem onClick={() => { props.history.push(constants.ROUTE_REGISTER); setShowMobileNav(false) }} >Kirjaudu sisään</HeaderItem>
                     }
                     <HeaderItem onClick={() => { props.history.push(constants.ROUTE_HOMEPAGE); setShowMobileNav(false) }} >Etusivu</HeaderItem>
                     <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT); setShowMobileNav(false) }} >Käyttäjätilini</HeaderItem>
                     <HeaderItem onClick={() => { props.history.push(constants.ROUTE_GDPR); setShowMobileNav(false) }}>Tietosuojaseloste</HeaderItem>
+                    <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT_SETTINGS); setShowMobileNav(false) }}>Asetukset</HeaderItem>
                     {localStorage.getItem("token") &&
                         <HeaderItem onClick={() => logOut()} >Kirjaudu ulos</HeaderItem>
                     }
