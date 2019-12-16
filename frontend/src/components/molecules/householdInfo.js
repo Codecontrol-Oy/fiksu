@@ -48,7 +48,7 @@ const HouseholdInfo = props => {
                                                     <Paragraph color={"secondary"}>{(member.info.firstName && member.info.lastName ? member.info.firstName + " " + member.info.lastName : '[ Piilotettu ]')}</Paragraph>
                                                 </Grid>
                                                 <Grid sizeS={4} sizeM={4} sizeL={4}>
-                                                     <Paragraph color={"secondary"}>{member.ecopoints + member.electricpoints + " pistettä"}</Paragraph>
+                                                     <Paragraph color={"secondary"}>{(member.ecopoints + member.electricpoints).toFixed(1) + " pistettä"}</Paragraph>
                                                 </Grid>
                                             </GridRow>
                                             <Divider color={"secondary"} />
