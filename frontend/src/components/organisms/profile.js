@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Block from "../atoms/block"
 import GridContainer from '../grid/container'
 import GridRow from '../grid/row'
@@ -7,31 +7,54 @@ import ProfileFamily from '../molecules/profileFamily'
 import ProfileBenefits from '../molecules/profileBenefits'
 import ProfileInfo from "../molecules/profileInfo"
 import ProfileGroups from "../molecules/profileGroups"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery, useLazyQuery } from "@apollo/react-hooks"
 import withSnackbar from '../molecules/withSnackbar'
-import { GET_DAILY_TIP } from '../../graphqlQueries'
+import { GET_DAILY_TIP, GET_USER_ACHIEVEMENTS, GET_MY_USER } from '../../graphqlQueries'
 
 const Profile = props => {
 
-    const { loading, error, data } = useQuery(GET_DAILY_TIP, {
+
+
+    let today = new Date()
+    let prevMonth = new Date()
+
+    prevMonth.setDate(1)
+    prevMonth.setMonth(today.getMonth() - 1)
+
+
+    const { loading: dLoading, dError, dData } = useQuery(GET_DAILY_TIP, {
         variables: {
             filter: {
-                date: "2019-12-12",
+                date: today.toJSON().slice(0, 10)
             }
+        }
+    })
+
+    const { loading, error, data } = useQuery(GET_USER_ACHIEVEMENTS, {
+        variables: {
+            userId: localStorage.getItem("userId"),
+            to: today.toJSON().slice(0, 10),
+            from: prevMonth.toJSON().slice(0, 10),
         },
         onCompleted(data) {
             console.log(data)
+        },
+        onError(data) {
+            console.log(data)
         }
+
     })
+
+
     return (
         <Block className="profile-container">
             <GridContainer height={12} width={12} direction={"column"}>
                 <Block id={"snackbars"} />
                 <GridRow justify={"center"}>
-                    <ProfileInfo />
+                    <ProfileInfo data={data && data.getUserAchievements} />
                 </GridRow>
                 <GridRow justify={"center"}>
-                    <ProfileAchievements />
+                    <ProfileAchievements data={data && data.getUserAchievements} />
                 </GridRow>
                 <GridRow justify={"center"}>
                     <ProfileFamily />
@@ -44,4 +67,4 @@ const Profile = props => {
     )
 
 }
-export default withSnackbar(Profile)
+export default Profile

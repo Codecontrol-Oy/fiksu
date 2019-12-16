@@ -6,9 +6,13 @@ import GridContainer from '../grid/container'
 import GridRow from '../grid/row'
 import Achievement from "../atoms/achievement"
 import Grid from '../grid/grid'
+import { useQuery } from "@apollo/react-hooks"
+import { GET_USER_ACHIEVEMENTS } from '../../graphqlQueries'
 
 
 const ProfileAchievements = props => {
+
+
 
     return (
         <Block className="profile-achievements">
@@ -16,27 +20,28 @@ const ProfileAchievements = props => {
             <Divider />
             <GridContainer direction={"row"} width={12}>
                 <GridRow wrap>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement />
+                    {props.data && props.data.ecoAchievements.length > 0 &&
+
+                        props.data.ecoAchievements.map((item => {
+
+                            return (
+                                <Grid sizeL={2} sizeS={6} sizeM={3}>
+                                    <Achievement
+                                        icon={item.icon}
+                                        points={item.points}
+                                        level={item.level}
+                                        type={item.type}
+                                        description={item.description}
+                                    />
+                                </Grid>
+                            )
+                        }))
+                    }
+                    <Grid sizeL={2} sizeS={6} sizeM={3}>
+                        <Achievement
+                        />
                     </Grid>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement />
-                    </Grid>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement />
-                    </Grid>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement />
-                    </Grid>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement />
-                    </Grid>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement />
-                    </Grid>
-                    <Grid size={1} sizeS={4} sizeM={2}>
-                        <Achievement locked />
-                    </Grid>
+
                 </GridRow>
             </GridContainer>
         </Block >
