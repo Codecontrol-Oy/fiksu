@@ -1145,6 +1145,7 @@ input::placeholder {
     display: none;
 }
 .menu-item {  
+
   margin: 0;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -1157,7 +1158,23 @@ input::placeholder {
   height: 100%;
 }
 .menu-item-icon {
+    position: relative;
   font-size: 1.5rem;
+}
+.menu-item-alert {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  right: 0;
+  height: 0.8rem;
+  width: 0.8rem;
+  background-color: rgba(255, 0, 0, 0.81);
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -ms-border-radius: 1rem;
+  -o-border-radius: 1rem;
 }
 .mobile-navbar-wrapper {
   position: fixed;
