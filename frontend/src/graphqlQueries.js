@@ -611,6 +611,21 @@ fragment Achievement on Achievement {
 }
 `
 
+const GET_DETAILED_POINTS = gql`
+query GetDetailedPoints($userId: ID, $householdId: ID, $groupId: ID, $from: Date, $to: Date) {
+  getDetailedPoints(userId: $userId, householdId: $householdId, groupId: $groupId, from: $from, to: $to) {
+    info {
+        firstName
+        lastName
+        loginInfo {
+            nickname
+        }
+    }
+    ecopoints
+    electricpoints
+  }
+}`
+
 export {
   GET_ME,
   QUERY_CONSUMPTION_TYPES,
@@ -634,5 +649,6 @@ export {
   GET_USER_APPLIED_GROUPS,
   GET_MY_USER,
   GET_DAILY_TIP,
-  GET_USER_ACHIEVEMENTS
+  GET_USER_ACHIEVEMENTS,
+  GET_DETAILED_POINTS
 }
