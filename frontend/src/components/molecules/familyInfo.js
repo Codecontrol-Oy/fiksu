@@ -75,7 +75,7 @@ const { loading: familyLoading, error: familyError, data: familyData } = useQuer
         <GridRow size={12}>
           <Grid>
             {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow size={12}>
-              <Grid sizeS={12} sizeM={6} sizeL={6}>
+              <Grid sizeS={12} sizeM={12} sizeL={4}>
                 <Card>
                   <InputHeading color={"secondary"} variant={2} name={`TALOUS ${family.name.toUpperCase()}`}>
                     {family.ownerId == localStorage.getItem('userId') && <Button
@@ -156,14 +156,14 @@ const { loading: familyLoading, error: familyError, data: familyData } = useQuer
                   </Block> }
                 </Card>
               </Grid>
-              <Grid sizeS={12} sizeM={6} sizeL={6}>
+              <Grid sizeS={12} sizeM={12} sizeL={6}>
                 <Block style={{textAlign: 'center'}}>
                 <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
                 <GridRow size={12}>
-                  <Grid sizeS={12} sizeM={6} sizeL={6}>
+                  <Grid sizeS={12} sizeM={12} sizeL={8}>
                     <FamilyPoints family={family} title={'Pisteet henkilöittäin'}/>
                   </Grid>
-                  <Grid sizeS={12} sizeM={6} sizeL={6}>
+                  <Grid sizeS={12} sizeM={12} sizeL={6}>
                     <FamilyStackedPoints family={family} title={'jaottelu henkilöittäin'}/>
                   </Grid>
                 </GridRow>

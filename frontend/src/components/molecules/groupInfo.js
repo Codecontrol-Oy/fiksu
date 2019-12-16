@@ -58,7 +58,7 @@ const GroupInfo = props => {
         <Block className="group-info">
           <GridContainer size={12} direction={"column"}>
           {groupsData && groupsData.getUserGroups.length > 0 && groupsData.getUserGroups.map(group => <GridRow size={12}>
-            <Grid sizeS={12} sizeM={6} sizeL={6}>
+            <Grid sizeS={12} sizeM={12} sizeL={4}>
             <Card>
             <InputHeading color={"secondary"} variant={2} name={`RYHMÄ ${group.name.toUpperCase()}`}>
                     {group.ownerId == localStorage.getItem('userId') && <Button
@@ -138,14 +138,14 @@ const GroupInfo = props => {
                   </Block> }
                     </Card>
                 </Grid>
-                <Grid sizeS={12} sizeM={6} sizeL={6}>
+                <Grid sizeS={12} sizeM={12} sizeL={8}>
                 <Block style={{textAlign: 'center'}}>
                   <Heading variant={2} color={"secondary"}>Ryhmän kuukausitulos</Heading>
                   <GridRow size={12}>
-                  <Grid sizeS={12} sizeM={6} sizeL={6}>
+                  <Grid sizeS={12} sizeM={12} sizeL={6}>
                     <GroupPoints group={group} title={'Pisteet henkilöittäin'}/>
                   </Grid>
-                  <Grid sizeS={12} sizeM={6} sizeL={6}>
+                  <Grid sizeS={12} sizeM={12} sizeL={6}>
                     <GroupStackedPoints group={group} title={'jaottelu henkilöittäin'}/>
                   </Grid>
                 </GridRow>
