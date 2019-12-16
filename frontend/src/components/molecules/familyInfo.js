@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Block from '../atoms/block'
-import { GET_USER_FAMILIES } from '../../graphqlQueries'
-import { useQuery, useMutation } from "@apollo/react-hooks"
+import { GET_USER_FAMILIES, GET_DETAILED_POINTS } from '../../graphqlQueries'
+import { useQuery, useMutation,useLazyQuery } from "@apollo/react-hooks"
 import { MUTATION_CREATE_FAMILY, MUTATION_REMOVE_FAMILY, MUTATION_REMOVE_FAMILY_MEMBER, MUTATION_PROMOTE_FAMILY_MEMBER, MUTATION_DEMOTE_FAMILY_MEMBER,MUTATION_CHANGE_FAMILY_VISIBILTY } from '../../graphqlMutations'
 import Heading from '../atoms/heading'
 import GridContainer from '../grid/container'
@@ -23,11 +23,13 @@ const FamilyInfo = props => {
 
 const [familyName, setFamilyname] = useState(undefined)
 
-  const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
+const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
     variables: {
       id: localStorage.getItem('userId')
     }
   })
+
+  const getFamilyData = useLazyQuery(GET_DETAILED_POINTS)
 
   const [createFamily, { loading: createFamilyLoading, error: createFamilyError, data: createFamilyData }] = useMutation(MUTATION_CREATE_FAMILY,
     {
@@ -66,6 +68,23 @@ const [familyName, setFamilyname] = useState(undefined)
     }
   )
 
+  const handleFamilyData = (family) => {
+      let today = new Date()
+      let tomorrow = new Date()
+      let lastMonth = new Date()
+      tomorrow.setDate(today.getDate() + 1)
+      lastMonth.setDate(lastMonth.getDate() - 31)
+      getFamilyData({
+        variables: {
+          householdId: family._id,
+          from: lastMonth,
+          to: tomorrow
+        }
+      }).then((r) => {
+        console.log(r)
+      })
+      return <span>moro</span>
+  }
   const myData = [{angle: 1, label: "1", subLabel:"ekopisteet"}, {angle: 5, label: "5", subLabel: "Sähkönkäyttöpisteet"}]
 
   return (
@@ -152,11 +171,14 @@ const [familyName, setFamilyname] = useState(undefined)
                       <Option key={'visibility-Public'} selected={family.permissions.visibility == 'PUBLIC' ? 'selected': undefined} value={'PUBLIC'} text={'Julkinen'} />
                     </SelectGroup>
                     </Block>
+                    <span>{handleFamilyData(family)}</span>
                   </Block> }
                 </Card>
               </Grid>
               <Grid sizeS={12} sizeM={6} sizeL={6}>
                 <Block style={{textAlign: 'center'}}>
+                  
+
                   <DonutChart data={myData} title={"Talouden pisteet"} />
                 </Block>
               </Grid>
