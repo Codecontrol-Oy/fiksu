@@ -156,14 +156,14 @@ const { loading: familyLoading, error: familyError, data: familyData } = useQuer
                   </Block> }
                 </Card>
               </Grid>
-              <Grid sizeS={12} sizeM={12} sizeL={6}>
+              <Grid sizeS={12} sizeM={12} sizeL={8}>
                 <Block style={{textAlign: 'center'}}>
                 <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
                 <GridRow size={12}>
-                  <Grid sizeS={12} sizeM={12} sizeL={8}>
+                  <Grid sizeS={12} sizeM={6} sizeL={6}>
                     <FamilyPoints family={family} title={'Pisteet henkilöittäin'}/>
                   </Grid>
-                  <Grid sizeS={12} sizeM={12} sizeL={6}>
+                  <Grid sizeS={12} sizeM={6} sizeL={6}>
                     <FamilyStackedPoints family={family} title={'jaottelu henkilöittäin'}/>
                   </Grid>
                 </GridRow>

@@ -15,8 +15,8 @@ const DonutChart = props => {
         width={320}
         padAngle={0.1}
         height={320}
-        innerRadius={100}
-        radius={140}
+        innerRadius={90}
+        radius={120}
         onValueMouseOver={(v) => {setRadialValue(v)}}
         onSeriesMouseOut={v => setRadialValue(false)}
         getAngle={d => d.angle}

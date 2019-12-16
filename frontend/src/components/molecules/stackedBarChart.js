@@ -27,6 +27,7 @@ class StackedBarChart extends React.Component {
       <div>
         <h3 className={(this.props.primary ? 'text' :'text-secondary')}>{this.props.title}</h3>
         <XYPlot
+          margin={{bottom: 70}}
           xType="ordinal"
           width={320}
           stackBy="y"

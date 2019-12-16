@@ -142,10 +142,10 @@ const GroupInfo = props => {
                 <Block style={{textAlign: 'center'}}>
                   <Heading variant={2} color={"secondary"}>Ryhmän kuukausitulos</Heading>
                   <GridRow size={12}>
-                  <Grid sizeS={12} sizeM={12} sizeL={6}>
+                  <Grid sizeS={12} sizeM={6} sizeL={6}>
                     <GroupPoints group={group} title={'Pisteet henkilöittäin'}/>
                   </Grid>
-                  <Grid sizeS={12} sizeM={12} sizeL={6}>
+                  <Grid sizeS={12} sizeM={6} sizeL={6}>
                     <GroupStackedPoints group={group} title={'jaottelu henkilöittäin'}/>
                   </Grid>
                 </GridRow>
