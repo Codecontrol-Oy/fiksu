@@ -584,6 +584,33 @@ query getAllTips($filter: TipFilterInput!) {
   }
 }
 `
+const GET_USER_ACHIEVEMENTS = gql`
+query GetUserAchievements($userId: ID, $from: Date!, $to: Date!) {
+  getUserAchievements(userId: $userId, from: $from, to: $to) {
+    ecoAchievements {
+        ...Achievement
+    }
+    combinedEcoAchievement {
+        ...Achievement
+    }
+    combinedElectricityAchievement {
+        ...Achievement
+    }
+  }
+}
+
+fragment Achievement on Achievement {
+  user {
+    firstName
+  }
+  points
+  icon
+  level
+  type
+  description
+}
+`
+
 export {
   GET_ME,
   QUERY_CONSUMPTION_TYPES,
@@ -606,5 +633,6 @@ export {
   GET_USER_INVITED_GROUPS,
   GET_USER_APPLIED_GROUPS,
   GET_MY_USER,
-  GET_DAILY_TIP
+  GET_DAILY_TIP,
+  GET_USER_ACHIEVEMENTS
 }

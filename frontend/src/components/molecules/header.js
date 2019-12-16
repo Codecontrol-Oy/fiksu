@@ -54,15 +54,15 @@ const HeaderBar = props => {
                     </Grid>
                 }
                 <Grid size={2}>
-                    <HeaderItem>UKK</HeaderItem>
-                </Grid>
-                <Grid size={2}>
-                    <HeaderItem>Yhteystiedot</HeaderItem>
-                </Grid>
-                <Grid size={2}>
                     <HeaderItem onClick={() => props.history.push(constants.ROUTE_GDPR)}>Tietosuojaseloste</HeaderItem>
                 </Grid>
-                <Grid size={2}>
+                <Grid size={1}>
+                </Grid>
+                <Grid size={1}>
+                </Grid>
+                <Grid size={1}>
+                </Grid>
+                <Grid size={1}>
                 </Grid>
                 <Grid size={2}>
                     <HeaderItem onClick={() => props.history.push(constants.ROUTE_HOMEPAGE)}>Fiksu</HeaderItem>
@@ -78,8 +78,7 @@ const HeaderBar = props => {
                     }
                     <HeaderItem onClick={() => { props.history.push(constants.ROUTE_HOMEPAGE); setShowMobileNav(false) }} >Etusivu</HeaderItem>
                     <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT); setShowMobileNav(false) }} >Käyttäjätilini</HeaderItem>
-                    <HeaderItem>UKK</HeaderItem>
-                    <HeaderItem>Tietoturvaseloste</HeaderItem>
+                    <HeaderItem onClick={() => { props.history.push(constants.ROUTE_GDPR); setShowMobileNav(false) }}>Tietosuojaseloste</HeaderItem>
                     {localStorage.getItem("token") &&
                         <HeaderItem onClick={() => logOut()} >Kirjaudu ulos</HeaderItem>
                     }

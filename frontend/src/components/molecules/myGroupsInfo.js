@@ -44,14 +44,18 @@ const MyGroupsInfo = props => {
                                 props.data.map((member => {
 
                                     return (
-                                        <GridRow>
-                                            <Grid sizeS={7} sizeM={7} sizeL={7}>
-                                                <Paragraph color={"secondary"}>{member.info.firstName + " " + member.info.lastName}</Paragraph>
-                                            </Grid>
-                                            <Grid sizeS={4} sizeM={4} sizeL={4}>
-                                                <Paragraph color={"secondary"}>{member.ecopoints + "pts"}</Paragraph>
-                                            </Grid>
-                                        </GridRow>
+                                        <>
+                                            <GridRow>
+                                                <Grid sizeS={7} sizeM={7} sizeL={7}>
+                                                    <Paragraph color={"secondary"}>{member.info.firstName + " " + member.info.lastName}</Paragraph>
+                                                </Grid>
+                                                <Grid sizeS={4} sizeM={4} sizeL={4}>
+                                                    <Paragraph color={"secondary"}>{member.ecopoints + "pts"}</Paragraph>
+                                                </Grid>
+                                            </GridRow>
+                                            <Divider color={"secondary"} />
+
+                                        </>
                                     )
                                 }))
                             }

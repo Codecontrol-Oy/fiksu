@@ -359,7 +359,22 @@ main {
   -o-transition: all 0.2s ease;
 }
 } 
-
+.menu-item-active {
+  transition: all 0.2s ease;
+  color: rgb(124, 251, 173);
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}   
+.menu-item-active > i {
+      transition: all 0.2s ease;
+  color: rgb(124, 251, 173);
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}
 .App {
   text-align: center;
   background-color: #282c34;
@@ -902,10 +917,17 @@ input::placeholder {
   border-color: rgba(116, 191, 241, 0.534);
   width: 100%; 
 }
+.divider-secondary {
+  border-color: rgba(181, 181, 181, 0.116);
+}
 .profile-achievements {
   width: 95%;
 }
 .achievement {
+  border: 1px solid #8080800a;
+    border-radius: 0.3rem;
+    box-shadow: 0px 1px 1px #00000038;
+    width: 10rem;
   position: relative;
   display: flex;
   flex-direction: column;  
@@ -916,7 +938,6 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(144, 218, 228);
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -924,7 +945,6 @@ input::placeholder {
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.274);
 
 }
 .achievement-image:hover {
@@ -937,7 +957,7 @@ input::placeholder {
     -o-transition: all 0.2s ease-in;
 }
 .achievement-image > i {
-  color: rgba(0, 0, 0, 0.199);
+  color: rgba(35, 204, 223, 0.577);
   font-size: 3rem;
 }
 .achievement-locked {
@@ -957,6 +977,57 @@ input::placeholder {
 .achievement-locked > i {
   font-size: 2rem;
   color: rgb(227, 148, 148);
+}
+.achievement-level {
+  position: absolute;
+  right: 0;
+  margin: 0.5rem;
+}
+.achievement-level > i {
+  font-size: 2rem;
+  color: grey;
+}
+.--level-BRONZE > i {
+  color: rgb(162, 128, 40);
+}
+.--level-SILVER > i {
+  color: rgb(191, 191, 191);
+}
+.--level-GOLD > i {
+  color: gold;
+}
+.profile-combined-achievement {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.profile-combined-achievement > i {
+  color: rgb(41, 169, 92);
+  font-size: 10rem;
+}
+.profile-combined-achievement-level {
+
+}
+.profile-combined-achievement-level > i {
+  color: rgba(128, 128, 128, 0.233);
+  font-size: 1.5rem;
+}
+.profile-tip {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.199);
+  height: 7rem;
+  border-radius: 0.2rem;
+  -webkit-border-radius: 0.2rem;
+  -moz-border-radius: 0.2rem;
+  -ms-border-radius: 0.2rem;
+  -o-border-radius: 0.2rem;
 }
 .radio-input {
   position: relative;
@@ -1073,8 +1144,8 @@ input::placeholder {
 .menu-list::-webkit-scrollbar {
     display: none;
 }
-.menu-item {
-  overflow: hidden;
+.menu-item {  
+
   margin: 0;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -1087,7 +1158,23 @@ input::placeholder {
   height: 100%;
 }
 .menu-item-icon {
+    position: relative;
   font-size: 1.5rem;
+}
+.menu-item-alert {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  right: 0;
+  height: 0.8rem;
+  width: 0.8rem;
+  background-color: rgba(255, 0, 0, 0.81);
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -ms-border-radius: 1rem;
+  -o-border-radius: 1rem;
 }
 .mobile-navbar-wrapper {
   position: fixed;
