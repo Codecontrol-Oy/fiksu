@@ -220,19 +220,19 @@ exports.seed = () => {
             }
         })
 
-    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi-/paperipussia.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-bag')
-    addEcoAction('Vähensin autoilua', 'Autoilu kuormittaa ympäristöä. Vähentämällä autoilua säästä ympäristöä ja parhaassa tapauksessa parannat myös omaa kuntoasi.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-car-alt-2')
-    addEcoAction('Ostin luomuelintarvikkeita', 'Luomuviljelyssä käytetään vähemmän sinulle ja ympäristölle vahingollisia kemikaaleja.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-food-basket')
-    addEcoAction('Söin itsekasvatettua ruokaa', 'Ruokaa itse kasvattamalla vähennät ruoan teolliseen tuottamiseen liittyviä päästöjä. Näin tiedät myös tarkalleen mitä syöt.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-farmer')
-    addEcoAction('Pesin täyden koneellisen', 'Pesemällä täyden koneellisen säästät rahaa ja ympäristöä.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-washing-machine')
-    addEcoAction('Säästin (lämmintä) vettä', 'Veden pumppaamiseen kuluva energia vähenee sekä jätevettä tarvitsee käsitellä vähemmän. Myös sähkölasku pienenee kun veden lämmittämiseen käytetyn sähkön määrä vähenee.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-water-drop')
-    addEcoAction('Lajittelin jätteet', 'Jätteitä pystytään hyödyntämään uudestaan, kun ne ny pysyvät puhtaana lajittelun avulla. Näin pystytään vähentämään luonnonvarojen käyttöä.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-trash')
-    addEcoAction('Vähensin lentomatkustusta', 'Lentämisestä aiheutuva ympäristökuorma on suuri, joten sen vähentäminen on hyvää ympäristölle.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-airplane-alt')
-    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa, voit säästää lämmityskuluissa.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-snow-temp')
-    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2, 'TypePlaceholder', 'DescPlaceholder', 'icofont-newspaper')
+    addEcoAction('Käytin kestokassia', 'Kestokassia käyttämällä ei tarvitse ostaa aina uutta muovi-/paperipussia.', 0.2, true, 'Kestokassi', 'Käytät omaa kestokassia kun käyt esimerkiksi kaupassa.', 'icofont-bag')
+    addEcoAction('Vähensin autoilua', 'Autoilu kuormittaa ympäristöä. Vähentämällä autoilua säästä ympäristöä ja parhaassa tapauksessa parannat myös omaa kuntoasi.', 0.2, true, 'Polkuauto', 'Olet jättänyt auton talliin ja kulkenut esimerkiksi pyörällä.', 'icofont-car-alt-2')
+    addEcoAction('Ostin luomuelintarvikkeita', 'Luomuviljelyssä käytetään vähemmän sinulle ja ympäristölle vahingollisia kemikaaleja.', 0.2, true, 'Luomu on paras', 'Ostat luomua, joka on hyvää sekä itsellesi, että ympäristölle.', 'icofont-food-basket')
+    addEcoAction('Söin itsekasvatettua ruokaa', 'Ruokaa itse kasvattamalla vähennät ruoan teolliseen tuottamiseen liittyviä päästöjä. Näin tiedät myös tarkalleen mitä syöt.', 0.2, true, 'Viherpeukalo', 'Kasvatat itse itsellesi syötävää.', 'icofont-farmer')
+    addEcoAction('Pesin täyden koneellisen', 'Pesemällä täyden koneellisen säästät rahaa ja ympäristöä.', 0.2, true, 'Pesuri', 'Peset täysiä koneellisia pyykkejä/tiskejä.', 'icofont-washing-machine')
+    addEcoAction('Säästin (lämmintä) vettä', 'Veden pumppaamiseen kuluva energia vähenee sekä jätevettä tarvitsee käsitellä vähemmän. Myös sähkölasku pienenee kun veden lämmittämiseen käytetyn sähkön määrä vähenee.', 0.2, true, 'Vedensäästäjä', 'Olet vähentänyt vedenkulutustasi ansiokkaasti.', 'icofont-water-drop')
+    addEcoAction('Lajittelin jätteet', 'Jätteitä pystytään hyödyntämään uudestaan, kun ne ny pysyvät puhtaana lajittelun avulla. Näin pystytään vähentämään luonnonvarojen käyttöä.', 0.2, true, 'Lajittelu ekspertti', 'Jätteiden lajittelu ei tuota sinulle ongelmia.', 'icofont-trash')
+    addEcoAction('Vähensin lentomatkustusta', 'Lentämisestä aiheutuva ympäristökuorma on suuri, joten sen vähentäminen on hyvää ympäristölle.', 0.2, true, 'Jalat maassa', 'Olet vähentänyt lentomatkustustasi ansiokkaasti.', 'icofont-airplane-alt')
+    addEcoAction('Viilensin asuntoni lämpötilaa', 'Viilentämällä asunnon lämpötilaa, voit säästää lämmityskuluissa.', 0.2, false, null, null, 'icofont-snow-temp')
+    addEcoAction('Kielsin ilmaisjakelun', 'Ilmaisjakelun kieltämisellä pystytään vähentämään paperiroskaa.', 0.2, false, null, null, 'icofont-newspaper')
 }
 
-function addEcoAction(title, description, amount, achievementType, achievementDescription, icon) {
+function addEcoAction(title, description, amount, hasAchievement, achievementType, achievementDescription, icon) {
     EcoAction.findOne({ title: title })
         .then((result) => {
             if (!result) {
@@ -240,10 +240,22 @@ function addEcoAction(title, description, amount, achievementType, achievementDe
                     title: title,
                     description: description,
                     amount: amount,
+                    hasAchievement: hasAchievement,
                     achievementType: achievementType,
                     achievementDescription: achievementDescription,
                     icon: icon
                 })
+            }
+            else {
+                return EcoAction.findOneAndUpdate({ title: title }, {
+                    title: title,
+                    description: description,
+                    amount: amount,
+                    hasAchievement: hasAchievement,
+                    achievementType: achievementType,
+                    achievementDescription: achievementDescription,
+                    icon: icon
+                }, { new: true, returnNewDocument: true, useFindAndModify: false })
             }
         })
 }

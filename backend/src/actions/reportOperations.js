@@ -51,7 +51,7 @@ exports.getElectricityGraph = async (args, context) => {
             })
 
             // Calculate savings
-            const savedConsumptions = await SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
+            const savedConsumptions = await SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lte": to } })
                 .populate('consumptionTypeId')
                 .then((savings) => {
                     if (savings) {
@@ -96,7 +96,7 @@ exports.getUserEcoActionsGraph = async (args, context) => {
     const from = new Date(args.from)
     const to = new Date(args.to)
     const fullRange = args.fullRange
-    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lt": to } })
+    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lte": to } })
         .sort({ date: 1 })
         .then(async (ecoActions) => {
             if (ecoActions.length <= 0) {
@@ -134,7 +134,7 @@ exports.getUserEcoActionsGraph = async (args, context) => {
 }
 
 function getEcoActionAchievements(userId, from, to) {
-    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lt": to } })
+    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lte": to } })
         .sort({ date: 1 })
         .populate('ecoActionTypeId')
         .then(async (ecoActions) => {
@@ -144,15 +144,17 @@ function getEcoActionAchievements(userId, from, to) {
             await EcoActionType.find({})
                 .then((ecoActionTypes) => {
                     ecoActionTypes.map((ecoActionType) => {
-                        results.push({
-                            id: ecoActionType._id.toString(),
-                            userId: userId,
-                            points: 0,
-                            icon: ecoActionType.icon,
-                            level: 'NONE',
-                            type: ecoActionType.achievementType,
-                            description: ecoActionType.achievementDescription
-                        })
+                        if (ecoActionType && ecoActionType.hasAchievement) {
+                            results.push({
+                                id: ecoActionType._id.toString(),
+                                userId: userId,
+                                points: 0,
+                                icon: ecoActionType.icon,
+                                level: 'NONE',
+                                type: ecoActionType.achievementType,
+                                description: ecoActionType.achievementDescription
+                            })
+                        }
                     })
                 })
 
@@ -276,7 +278,7 @@ async function getUserEcoPoints(args, context) {
     const userId = args?.userId ?? context.user._id
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lt": to } })
+    return SavedEcoActions.find({ userId: userId, date: { "$gte": from, "$lte": to } })
         .sort({ date: 1 })
         .populate('ecoActionTypeId')
         .then(async (ecoActions) => {
@@ -303,7 +305,7 @@ async function getUserElectricPoints(args, context) {
     const from = new Date(args.from)
     const to = new Date(args.to)
 
-    return Measurement.find({ householdId: householdId, date: { "$gte": from, "$lt": to } })
+    return Measurement.find({ householdId: householdId, date: { "$gte": from, "$lte": to } })
         .sort({ date: 1 })
         .then(async (measurements) => {
             let totalPoints = 0
@@ -312,7 +314,7 @@ async function getUserElectricPoints(args, context) {
             }
 
             // Calculate savings
-            const savedConsumptions = await SavedConsumption.find({ householdId: householdId, userId: userId, date: { "$gte": from, "$lt": to } })
+            const savedConsumptions = await SavedConsumption.find({ householdId: householdId, userId: userId, date: { "$gte": from, "$lte": to } })
                 .populate('consumptionTypeId')
                 .then((savings) => {
                     if (savings) {
