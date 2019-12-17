@@ -395,7 +395,7 @@ async function getFamilyResults(args) {
         .then(async (familyMemberIds) => {
             let totalPoints = 0
             for (let i = 0; i < familyMemberIds.length; i++) {
-                totalPoints += parseFloat(await getUserFamilyPoints(familyMemberIds[i], args.from, args.to))
+                totalPoints += parseFloat(await getUserFamilyPoints(familyMemberIds[i], args.from, args.to, familyId))
                 totalPoints += parseFloat(await getUserEcoPoints({
                     userId: familyMemberIds[i],
                     from: args.from,
@@ -430,7 +430,7 @@ async function getGroupResults(args) {
     return parseFloat(totalPoints).toFixed(2)
 }
 
-async function getUserFamilyPoints(userId, from, to) {
+async function getUserFamilyPoints(userId, from, to, familyId) {
     to = to ?? new Date()
     if (!from) {
         from = new Date()
@@ -438,7 +438,13 @@ async function getUserFamilyPoints(userId, from, to) {
     }
 
     // Family points
-    let memberFamilies = await getUserFamilies(userId)
+    let memberFamilies = null
+    if (!familyId) {
+        memberFamilies = await getUserFamilies(userId)
+    }
+    else {
+        memberFamilies = await getUserHousehold(familyId)
+    }
     let totalFamilyPoints = 0
     for (let y = 0; y < memberFamilies.length; y++) {
         let points = await getUserElectricPoints({
@@ -571,6 +577,10 @@ function getAllPublicGroups() {
 
 function getUserFamilies(groupMemberId) {
     return Family.find({ $or: [{ ownerId: groupMemberId }, { memberIds: groupMemberId }, { adminIds: groupMemberId }] })
+}
+
+function getUserHousehold(householdId) {
+    return Family.find({ _id: householdId })
 }
 
 function generateDataSet(fullRange, from, to, data) {
