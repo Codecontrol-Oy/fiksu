@@ -16,7 +16,7 @@ const ProfileAchievements = props => {
             <Heading align={"left"} color={"secondary"} variant={4}>Saavutukseni</Heading>
             <Divider />
             <GridContainer direction={"row"} width={12}>
-                <GridRow wrap>
+                <GridRow justify={"start"} wrap>
                     {props.data && props.data.ecoAchievements && props.data.ecoAchievements.length > 0 &&
                         props.data.ecoAchievements.map((item => {
                             return (
@@ -26,6 +26,7 @@ const ProfileAchievements = props => {
                                         points={(item.points ? item.points : 0)}
                                         level={item.level}
                                         type={item.type}
+                                        name={item.type}
                                         description={item.description}
                                     />
                                 </Grid>

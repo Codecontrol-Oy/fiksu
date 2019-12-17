@@ -22,7 +22,7 @@ const Profile = props => {
     prevMonth.setMonth(today.getMonth() - 1)
 
 
-    const { loading: dLoading, dError, dData } = useQuery(GET_DAILY_TIP, {
+    const { loading: dLoading, error: dError, data: tipData } = useQuery(GET_DAILY_TIP, {
         variables: {
             filter: {
                 date: today.toJSON().slice(0, 10)
@@ -56,21 +56,21 @@ const Profile = props => {
     return (
         <Block className="profile-container">
             {uData && uData.user &&
-            <GridContainer height={12} width={12} direction={"column"}>
-                <Block id={"snackbars"} />
-                <GridRow justify={"center"}>
-                     <ProfileInfo user={uData.user} data={data && data.getUserAchievements} />
-                </GridRow>
-                <GridRow justify={"center"}>
-                    <ProfileAchievements data={data && data.getUserAchievements} />
-                </GridRow>
-                <GridRow justify={"center"}>
-                    <ProfileFamily />
-                </GridRow>
-                <GridRow justify={"center"}>
-                    <ProfileGroups />
-                </GridRow>
-            </GridContainer>}
+                <GridContainer height={12} width={12} direction={"column"}>
+                    <Block id={"snackbars"} />
+                    <GridRow justify={"center"}>
+                        <ProfileInfo tip={tipData && tipData.getAllTips.length > 0 && tipData.getAllTips[0]} user={uData.user} data={data && data.getUserAchievements} />
+                    </GridRow>
+                    <GridRow justify={"center"}>
+                        <ProfileAchievements data={data && data.getUserAchievements} />
+                    </GridRow>
+                    <GridRow justify={"center"}>
+                        <ProfileFamily />
+                    </GridRow>
+                    <GridRow justify={"center"}>
+                        <ProfileGroups />
+                    </GridRow>
+                </GridContainer>}
         </Block>
     )
 

@@ -50,7 +50,7 @@ background: linear-gradient(to top, rgb(83, 203, 240), #076585); /* W3C, IE 10+/
 .main-header {
   display: flex;
   justify-content: center;
-  height: 10vh;
+  height: 4rem;
   width: 100%;
   position: relative;
   
@@ -73,7 +73,7 @@ z-index: 99999;
   position: fixed;
   bottom: 0;
   display: flex;
-  height: 10vh;
+  height: 4rem;
   width: 100%;
   background-color: rgb(88, 160, 181);
   order: 1;  
@@ -267,6 +267,7 @@ main {
   width: 100%;
   min-height: 90vh;
   overflow: hidden;
+  padding-bottom: 2rem;
 
 }
 
@@ -374,6 +375,15 @@ main {
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
+}
+@media only screen and (max-width: 768px) {
+  .menu-item-active .menu-item-icon {
+    transform: translateY(-0.3rem);
+    -webkit-transform: translateY(-0.3rem);
+    -moz-transform: translateY(-0.3rem);
+    -ms-transform: translateY(-0.3rem);
+    -o-transform: translateY(-0.3rem);
+}
 }
 .App {
   text-align: center;
@@ -933,6 +943,12 @@ input::placeholder {
   flex-direction: column;  
   align-items: center;
 }
+@media only screen and (max-width: 768px) {
+  .achievement {
+    width: 100%;
+  }
+  
+}
 .achievement-image {
   cursor: pointer;
   display: flex;
@@ -1006,7 +1022,7 @@ input::placeholder {
   flex-direction: column;
 }
 .profile-combined-achievement > i {
-  color: rgb(41, 169, 92);
+  color: rgb(123, 208, 155);
   font-size: 10rem;
 }
 .profile-combined-achievement-level {
@@ -1141,6 +1157,15 @@ input::placeholder {
     justify-content: space-around;
   }
 }
+@media screen and (min-width: 320px) and (max-width:812px) and (orientation: landscape) { 
+  .menu-list {
+    justify-content: space-around;
+  }
+  .achievement-progress-inner {
+  width: 40% !important;
+  height: 100%;
+}
+}
 .menu-list::-webkit-scrollbar {
     display: none;
 }
@@ -1158,8 +1183,14 @@ input::placeholder {
   height: 100%;
 }
 .menu-item-icon {
-    position: relative;
+  transition: all 0.2s ease;
+  position: relative;
   font-size: 1.5rem;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  -webkit-filter: s;
 }
 .menu-item-alert {
   position: absolute;
@@ -1205,7 +1236,6 @@ input::placeholder {
 }
 @media only screen and (min-width: 769px) {
 .mobile-navbar-button {
-
   display: none;
 }
 }
@@ -1213,7 +1243,73 @@ input::placeholder {
   font-size: 2rem;
 }
 .mobile-navbar-button {
-    margin: 1rem;
+
+  width: 100%;
+  display: none;
+  justify-content: flex-end;
+  align-items: baseline;
+  margin: 1rem;
+
+}
+.achievement-progress {
+  visibility: hidden;
+  opacity: 0;
+  border-radius: inherit;
+  -webkit-border-radius: inherit;
+  -moz-border-radius: inherit;
+  -ms-border-radius: inherit;
+  -o-border-radius: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(52, 52, 52, 0.719);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.achievement-progress-level {
+  font-size: 1.5rem;
+}
+.progress-show {
+  animation: progressShow 0.2s ease forwards;
+  -webkit-animation: progressShow 0.2s ease forwards;
+}
+.progress-hide {
+  animation: progressHide 0.2s ease forwards;
+  -webkit-animation: progressHide 0.2s ease forwards;
+}
+@keyframes progressShow {
+  0% {
+  visibility: visible;
+  opacity: 0;
+
+  }
+  100% {
+      visibility: visible;
+  opacity: 1;
+  }
+}
+@keyframes progressHide {
+  0% {
+  visibility: visible;
+  opacity: 1;
+
+  }
+  90% {
+  opacity: 0;
+  }
+  100% {
+          visibility: hidden;
+  }
+}
+.achievement-progress-inner {
+  width: 70%;
+  height: 100%;
+}
+@media only screen and (max-width: 768px) {
+  .mobile-navbar-button {
+    display: flex;
+  }
 }
 @keyframes mobileNav {
   0% {
@@ -1317,6 +1413,7 @@ input::placeholder {
   }
   .account-header {
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.219);
+        outline: 1px solid #969696c7;
   }
 }
 
@@ -1521,6 +1618,21 @@ input::placeholder {
 .s-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
 
 }
+@media screen and (min-width: 320px) and (max-width:812px) and (orientation: landscape) {
+.s-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
+.s-grid-2 {min-width: 16.66% !important; max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
+.s-grid-3 {min-width: 24.99% !important; max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }
+.s-grid-4 {min-width: 33.32% !important; max-width: 33.32% !important; flex-basis: 33.32% !important; padding: 0.5rem;  }
+.s-grid-5 {min-width: 41.65% !important; max-width: 41.65% !important; flex-basis: 41.65% !important; padding: 0.5rem;  }
+.s-grid-6 {min-width: 50% !important; max-width: 50% !important; flex-basis: 50% !important; padding: 0.5rem;  }
+.s-grid-7 {min-width: 58.31% !important; max-width: 58.31% !important; flex-basis: 58.31% !important; padding: 0.5rem;}
+.s-grid-8 {min-width: 66.64% !important; max-width: 66.64% !important; flex-basis: 66.64% !important; padding: 0.5rem;  }
+.s-grid-9 {min-width: 74.97% !important; max-width: 74.97% !important; flex-basis: 74.97% !important; padding: 0.5rem; }
+.s-grid-10 {min-width: 83.3% !important; max-width: 83.3% !important; flex-basis: 83.3% !important; padding: 0.5rem;  }
+.s-grid-11 {min-width: 91.63% !important; max-width: 91.63% !important; flex-basis: 91.63% !important; padding: 0.5rem;  }
+.s-grid-12 {min-width: 100% !important; flex-basis: 100% !important; max-width: 100%; padding: 0.5rem;  }
+
+}
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
 .m-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
@@ -1596,6 +1708,12 @@ input::placeholder {
   margin: 5.5rem;
 }
 
+@media only screen and (max-width: 768px) {
+.hidden-m-down {
+  display: none;
+  visibility: hidden;
+}
+}
 
 
 .flex {display: flex}
@@ -2085,4 +2203,26 @@ select, input {
 }
 .header-icon {
   display: inline-block
+}
+
+.ripple-test {
+  background-position: center;
+  transition: background 0.5s;
+  -webkit-transition: background 0.5s;
+  -moz-transition: background 0.5s;
+  -ms-transition: background 0.5s;
+  -o-transition: background 0.5s;
+  background: transparent radial-gradient(circle, rgba(255, 255, 255, 0.242) 1%, transparent 1%) center/20000%;
+  background-size: 100%;
+  transition: background 0s forwards;
+  -webkit-transition: background 0s forwards;
+  -moz-transition: background 0s forwards;
+  -ms-transition: background 0s forwards;
+  -o-transition: background 0s forwards;
+}
+.ripple-test:hover {
+
+}
+.ripple-test:active {
+
 }

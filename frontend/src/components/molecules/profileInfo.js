@@ -19,15 +19,20 @@ const ProfileInfo = props => {
 
     const [myData, setData] = useState([{ angle: 1, label: "0", subLabel: "Energiankulutus" }, { angle: 2, label: "0", subLabel: "EkoTeot" }])
 
+    console.log(props.tip)
     useEffect(() => {
         if (props.data) {
             setData([
-                { angle: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points: 0, 
-                  label: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points.toString(): "0", 
-                  subLabel: "Energiankulutus" }, 
-                { angle: props.data.combinedEcoAchievement ? props.data.combinedEcoAchievement.points: 0, 
-                  label: props.data.combinedEcoAchievement ? props.data.combinedEcoAchievement.points.toString() : "0", 
-                  subLabel: "EkoTeot" }])
+                {
+                    angle: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points : 0,
+                    label: props.data.combinedElectricityAchievement ? props.data.combinedElectricityAchievement.points.toString() : "0",
+                    subLabel: "Energiankulutus"
+                },
+                {
+                    angle: props.data.combinedEcoAchievement ? props.data.combinedEcoAchievement.points : 0,
+                    label: props.data.combinedEcoAchievement ? props.data.combinedEcoAchievement.points.toString() : "0",
+                    subLabel: "EkoTeot"
+                }])
         }
 
     }, [props.data])
@@ -39,59 +44,59 @@ const ProfileInfo = props => {
                 <GridRow wrap >
                     <Grid sizeS={12} sizeL={6} sizeM={6}>
                         <GridRow wrap>
-                                {props.data && props.data.combinedEcoAchievement &&
+                            {props.data && props.data.combinedEcoAchievement &&
                                 <Grid sizeS={6} sizeM={6} sizeL={6}>
                                     <Block className="profile-combined-achievement">
                                         <Heading color={"secondary"} variant={3}>Ekoteot</Heading>
                                         <i className={props.data.combinedEcoAchievement.icon} />
                                         <Heading variant={4} color={"secondary"}>{props.data.combinedEcoAchievement.points || 0}{" - pistettä"}</Heading>
-                                        {props.data && props.data.combinedEcoAchievement.level !== "NONE" &&
-                                            <>
-                                                <Divider color={"secondary"} />
-                                                <Block className={`profile-combined-achievement-level --level-${props.data.combinedEcoAchievement.level}`}>
+                                        <Divider color={"secondary"} />
+                                        <Block className={`profile-combined-achievement-level --level-${props.data.combinedEcoAchievement.level}`}>
+                                            {props.data && props.data.combinedEcoAchievement.level !== "NONE" &&
+                                                <>
                                                     <i class="icofont-medal"></i>
-                                                </Block>
-                                            </>
-                                        }
 
+                                                </>
+                                            }
+                                        </Block>
                                     </Block>
-                                    </Grid>
-                                }
-                                {props.data && props.data.combinedElectricityAchievement &&
+                                </Grid>
+                            }
+                            {props.data && props.data.combinedElectricityAchievement &&
                                 <Grid sizeS={6} sizeM={6} sizeL={6}>
                                     <Block className="profile-combined-achievement">
                                         <Heading color={"secondary"} variant={3}>Energiankulutus</Heading>
                                         <i className={props.data.combinedElectricityAchievement.icon} />
                                         <Heading variant={4} color={"secondary"}>{props.data.combinedElectricityAchievement.points || 0}{" - pistettä"}</Heading>
-                                        {props.data && props.data.combinedElectricityAchievement.level !== "NONE" &&
-                                            <>
-                                                <Divider color={"secondary"} />
-                                                <Block className={`profile-combined-achievement-level --level-${props.data.combinedElectricityAchievement.level}`}>
+                                        <Divider color={"secondary"} />
+                                        <Block className={`profile-combined-achievement-level --level-${props.data.combinedElectricityAchievement.level}`}>
+                                            {props.data && props.data.combinedElectricityAchievement.level !== "NONE" &&
+                                                <>
                                                     <i class="icofont-medal"></i>
-                                                </Block>
-                                            </>
-                                        }
+                                                </>
+                                            }
+                                        </Block>
                                     </Block>
 
                                 </Grid>}
-                            
+
                             {props.data && (!props.data.combinedEcoAchievement && !props.data.combinedElectricityAchievement) &&
-                             <Grid sizeS={12} sizeM={12} sizeL={12}>
-                                <Block className="profile-combined-achievement">
-                            <Heading color={"secondary"} variant={3}>Hei, {props.user.firstName}</Heading>
-                                         <Paragraph color={"secondary"}>Kuukauden ajalta ei löydy merkattuja ekotekoja tai talouden sähkönsäästömerkintöjä.</Paragraph>
-                                         <Paragraph color={"secondary"}>Ekotekoja voit kirjata EKOTEOT -välilehdeltä, ja mikäli olet mukana taloudessa, sähkömerkintöjä voit merkata ENERGIANKULUTUS välilehdeltä!</Paragraph>
+                                <Grid sizeS={12} sizeM={12} sizeL={12}>
+                                    <Block className="profile-combined-achievement">
+                                        <Heading color={"secondary"} variant={3}>Hei, {props.user.firstName}</Heading>
+                                        <Paragraph color={"secondary"}>Kuukauden ajalta ei löydy merkattuja ekotekoja tai talouden sähkönsäästömerkintöjä.</Paragraph>
+                                        <Paragraph color={"secondary"}>Ekotekoja voit kirjata EKOTEOT -välilehdeltä, ja mikäli olet mukana taloudessa, sähkömerkintöjä voit merkata ENERGIANKULUTUS välilehdeltä!</Paragraph>
                                         <Paragraph color={"secondary"}>Jos haluat perustaa oman talouden, voit tehdä sen TALOUDET -välilehdeltä.</Paragraph>
-                                </Block>
+                                    </Block>
                                 </Grid>
                             }
                             <Grid sizeS={12} sizeM={12} sizeL={12}>
-                                {props.data &&
+                                {props.tip &&
                                     <Block className="profile-tip">
-                                        <Heading color={"secondary"} variant={4}>Kestävän arjen vinkki!</Heading>
+                                        <Heading color={"secondary"} variant={4}>{props.tip.title}</Heading>
 
                                         <Paragraph size={4} color={"secondary"}>
-                                            Pienemmällä kulutuksella säästät enemmän.
+                                            {props.tip.description}
                                         </Paragraph>
                                     </Block>
                                 }
