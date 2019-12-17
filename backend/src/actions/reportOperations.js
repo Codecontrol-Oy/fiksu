@@ -478,7 +478,9 @@ exports.getTopFamilyResults = async (args, context) => {
                         familyId: houseHold._id.toString(),
                         from: args.from,
                         to: args.to
-                    })).toFixed(2)
+                    })).toFixed(2),
+                    from: args.from,
+                    to: args.to
                 })
             }
 
@@ -529,7 +531,9 @@ exports.getTopGroupResults = async (args, context) => {
                         groupId: group._id.toString(),
                         from: args.from,
                         to: args.to
-                    })).toFixed(2)
+                    })).toFixed(2),
+                    from: args.from,
+                    to: args.to
                 })
             }
 

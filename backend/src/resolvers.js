@@ -562,13 +562,17 @@ const resolvers = {
     points: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getFamilyResults({
-        familyId: obj._id.toString()
+        familyId: obj._id.toString(),
+        from: obj.from,
+        to: obj.to
       })
     },
     detailedPoints: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getDetailedPoints({
-        householdId: obj._id.toString()
+        householdId: obj._id.toString(),
+        from: obj.from,
+        to: obj.to
       })
     }
   },
@@ -609,13 +613,17 @@ const resolvers = {
     points: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getGroupResults({
-        groupId: obj._id.toString()
+        groupId: obj._id.toString(),
+        from: obj.from,
+        to: obj.to
       })
     },
     detailedPoints: (obj, args, context) => {
       new AuthHelper(context.user).validateAuthorization()
       return getDetailedPoints({
-        groupId: obj._id.toString()
+        groupId: obj._id.toString(),
+        from: obj.from,
+        to: obj.to
       })
     }
   },
@@ -637,10 +645,20 @@ const resolvers = {
     household: (obj, args, context) => {
       if (!obj?.householdId) return null
       return getFamily(obj.householdId)
+        .then((household) => {
+          household.from = obj.from
+          household.to = obj.to
+          return household
+        })
     },
     group: (obj, args, context) => {
       if (!obj?.groupId) return null
       return getGroup(obj.groupId)
+        .then((group) => {
+          group.from = obj.from
+          group.to = obj.to
+          return group
+        })
     },
   },
   Achievement: {
