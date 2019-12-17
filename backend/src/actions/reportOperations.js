@@ -144,18 +144,15 @@ function getEcoActionAchievements(userId, from, to) {
             await EcoActionType.find({})
                 .then((ecoActionTypes) => {
                     ecoActionTypes.map((ecoActionType) => {
-                        let index = results.findIndex((element) => element.id == ecoActionType._id)
-                        if (index == -1) {
-                            results.push({
-                                id: ecoActionType._id,
-                                userId: userId,
-                                points: 0,
-                                icon: ecoActionType.icon,
-                                level: 'NONE',
-                                type: ecoActionType.achievementType,
-                                description: ecoActionType.achievementDescription
-                            })
-                        }
+                        results.push({
+                            id: ecoActionType._id.toString(),
+                            userId: userId,
+                            points: 0,
+                            icon: ecoActionType.icon,
+                            level: 'NONE',
+                            type: ecoActionType.achievementType,
+                            description: ecoActionType.achievementDescription
+                        })
                     })
                 })
 
@@ -170,13 +167,12 @@ function getEcoActionAchievements(userId, from, to) {
                 if (!ecoAction || !ecoAction.ecoActionTypeId) return
                 let points = parseFloat(ecoAction.value * ecoAction.ecoActionTypeId.amount).toFixed(2)
 
-                let index = results.findIndex((element) => element.id == ecoAction.ecoActionTypeId._id)
+                let index = results.findIndex((element) => element.id == ecoAction.ecoActionTypeId._id.toString())
                 if (index > -1) {
                     results[index].points = (parseFloat(results[index].points) + parseFloat(points)).toFixed(2)
+                    totalPoints += (ecoAction.value * ecoAction.ecoActionTypeId.amount)
                 }
                 // else block would be an achievement which has been removed
-
-                totalPoints += (ecoAction.value * ecoAction.ecoActionTypeId.amount)
             })
 
             results.map((ecoAction) => {
