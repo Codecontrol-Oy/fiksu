@@ -16,6 +16,10 @@ exports.createSavedConsumption = async (args, context) => {
             throw new ApolloError(localeService.translate('FAMILY_MEMBER_NOT_FOUND'))
         }
 
+        if (args.savedConsumption.value < 0) {
+            throw new ApolloError(localeService.translate('SAVED_CONSUMPTION_NEGATIVE'))
+        }
+
         let consumption = {
             householdId: args.savedConsumption.householdId,
             userId: context.user._id,

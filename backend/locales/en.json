@@ -51,6 +51,8 @@
 	"DESCRIPTION_REQUIRED": "Description is required",
 	"VISIBLEDATE_REQUIRED": "Visibility is required",
 	"MEASUREMENT_NEGATIVE": "Measurement can't be negative.",
+	"SAVED_CONSUMPTION_NEGATIVE": "Value can't be negative.",
+	"SAVED_ACTION_NEGATIVE": "Value can't be negative.",
 
 	"PASSWORD_MIN_REQUIRED": "Password must be at least {{minLen}} characters long.",
 	"PASSWORD_COMPLEXITY_FAILED": "Password doesn't meet the complexity requirements.",
