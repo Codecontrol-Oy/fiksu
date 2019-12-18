@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Block from "./block"
 import Heading from './heading'
 import ReactDOM from "react-dom"
+import { useSwipeable, Swipeable } from 'react-swipeable'
 
 const MobileNavbar = props => {
 

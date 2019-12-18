@@ -33,11 +33,6 @@ const ProfileAchievements = props => {
                             )
                         }))
                     }
-                    <Grid sizeL={2} sizeS={6} sizeM={3}>
-                        <Achievement
-                        />
-                    </Grid>
-
                 </GridRow>
             </GridContainer>
         </Block >

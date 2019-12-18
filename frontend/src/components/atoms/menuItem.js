@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react'
 import useRipple from "../hooks/useRipple"
+import { ReactSVG } from 'react-svg'
+import Paragraph from './paragraph'
 
 const MenuItem = props => {
   const ref = useRef(null)
@@ -20,11 +22,38 @@ const MenuItem = props => {
               <i className="icofont-exclamation"></i>
             </span>
           }
+          <ReactSVG
+            src={props.icon}
+            afterInjection={(error, svg) => {
+              if (error) {
+                console.error(error)
+                return
+              }
+              console.log(svg)
+              if (props.active) {
+                svg.classList.add('new-menu-item-active')
+              }
 
-          <i className={props.icon}>
-          </i></span>
+            }}
+            beforeInjection={svg => {
+              svg.classList.add('new-menu-item')
+            }}
+            evalScripts="always"
+            fallback={() => <span>Error!</span>}
+            loading={() => <span>Loading</span>}
+            renumerateIRIElements={false}
+            className="menu-item-wrapper"
+            onClick={() => {
+              console.log('wrapper onClick')
+            }}
+          />
+        </span>
       }
-      {props.children}
+      {/*
+      <Paragraph size={3}>
+        {props.children}
+      </Paragraph>
+      */}
     </li>
   )
 
