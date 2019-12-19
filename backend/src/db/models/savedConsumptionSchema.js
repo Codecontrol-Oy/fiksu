@@ -6,6 +6,7 @@ const savedConsumptionSchema = mongoose.Schema({
   userId: { type: String, required: true },
   consumptionTypeId: { type: String, ref: Const.MONGO_CONSUMPTION_TYPE, required: true },
   value: { type: String, required: true },
+  notes: { type: String },
   date: { type: Date, required: true }
 }, {
   timestamps: true

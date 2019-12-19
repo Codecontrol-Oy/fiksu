@@ -57,7 +57,7 @@ const Register = props => {
         <Card>
           {register === false &&
 
-            <Transition>
+            <Block>
               <CardTitle>
                 <Heading variant={4}>Tervetuloa takaisin!</Heading>
               </CardTitle>
@@ -94,7 +94,7 @@ const Register = props => {
                 <Paragraph onClick={(e) => props.history.push(constants.ROUTE_RESET_PASSWORD)} weight={3} size={2}>Unohtuiko salasana! Luo uusi täältä</Paragraph>
 
               </CardFooter>
-            </Transition>
+            </Block>
           }
           {register === true &&
             <RegisterForm onClick={(e) => setRegister(false)} />

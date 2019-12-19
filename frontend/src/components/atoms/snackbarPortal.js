@@ -15,8 +15,9 @@ const SnackbarPortal = props => {
 
     }, [])
 
-
-    console.log(mountNode)
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        console.log(mountNode)
+    }
     return mountNode ? ReactDOM.createPortal(
         <Block className="snackbar-portal-wrapper">
             <Block style={props.style} className="snackbar-portal-inner">

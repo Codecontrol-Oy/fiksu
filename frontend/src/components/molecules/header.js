@@ -73,13 +73,12 @@ const HeaderBar = props => {
                     <HeaderItem onClick={() => props.history.push(constants.ROUTE_HOMEPAGE)}>Fiksu</HeaderItem>
                 </Grid>
             </HeaderList>
-            <Block className={"mobile-navbar-button"}>
+            <Block onClick={() => setShowMobileNav(!showMobileNav)} className={"mobile-navbar-button"}>
                 <Grid sizeS={3} sizeM={2}>
                     <Heading variant={3}>Valikko</Heading>
                 </Grid>
                 <Grid style={{ display: "flex", justifyContent: "center" }} sizeS={2} sizeM={1}>
-                    <i onClick={() => setShowMobileNav(!showMobileNav)} class="icofont-navigation-menu"></i>
-
+                    <i class="icofont-navigation-menu"></i>
                 </Grid>
             </Block>
             <Block handlers={{ ...handlers }}>

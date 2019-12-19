@@ -965,7 +965,6 @@ input::placeholder {
 }
 
 .profile-container, .family-container, .eco-container, .group-container {
-  overflow-y: scroll;
   width: 100%;
   overflow-x: hidden;
   background-color: white;
@@ -1113,7 +1112,7 @@ input::placeholder {
   font-size: 10rem;
 }
 .profile-combined-achievement-level {
-
+  min-height: 24px;
 }
 .profile-combined-achievement-level > i {
   color: rgba(128, 128, 128, 0.651);
@@ -1231,7 +1230,7 @@ input::placeholder {
 .menu-list {
   display: flex;
   justify-content: space-around;
-  overflow-x: scroll;
+  overflow-x: auto;
   list-style: none;
   width: 100%;
   height: 100%;
@@ -1701,7 +1700,7 @@ input::placeholder {
 .u-grid-11 {max-width: 91.63%; flex-basis: 91.63%; padding: 0.5rem;  }
 .u-grid-12 {min-width: 100%; flex-basis: 100%; max-width: 100%; padding: 0.5rem;  }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 767px) {
 .s-grid-1 {min-width: 8.33% !important; max-width: 8.33% !important; flex-basis: 8.33% !important; padding: 0.5rem;  }
 .s-grid-2 {min-width: 16.66% !important; max-width: 16.66% !important; flex-basis: 16.66% !important; padding: 0.5rem;  }
 .s-grid-3 {min-width: 24.99% !important; max-width: 24.99% !important; flex-basis: 24.99% !important; padding: 0.5rem;  }

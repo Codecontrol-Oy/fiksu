@@ -53,6 +53,7 @@
 	"MEASUREMENT_NEGATIVE": "Measurement can't be negative.",
 	"SAVED_CONSUMPTION_NEGATIVE": "Value can't be negative.",
 	"SAVED_ACTION_NEGATIVE": "Value can't be negative.",
+	"SAVED_CONSUMPTION_NOTES_TOO_LONG": "Notes aren't allowed to exceed 255 characters.",
 
 	"PASSWORD_MIN_REQUIRED": "Password must be at least {{minLen}} characters long.",
 	"PASSWORD_COMPLEXITY_FAILED": "Password doesn't meet the complexity requirements.",

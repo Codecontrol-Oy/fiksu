@@ -54,7 +54,7 @@ const StatisticsTopGroups = props => {
                     <Heading variant={2} style={{textTransform: 'uppercase'}}>Ryhmät</Heading>
                     <Paragraph>Parhaiten menestyneet ryhmät. Pisteytyksessä huomiodaan ryhmän jäsenten oma panos sähkönkulutukseen ja ekotekoihin.</Paragraph>
                     <Block style={{ textAlign: 'center'}}>
-                        {groupData && groupData.getTopGroupResults.length > 0 && groupData.getTopGroupResults.map(group => (group.position < 4) && <Grid sizeS={12} sizeM={6} sizeL={3}>
+                        {groupData && groupData.getTopGroupResults && groupData.getTopGroupResults.length > 0 && groupData.getTopGroupResults.map(group => (group.position < 4) && <Grid sizeS={12} sizeM={6} sizeL={3}>
                             <Block>
                             <i className={`statistics-medal ${(group.position > 0 && group.position < 4 ? 'icofont-medal' : 'icofont-trophy statistics-diplom')} ${(group.position == 1 ? 'gold' : (group.position == 2 ? 'silver' : (group.position == 3 ? 'bronze' : 'diplom')) )}`}></i>
                             <Heading variant={2} style={{textTransform: 'uppercase'}} icon={true}>{`${group.group.name}`}</Heading>

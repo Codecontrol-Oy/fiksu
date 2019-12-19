@@ -187,9 +187,10 @@ const typeDefs = gql`
 
   input SavedConsumptionInput {
     householdId: ID!
-    consumptionTypeId: String
-    value: Float
-    date: Date
+    consumptionTypeId: String!
+    value: Float!
+    notes: String
+    date: Date!
   }
 
   input SavedEcoActionInput {
@@ -385,6 +386,7 @@ const typeDefs = gql`
     consumptionTypeId: String
     consumptionType: ConsumptionType
     value: Float
+    notes: String
     date: Date
   }
 

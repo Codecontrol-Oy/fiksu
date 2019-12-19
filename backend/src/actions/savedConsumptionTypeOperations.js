@@ -20,11 +20,16 @@ exports.createSavedConsumption = async (args, context) => {
             throw new ApolloError(localeService.translate('SAVED_CONSUMPTION_NEGATIVE'))
         }
 
+        if (args.savedConsumption.notes && args.savedConsumption.notes.notes > 255) {
+            throw new ApolloError(localeService.translate('SAVED_CONSUMPTION_NOTES_TOO_LONG'))
+        }
+
         let consumption = {
             householdId: args.savedConsumption.householdId,
             userId: context.user._id,
             consumptionTypeId: args.savedConsumption.consumptionTypeId,
             value: args.savedConsumption.value,
+            notes: args.savedConsumption.notes,
             date: new Date(args.savedConsumption.date)
         }
         return SavedConsumption.create(consumption)
