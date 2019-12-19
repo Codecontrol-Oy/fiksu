@@ -74,19 +74,16 @@ const HeaderBar = props => {
                 </Grid>
             </HeaderList>
             <Block onClick={() => setShowMobileNav(!showMobileNav)} className={"mobile-navbar-button"}>
-                <Grid sizeS={3} sizeM={2}>
-                    <Heading variant={3}>Valikko</Heading>
-                </Grid>
-                <Grid style={{ display: "flex", justifyContent: "center" }} sizeS={2} sizeM={1}>
-                    <i class="icofont-navigation-menu"></i>
-                </Grid>
+                <i class="icofont-navigation-menu"></i>
             </Block>
             <Block handlers={{ ...handlers }}>
                 <MobileNavbar onClick={() => setShowMobileNav(false)} handlers={{ ...handlers }} display={showMobileNav}>
                     <HeaderList>
-                        <Heading variant={3}>
-                            Hei {data && data.user.firstName + " " + data.user.lastName + " "}!
-                    </Heading>
+                        {localStorage.getItem("token") &&
+                            <Heading variant={3}>
+                                Hei {data && data.user.firstName + " " + data.user.lastName + " "}!
+                            </Heading>
+                        }
                         {!localStorage.getItem("token") &&
                             <HeaderItem onClick={() => { props.history.push(constants.ROUTE_REGISTER); setShowMobileNav(false) }} >Kirjaudu sisään</HeaderItem>
                         }
