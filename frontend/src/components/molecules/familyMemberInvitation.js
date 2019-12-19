@@ -25,7 +25,7 @@ const FamilyMemberInvitation = props => {
   )
   return (
     <>
-      {invitationsData && invitationsData.getUserPendingFamilies.length &&
+      {invitationsData && invitationsData.getUserPendingFamilies.length > 0 &&
         <GridRow justify={"center"}>
           <Block className="family-info">
 

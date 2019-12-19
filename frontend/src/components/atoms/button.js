@@ -21,6 +21,9 @@ const Button = props => {
     if (props.rounded) {
       newClasses.push("button-rounded")
     }
+    if (props.outlined) {
+      newClasses.push("button-outlined")
+    }
 
     return newClasses
 

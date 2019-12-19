@@ -58,21 +58,19 @@ const Profile = props => {
         <Block className="profile-container">
             {uData && uData.user &&
                 <GridContainer height={12} width={12} direction={"column"}>
-                    <Transition transition="fade-in">
-                        <Block id={"snackbars"} />
-                        <GridRow justify={"center"}>
-                            <ProfileInfo user={uData.user} loading={uLoading} data={data && data.getUserAchievements} />
-                        </GridRow>
-                        <GridRow justify={"center"}>
-                            <ProfileAchievements loading={loading} data={data && data.getUserAchievements} />
-                        </GridRow>
-                        <GridRow justify={"center"}>
-                            <ProfileFamily />
-                        </GridRow>
-                        <GridRow justify={"center"}>
-                            <ProfileGroups />
-                        </GridRow>
-                    </Transition>
+                    <Block id={"snackbars"} />
+                    <GridRow justify={"center"}>
+                        <ProfileInfo user={uData.user} loading={uLoading} data={data && data.getUserAchievements} />
+                    </GridRow>
+                    <GridRow justify={"center"}>
+                        <ProfileAchievements loading={loading} data={data && data.getUserAchievements} />
+                    </GridRow>
+                    <GridRow justify={"center"}>
+                        <ProfileFamily />
+                    </GridRow>
+                    <GridRow justify={"center"}>
+                        <ProfileGroups />
+                    </GridRow>
 
                 </GridContainer>
             }
