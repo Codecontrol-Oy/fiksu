@@ -2,25 +2,28 @@ import React from 'react'
 import Block from '../atoms/block'
 import InputLabel from '../atoms/inputLabel'
 import Button from '../atoms/button'
-const FamilyMember = props => <Block className="family-member">
-  <InputLabel color={"secondary"} variant={4} name={props.name}>
-    {props.isOwner && props.id != localStorage.getItem("userId") && <Button onClick={() => props.delete()} style={{marginLeft: '5px'}} type="button" alert>
-      <i class={'icofont-ui-delete'} style={{marginRight: '5px'}}></i> Poista
-    </Button>}
-    {props.isAdmin && props.memberUser && <Button onClick={() => props.delete()} style={{marginLeft: '5px'}} type="button" alert>
-      <i class={'icofont-ui-delete'} style={{marginRight: '5px'}}></i> Poista
-    </Button>}
-    {!props.isOwner && props.id == localStorage.getItem('userId') && <Button onClick={() => props.delete()} style={{marginLeft: '5px'}} type="button" alert>
-      <i class={'icofont-ui-delete'} style={{marginRight: '5px'}}></i> Poista
-    </Button>}
-    {props.isOwner && props.memberUser && <Button onClick={() => props.promote()} style={{marginLeft: '5px'}} type="button" basic>
-      <i class={'icofont-curved-up'} style={{marginRight: '5px'}}></i> Nosta pääkäyttäjäksi
-    </Button>}
-    {props.isOwner && props.adminUser && <Button onClick={() => props.demote()} style={{marginLeft: '5px'}} type="button" basic>
-      <i class={'icofont-curved-down'} style={{marginRight: '5px'}}></i> palauta käyttäjäksi
-    </Button>}
-  </InputLabel>
-  
-</Block>
+import GridContainer from "../grid/container"
+import Grid from "../grid/grid"
+import Paragraph from "../atoms/paragraph"
+import GridRow from "../grid/row"
+
+const FamilyMember = props =>
+
+  <Block className="member-wrapper">
+    <GridContainer justify={"start"} align="center">
+      <Grid sizeL={6} sizeS={4}>
+        <GridRow direction={"column"} justify={"start"} align={"start"}>
+          <Paragraph style={{ margin: '0' }} color={"secondary"}>Testi nimi</Paragraph>
+          <Paragraph style={{ margin: '0 0 0 0' }} color={"secondary"} size={4}>Pääkäyttäjä</Paragraph>
+        </GridRow>
+      </Grid>
+      <Grid sizeS={4} sizeL={2}>
+        <Button style={{ display: 'flex', justifyContent: 'flex-end' }} outlined>Käyttäjätaso</Button>
+      </Grid>
+      <Grid sizeS={4} style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3}>
+        <Button outlined>Poista</Button>
+      </Grid>
+    </GridContainer>
+  </Block>
 
 export default FamilyMember

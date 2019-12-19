@@ -104,71 +104,19 @@ const FamilyInfo = props => {
         <GridContainer size={12} direction={"column"}>
           <Block className="family-header">
             <GridContainer align="center" justify="start">
-              <Grid sizeL={2}>
+              <Grid style={{ padding: "0" }} sizeL={2}>
                 <Heading style={{ margin: '0.2rem' }} variant={3}>
                   Talous {familyData && familyData.getUserFamilies[0].name}
                 </Heading>
+              </Grid>
+              <Grid sizeL={2}>
+                <Button outlined>Poista ryhmä</Button>
               </Grid>
             </GridContainer>
           </Block>
           <GridRow size={12}>
             <Grid>
-              <Heading align={"left"} variant={4} color={"secondary"}>Jäsenet</Heading>
-              <Divider color={"secondary"} />
-              <Grid sizeS={12} sizeL={4}>
-                <GridRow justify="center" align="center" direction="column">
-                  <Block className="member-wrapper">
-                    <GridContainer justify={"start"} align="center">
-                      <Grid sizeL={6} sizeS={4}>
-                        <GridRow direction={"column"} justify={"start"} align={"start"}>
-                          <Paragraph style={{ margin: '0' }} color={"secondary"}>Testi nimi</Paragraph>
-                          <Paragraph style={{ margin: '0 0 0 0' }} color={"secondary"} size={4}>Pääkäyttäjä</Paragraph>
-                        </GridRow>
-                      </Grid>
-                      <Grid sizeS={4} sizeL={2}>
-                        <Button style={{ display: 'flex', justifyContent: 'flex-end' }} outlined>Käyttäjätaso</Button>
-                      </Grid>
-                      <Grid sizeS={4} style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3}>
-                        <Button outlined>Poista</Button>
-                      </Grid>
-                    </GridContainer>
-                  </Block>
-                  <Block className="member-wrapper">
-                    <GridContainer justify={"start"} align="center">
-                      <Grid sizeL={6} sizeS={4}>
-                        <GridRow direction={"column"} justify={"start"} align={"start"}>
-                          <Paragraph style={{ margin: '0' }} color={"secondary"}>Testi nimi</Paragraph>
-                          <Paragraph style={{ margin: '0 0 0 0' }} color={"secondary"} size={4}>Pääkäyttäjä</Paragraph>
-                        </GridRow>
-                      </Grid>
-                      <Grid sizeS={4} sizeL={2}>
-                        <Button style={{ display: 'flex', justifyContent: 'flex-end' }} outlined>Käyttäjätaso</Button>
-                      </Grid>
-                      <Grid sizeS={4} style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3}>
-                        <Button outlined>Poista</Button>
-                      </Grid>
-                    </GridContainer>
-                  </Block>
-                  <Block className="member-wrapper">
-                    <GridContainer justify={"start"} align="center">
-                      <Grid sizeL={6} sizeS={4}>
-                        <GridRow direction={"column"} justify={"start"} align={"start"}>
-                          <Paragraph style={{ margin: '0' }} color={"secondary"}>Testi nimi</Paragraph>
-                          <Paragraph style={{ margin: '0 0 0 0' }} color={"secondary"} size={4}>Pääkäyttäjä</Paragraph>
-                        </GridRow>
-                      </Grid>
-                      <Grid sizeS={4} sizeL={2}>
-                        <Button style={{ display: 'flex', justifyContent: 'flex-end' }} outlined>Käyttäjätaso</Button>
-                      </Grid>
-                      <Grid sizeS={4} style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3}>
-                        <Button outlined>Poista</Button>
-                      </Grid>
-                    </GridContainer>
-                  </Block>
-                </GridRow>
-
-              </Grid>
-              {familyData && familyData.getUserFamilies.length === 0 && familyData.getUserFamilies.map(family => <GridRow size={12}>
+              {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow size={12}>
                 <Grid sizeS={12} sizeM={12} sizeL={4}>
                   <Modal display={displayModal} id={"profile-card"}>
                     <GridContainer align={"center"} justify={"center"} direction={"column"}>
@@ -197,9 +145,11 @@ const FamilyInfo = props => {
                     </Button>}
                     </InputHeading>
                     <br />
-                    <Heading color={"secondary"} variant={3}>Perustaja</Heading>
+                    <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
+                    <Divider color={"secondary"} />
                     <FamilyMember key={`family-${family._id}-${family.ownerId}`} isOwner={family.isOwner} isAdmin={family.isAdmin} role={"perustaja"} id={family.ownerId} name={`${family.owner.firstName} ${family.owner.lastName}`} />
-                    <Heading color={"secondary"} variant={3}>Pääkäyttäjät</Heading>
+                    <Heading align={"left"} variant={4} color={"secondary"}>Jäsenet</Heading>
+                    <Divider color={"secondary"} />
                     {family.admins && family.admins.length && family.admins.map(admin => <FamilyMember
                       key={`family-${family._id}-${admin._id}`}
                       isOwner={family.isOwner}
@@ -221,7 +171,7 @@ const FamilyInfo = props => {
                       })}
                       id={admin._id}
                       name={`${admin.firstName} ${admin.lastName}`} />)}
-                    <Heading color={"secondary"} variant={3}>Jäsenet</Heading>
+                    <Heading style={{ margin: '0' }} align="left" color={"secondary"} variant={3}>Asetukset</Heading>
                     {family.members && family.members.length && family.members.map(member => <FamilyMember
                       key={`family-${family._id}-${member._id}`}
                       isOwner={family.isOwner}
@@ -244,8 +194,8 @@ const FamilyInfo = props => {
                       id={member._id}
                       name={`${member.firstName} ${member.lastName}`} />)}
                     {(family.isOwner || family.isAdmin) && <Block>
-                      <Paragraph color={"secondary"}>Alla voit säätää talouden näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, taloutta ei löydy vertailusivuilla. </Paragraph>
-                      <Block style={{ textAlign: 'center' }}>
+                      <Paragraph align="left" color={"secondary"}>Alla voit säätää talouden näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, taloutta ei löydy vertailusivuilla. </Paragraph>
+                      <Block style={{ textAlign: 'center', display: 'flex', justifyContent: 'flex-start' }}>
                         <SelectGroup underline color={"secondary"} value={family.permissions.visibility} onChange={(e, dataset) => changeFamilyVisibility({
                           variables: {
                             family: {
