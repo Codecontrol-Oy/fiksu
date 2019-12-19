@@ -12,6 +12,10 @@ exports.createSavedEcoAction = async (args, context) => {
                 throw new ApolloError(localeService.translate('ECOACTIONTYPE_NOT_FOUND'))
             }
 
+            if (args.savedEcoAction.value < 0) {
+                throw new ApolloError(localeService.translate('SAVED_ACTION_NEGATIVE'))
+            }
+
             let ecoAction = {
                 userId: context.user._id,
                 ecoActionTypeId: args.savedEcoAction.ecoActionTypeId,

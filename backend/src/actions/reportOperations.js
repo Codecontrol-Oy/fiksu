@@ -17,7 +17,7 @@ exports.getElectricityGraph = async (args, context) => {
     }
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return Measurement.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
+    return Measurement.find({ householdId: args.householdId, date: { "$gte": from, "$lte": to } })
         .sort({ date: 1 })
         .then(async (measurements) => {
             // If not at least two measurements, return nothing
@@ -43,20 +43,51 @@ exports.getElectricityGraph = async (args, context) => {
 
             // Create the actual electricity line
             let actualElectricityLine = []
-            measurements.map((measurement) => {
-                actualElectricityLine.push({
-                    x: measurement.date.toISOString().slice(0, 10),
-                    y: measurement.value
-                })
+            // measurements.map((measurement) => {
+            //     actualElectricityLine.push({
+            //         x: measurement.date.toISOString().slice(0, 10),
+            //         y: measurement.value
+            //     })
+            // })
+
+            measurements.reduce((prev, curr) => {
+                if (prev.prevVal) {
+                    actualElectricityLine.push({
+                        x: curr.date.toISOString().slice(0, 10),
+                        y: prev.prevVal + (curr.value - prev.previous.value),
+                        label: prev.prevVal + (curr.value - prev.previous.value)
+                    })
+                    return {
+                        previous: curr,
+                        prevVal: prev.prevVal + (curr.value - prev.previous.value)
+                    }
+                } else {
+                    actualElectricityLine.push({
+                        x: curr.date.toISOString().slice(0, 10),
+                        y: curr.value - prev.value,
+                        label: prev.prevVal + (curr.value - prev.previous.value)
+                    })
+                    return {
+                        previous: curr,
+                        prevVal: curr.value - prev.value
+                    }
+                }
             })
 
             // Calculate savings
+            let savingsLine = JSON.parse(JSON.stringify(actualElectricityLine))
             const savedConsumptions = await SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lte": to } })
+                .sort({ date: 1 })
                 .populate('consumptionTypeId')
                 .then((savings) => {
                     if (savings) {
                         let totalSavings = 0
                         savings.map((saving) => {
+                            savingsLine.map((line) => {
+                                if (new Date(line.x) >= saving.date) {
+                                    line.y = parseFloat(line.y) + (saving.value * saving.consumptionTypeId.amount)
+                                }
+                            })
                             totalSavings += (saving.value * saving.consumptionTypeId.amount)
                         })
 
@@ -67,19 +98,19 @@ exports.getElectricityGraph = async (args, context) => {
                 })
 
             // Create the "what it would've been without savings" line
-            const first = measurements[0]
-            const last = measurements[measurements.length - 1]
-            last.value += savedConsumptions
+            // const first = measurements[0]
+            // const last = measurements[measurements.length - 1]
+            // last.value += savedConsumptions
 
-            let savingsLine = []
-            savingsLine.push({
-                x: first.date.toISOString().slice(0, 10),
-                y: first.value
-            })
-            savingsLine.push({
-                x: last.date.toISOString().slice(0, 10),
-                y: last.value
-            })
+            // let savingsLine = []
+            // savingsLine.push({
+            //     x: first.date.toISOString().slice(0, 10),
+            //     y: first.value
+            // })
+            // savingsLine.push({
+            //     x: last.date.toISOString().slice(0, 10),
+            //     y: last.value
+            // })
 
             //console.log(JSON.stringify([{ data: actualElectricityLine }, { data: savingsLine }]))
             return [{ data: actualElectricityLine }, { data: savingsLine }]
