@@ -9,6 +9,7 @@ import FamilyMemberInvitation from "../molecules/familyMemberInvitation"
 const Family = props => <Block className="family-container">
 
   <GridContainer height={12} width={12} direction={"column"}>
+    <Block id={"modal"} />
     <FamilyMemberInvitation />
     <GridRow justify={"center"}>
       <FamilyInfo />

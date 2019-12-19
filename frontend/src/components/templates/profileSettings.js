@@ -28,7 +28,7 @@ import LoadingSpinner from "../atoms/loadingSpinner"
 import Modal from '../atoms/modal'
 import { withRouter } from "react-router-dom"
 import * as constants from '../../constants'
-
+import withSnackbar from "../molecules/withSnackbar"
 
 const ProfileSettings = props => {
 
@@ -63,7 +63,7 @@ const ProfileSettings = props => {
 
     const [updateUser, { loading: mloading, error: mError, data: mData }] = useMutation(MUTATION_UPDATE_USER, {
         onCompleted(data) {
-            console.log(data)
+            props.addSnack("Tiedot muutettu onnistuneesti!", "success")
         },
         refetchQueries: [{ query: GET_MY_USER, variables: { id: localStorage.getItem("userId") } }]
 
@@ -256,4 +256,4 @@ const ProfileSettings = props => {
         </ProfileCard>
     )
 }
-export default withRouter(ProfileSettings)
+export default withSnackbar(withRouter(ProfileSettings))

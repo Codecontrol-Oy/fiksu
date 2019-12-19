@@ -32,6 +32,8 @@ const HeaderBar = props => {
         setShowMobileNav(false)
     }
 
+    const handlers = useSwipeable({ onSwipedRight: () => setShowMobileNav(false), trackMouse: true })
+
     return (
         <Header>
             <HeaderList>
@@ -80,8 +82,8 @@ const HeaderBar = props => {
 
                 </Grid>
             </Block>
-            <MobileNavbar display={showMobileNav}>
-                <Swipeable onSwipedRight={(eventData) => setShowMobileNav(false)} >
+            <Block handlers={{ ...handlers }}>
+                <MobileNavbar onClick={() => setShowMobileNav(false)} handlers={{ ...handlers }} display={showMobileNav}>
                     <HeaderList>
                         <Heading variant={3}>
                             Hei {data && data.user.firstName + " " + data.user.lastName + " "}!
@@ -97,8 +99,9 @@ const HeaderBar = props => {
                             <HeaderItem onClick={() => logOut()} >Kirjaudu ulos</HeaderItem>
                         }
                     </HeaderList>
-                </Swipeable>
-            </MobileNavbar>
+                </MobileNavbar>
+            </Block>
+
         </Header>
     )
 }

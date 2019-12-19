@@ -9,6 +9,7 @@ import GroupMemberSearch from '../molecules/groupMemberSearch'
 import GroupSearch from '../molecules/groupSearch'
 const Group = props => <Block className="group-container">
   <GridContainer height={12} width={12} direction={"column"}>
+    <Block id={"modal"} />
     <GridRow justify={"center"}>
       <GroupMemberInvitation />
     </GridRow>
@@ -19,7 +20,7 @@ const Group = props => <Block className="group-container">
       <GroupInfo />
     </GridRow>
     <GridRow justify={"center"}>
-    <CreateGroup />
+      <CreateGroup />
     </GridRow>
     <GridRow justify={"center"}>
       <GroupMemberSearch />

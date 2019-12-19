@@ -5,6 +5,7 @@ import Divider from '../atoms/divider'
 import { useQuery } from "@apollo/react-hooks"
 import { GET_USER_GROUPS } from '../../graphqlQueries'
 import MyGroupsInfo from "./myGroupsInfo"
+import LoadingSpinner from '../atoms/loadingSpinner'
 
 const ProfileGroups = props => {
 
@@ -15,13 +16,16 @@ const ProfileGroups = props => {
     })
     return (
         <Block className="profile-achievements">
+            {loading &&
+                <LoadingSpinner />
+            }
             {data && data.getUserGroups && data.getUserGroups.length > 0 &&
                 <>
                     <Heading align={"left"} color={"secondary"} variant={4}>Ryhmäni - {data.getUserGroups.length}kpl</Heading>
                     <Divider />
                     {
                         data.getUserGroups.map((group => {
-                            return <MyGroupsInfo data={group.detailedPoints} members={[...group.members, ...group.admins, group.owner]} name={group.name} id={group._id} />
+                            return <MyGroupsInfo loading={loading} data={group.detailedPoints} members={[...group.members, ...group.admins, group.owner]} name={group.name} id={group._id} />
                         }))
                     }
                 </>

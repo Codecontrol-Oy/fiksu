@@ -12,6 +12,7 @@ import withSnackbar from "./withSnackbar"
 import Achievement from '../atoms/achievement'
 import Divider from '../atoms/divider'
 import Paragraph from "../atoms/paragraph"
+import LoadingSpinner from '../atoms/loadingSpinner'
 
 const ProfileInfo = props => {
 
@@ -44,6 +45,9 @@ const ProfileInfo = props => {
                 <GridRow wrap >
                     <Grid sizeS={12} sizeL={6} sizeM={6}>
                         <GridRow wrap>
+                            {props.loading &&
+                                <LoadingSpinner />
+                            }
                             {props.data && props.data.combinedEcoAchievement &&
                                 <Grid sizeS={6} sizeM={6} sizeL={6}>
                                     <Block className="profile-combined-achievement">

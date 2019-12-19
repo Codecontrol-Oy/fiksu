@@ -8,6 +8,7 @@ import Achievement from "../atoms/achievement"
 import Grid from '../grid/grid'
 import { useQuery } from "@apollo/react-hooks"
 import { GET_USER_ACHIEVEMENTS } from '../../graphqlQueries'
+import LoadingSpinner from '../atoms/loadingSpinner'
 
 
 const ProfileAchievements = props => {
@@ -16,7 +17,10 @@ const ProfileAchievements = props => {
             <Heading align={"left"} color={"secondary"} variant={4}>Saavutukseni</Heading>
             <Divider />
             <GridContainer direction={"row"} width={12}>
-                <GridRow justify={"start"} wrap>
+                <GridRow style={{ justifyContent: (props.loading ? "center" : "start") }} wrap>
+                    {props.loading &&
+                        <LoadingSpinner />
+                    }
                     {props.data && props.data.ecoAchievements && props.data.ecoAchievements.length > 0 &&
                         props.data.ecoAchievements.map((item => {
                             return (
