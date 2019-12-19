@@ -65,7 +65,7 @@ exports.getElectricityGraph = async (args, context) => {
                     actualElectricityLine.push({
                         x: curr.date.toISOString().slice(0, 10),
                         y: curr.value - prev.value,
-                        label: prev.prevVal + (curr.value - prev.previous.value)
+                        label: curr.value - prev.value
                     })
                     return {
                         previous: curr,
