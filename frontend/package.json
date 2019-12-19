@@ -24,6 +24,8 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.3.0",
+    "react-svg": "^11.0.4",
+    "react-swipeable": "^5.5.0",
     "react-vis": "^1.11.7",
     "ts-pnp": "^1.1.2",
     "tsutils": "^3.10.0"

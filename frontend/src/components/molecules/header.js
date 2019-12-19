@@ -11,6 +11,7 @@ import { useQuery } from "@apollo/react-hooks"
 import { GET_MY_USER } from '../../graphqlQueries'
 import Heading from '../atoms/heading'
 import Divider from "../atoms/divider"
+import { useSwipeable, Swipeable } from 'react-swipeable'
 
 const HeaderBar = props => {
 
@@ -30,6 +31,8 @@ const HeaderBar = props => {
         localStorage.removeItem("userId")
         setShowMobileNav(false)
     }
+
+    const handlers = useSwipeable({ onSwipedRight: () => setShowMobileNav(false), trackMouse: true })
 
     return (
         <Header>
@@ -79,23 +82,26 @@ const HeaderBar = props => {
 
                 </Grid>
             </Block>
-            <MobileNavbar display={showMobileNav}>
-                <HeaderList>
-                    <Heading variant={3}>
-                        Hei {data && data.user.firstName + " " + data.user.lastName + " "}!
+            <Block handlers={{ ...handlers }}>
+                <MobileNavbar onClick={() => setShowMobileNav(false)} handlers={{ ...handlers }} display={showMobileNav}>
+                    <HeaderList>
+                        <Heading variant={3}>
+                            Hei {data && data.user.firstName + " " + data.user.lastName + " "}!
                     </Heading>
-                    {!localStorage.getItem("token") &&
-                        <HeaderItem onClick={() => { props.history.push(constants.ROUTE_REGISTER); setShowMobileNav(false) }} >Kirjaudu sisään</HeaderItem>
-                    }
-                    <HeaderItem onClick={() => { props.history.push(constants.ROUTE_HOMEPAGE); setShowMobileNav(false) }} >Etusivu</HeaderItem>
-                    <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT); setShowMobileNav(false) }} >Käyttäjätilini</HeaderItem>
-                    <HeaderItem onClick={() => { props.history.push(constants.ROUTE_GDPR); setShowMobileNav(false) }}>Tietosuojaseloste</HeaderItem>
-                    <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT_SETTINGS); setShowMobileNav(false) }}>Asetukset</HeaderItem>
-                    {localStorage.getItem("token") &&
-                        <HeaderItem onClick={() => logOut()} >Kirjaudu ulos</HeaderItem>
-                    }
-                </HeaderList>
-            </MobileNavbar>
+                        {!localStorage.getItem("token") &&
+                            <HeaderItem onClick={() => { props.history.push(constants.ROUTE_REGISTER); setShowMobileNav(false) }} >Kirjaudu sisään</HeaderItem>
+                        }
+                        <HeaderItem onClick={() => { props.history.push(constants.ROUTE_HOMEPAGE); setShowMobileNav(false) }} >Etusivu</HeaderItem>
+                        <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT); setShowMobileNav(false) }} >Käyttäjätilini</HeaderItem>
+                        <HeaderItem onClick={() => { props.history.push(constants.ROUTE_GDPR); setShowMobileNav(false) }}>Tietosuojaseloste</HeaderItem>
+                        <HeaderItem onClick={() => { props.history.push(constants.ROUTE_ACCOUNT_SETTINGS); setShowMobileNav(false) }}>Asetukset</HeaderItem>
+                        {localStorage.getItem("token") &&
+                            <HeaderItem onClick={() => logOut()} >Kirjaudu ulos</HeaderItem>
+                        }
+                    </HeaderList>
+                </MobileNavbar>
+            </Block>
+
         </Header>
     )
 }

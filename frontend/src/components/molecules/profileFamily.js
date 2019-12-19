@@ -5,6 +5,7 @@ import Divider from '../atoms/divider'
 import { useQuery } from "@apollo/react-hooks"
 import { GET_USER_FAMILIES } from '../../graphqlQueries'
 import HouseholdInfo from "./householdInfo"
+import LoadingSpinner from "../atoms/loadingSpinner"
 
 const ProfileFamily = props => {
 
@@ -28,13 +29,16 @@ const ProfileFamily = props => {
 
     return (
         <Block className="profile-achievements">
+            {loading &&
+                <LoadingSpinner />
+            }
             {data && data.getUserFamilies && data.getUserFamilies.length > 0 &&
                 <>
                     <Heading align={"left"} color={"secondary"} variant={4}>Talouteni - {data.getUserFamilies.length}kpl</Heading>
                     <Divider />
                     {
                         data.getUserFamilies.map((household => {
-                            return <HouseholdInfo data={household.detailedPoints} members={[...household.members, ...household.admins, household.owner]} name={household.name} id={household._id} />
+                            return <HouseholdInfo loading={loading} data={household.detailedPoints} members={[...household.members, ...household.admins, household.owner]} name={household.name} id={household._id} />
                         }))
                     }
                 </>

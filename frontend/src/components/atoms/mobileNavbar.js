@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Block from "./block"
 import Heading from './heading'
 import ReactDOM from "react-dom"
+import { useSwipeable, Swipeable } from 'react-swipeable'
 
 const MobileNavbar = props => {
 
@@ -36,7 +37,7 @@ const MobileNavbar = props => {
 
     return mountNode && render ? ReactDOM.createPortal(
         <Block className={"mobile-navbar-wrapper " + (classes.join(' '))}>
-            <Block className="mobile-navbar-inner">
+            <Block onClick={() => props.onClick()} handlers={props.handlers} className="mobile-navbar-inner">
                 {props.children}
             </Block>
         </Block>,

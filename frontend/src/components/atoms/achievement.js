@@ -10,7 +10,7 @@ const Achievement = props => {
 
     const [classes, setClasses] = useState([])
 
-    const [showProgress, setShowProgress] = useState(false)
+    const [showProgress, setShowProgress] = useState(props.level === "NONE" ? true : false)
 
     const [maxValue, setMaxValue] = useState(() => {
         if (props.level === "NONE") return 1.0
@@ -44,8 +44,22 @@ const Achievement = props => {
                     }
                 </Block>
             }
-            <Block className={"achievement-progress " + (props.level === "NONE" ? "progress-show" : showProgress ? "progress-show" : "progress-hide")}>
+            <Block className={"achievement-progress " + (showProgress ? "progress-show" : "progress-hide")}>
                 <Block className={"achievement-progress-inner"}>
+                    <Heading style={{ padding: 0, margin: "0.5rem" }} variant={5}>
+                        Seuraavaan tasoon
+                    </Heading>
+                    <CircularProgressbarWithChildren maxValue={maxValue} value={props.points}>
+                        {/* Put any JSX content in here that you'd like. It'll be vertically and horizonally centered. */}
+                        <Block className={`achievement-progress-level --level-${nextLevel}`}>
+                            {props.level &&
+                                <i class="icofont-medal"></i>
+                            }
+                        </Block>
+                    </CircularProgressbarWithChildren>
+                    <Paragraph size={3}>
+                        {`${(props.points / maxValue * 100).toFixed(0)}%`}
+                    </Paragraph>
                     <Heading style={{ padding: 0, margin: "0.5rem" }} variant={5}>
                         {
                             nextLevel === "BRONZE" ?
@@ -63,17 +77,6 @@ const Achievement = props => {
                         }
                         taso
                     </Heading>
-                    <CircularProgressbarWithChildren maxValue={maxValue} value={props.points}>
-                        {/* Put any JSX content in here that you'd like. It'll be vertically and horizonally centered. */}
-                        <Block className={`achievement-progress-level --level-${nextLevel}`}>
-                            {props.level &&
-                                <i class="icofont-medal"></i>
-                            }
-                        </Block>
-                    </CircularProgressbarWithChildren>
-                    <Paragraph size={3}>
-                        {`${props.points * 100}%`}
-                    </Paragraph>
                 </Block>
             </Block>
             <Block className="achievement-image">

@@ -10,6 +10,7 @@ const Transition = props => {
 
         if (props.transition === "slow-fade-from-top") classesNew.push("slow-fade-in-top")
 
+        if (props.transition === "fade-in") classesNew.push("fade-in")
         return classesNew
     })
 
