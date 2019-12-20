@@ -14,8 +14,7 @@ const FamilyMember = props =>
       <GridContainer justify={"start"} align="center">
         <Grid style={{ padding: '0' }} sizeXL={7} sizeL={4} sizeM={7} sizeS={4}>
           <GridRow direction={"column"} justify={"start"} align={"start"}>
-            <Paragraph style={{ margin: '0' }} color={"secondary"}>Testi nimi</Paragraph>
-            <Paragraph style={{ margin: '0 0 0 0' }} color={"secondary"} size={4}>Pääkäyttäjä</Paragraph>
+            <Paragraph style={{ margin: '0' }} size={2} color={"secondary"}>{props.name}</Paragraph>
           </GridRow>
         </Grid>
         <Grid style={{ padding: '0' }} sizeS={4} sizeM={3} sizeL={4} sizeXL={3}>
