@@ -24,6 +24,15 @@ const Button = props => {
     if (props.outlined) {
       newClasses.push("button-outlined")
     }
+    if (props.color === "alert") {
+      newClasses.push("text-alert")
+    }
+    if (props.color === "secondary") {
+      newClasses.push("text-alert")
+    }
+    if (props.color === "default") {
+      newClasses.push("text-alert")
+    }
 
     return newClasses
 

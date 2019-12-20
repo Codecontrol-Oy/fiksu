@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Block from '../atoms/block'
 import { GET_USER_FAMILIES } from '../../graphqlQueries'
 import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks"
@@ -28,9 +28,19 @@ const FamilyInfo = props => {
   const [familyName, setFamilyname] = useState(undefined)
   const [displayModal, setDisplayModal] = useState(false)
 
+
+  useEffect(() => {
+
+    setDisplayModal(props.displayModal)
+  }, [props.displayModal])
   const { loading: familyLoading, error: familyError, data: familyData } = useQuery(GET_USER_FAMILIES, {
     variables: {
       id: localStorage.getItem('userId')
+    },
+    onCompleted(familyData) {
+      if (familyData && familyData.getUserFamilies.length > 0) {
+        props.setFamilyName(familyData.getUserFamilies[0].name)
+      }
     }
   })
 
@@ -101,20 +111,8 @@ const FamilyInfo = props => {
   return (
     <>
       <Block className="family-info">
-        <GridContainer size={12} direction={"column"}>
-          <Block className="family-header">
-            <GridContainer align="center" justify="start">
-              <Grid style={{ padding: "0" }} sizeL={2}>
-                <Heading style={{ margin: '0.2rem' }} variant={3}>
-                  Talous {familyData && familyData.getUserFamilies[0].name}
-                </Heading>
-              </Grid>
-              <Grid sizeL={2}>
-                <Button outlined>Poista ryhmä</Button>
-              </Grid>
-            </GridContainer>
-          </Block>
-          <GridRow size={12}>
+        <GridContainer style={{ padding: '0' }} size={12} direction={"column"}>
+          <GridRow style={{ padding: '0' }} size={12}>
             <Grid>
               {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow size={12}>
                 <Grid sizeS={12} sizeM={12} sizeL={4}>
@@ -126,29 +124,24 @@ const FamilyInfo = props => {
                         <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa talouden {family.name.toUpperCase()}?</Heading>
                       </GridRow>
                       <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
-                        <Button onClick={() => removeFamily({
-                          variables: {
-                            id: family._id
-                          }
-                        })} style={{ width: "5rem" }} basic>Kyllä</Button>
-                        <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                        <Button onClick={() => {
+                          removeFamily({
+                            variables: {
+                              id: family._id
+                            }
+                          });
+                          props.setDisplayModal(false)
+                        }} style={{ width: "5rem" }} basic>Kyllä</Button>
+                        <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
                       </GridRow>
                     </GridContainer>
 
 
                   </Modal>
                   <Card>
-                    <InputHeading color={"secondary"} variant={2} name={`TALOUS ${family.name.toUpperCase()}`}>
-                      {family.ownerId == localStorage.getItem('userId') && <Button
-                        onClick={() => setDisplayModal(true)} style={{ marginLeft: '5px', verticalAlign: 'bottom' }} type="button" alert>
-                        <i class={'icofont-ui-delete'} style={{ marginRight: '5px' }}></i> Poista
-                    </Button>}
-                    </InputHeading>
-                    <br />
                     <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
-                    <Divider color={"secondary"} />
                     <FamilyMember key={`family-${family._id}-${family.ownerId}`} isOwner={family.isOwner} isAdmin={family.isAdmin} role={"perustaja"} id={family.ownerId} name={`${family.owner.firstName} ${family.owner.lastName}`} />
-                    <Heading align={"left"} variant={4} color={"secondary"}>Jäsenet</Heading>
+                    <Heading style={{ marginBottom: '0' }} align={"left"} variant={4} color={"secondary"}>Pääkäyttäjät</Heading>
                     <Divider color={"secondary"} />
                     {family.admins && family.admins.length && family.admins.map(admin => <FamilyMember
                       key={`family-${family._id}-${admin._id}`}
@@ -171,7 +164,8 @@ const FamilyInfo = props => {
                       })}
                       id={admin._id}
                       name={`${admin.firstName} ${admin.lastName}`} />)}
-                    <Heading style={{ margin: '0' }} align="left" color={"secondary"} variant={3}>Asetukset</Heading>
+                    <Heading style={{ margin: '0' }} align="left" color={"secondary"} variant={4}>Jäsenet</Heading>
+                    <Divider color={"secondary"} />
                     {family.members && family.members.length && family.members.map(member => <FamilyMember
                       key={`family-${family._id}-${member._id}`}
                       isOwner={family.isOwner}
@@ -193,7 +187,7 @@ const FamilyInfo = props => {
                       })}
                       id={member._id}
                       name={`${member.firstName} ${member.lastName}`} />)}
-                    {(family.isOwner || family.isAdmin) && <Block>
+                    {(family.isOwner || family.isAdmin) && <Block style={{ paddingTop: '1rem' }}>
                       <Paragraph align="left" color={"secondary"}>Alla voit säätää talouden näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, taloutta ei löydy vertailusivuilla. </Paragraph>
                       <Block style={{ textAlign: 'center', display: 'flex', justifyContent: 'flex-start' }}>
                         <SelectGroup underline color={"secondary"} value={family.permissions.visibility} onChange={(e, dataset) => changeFamilyVisibility({
