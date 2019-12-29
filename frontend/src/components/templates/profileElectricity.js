@@ -117,7 +117,7 @@ const ProfileElectricity = props => {
                 <GridContainer style={{ padding: '0' }} height={12} size={12} justify="flex-start" align="baseline">
                     <GridRow>
                         <Grid style={{ padding: '0', paddingLeft: '1rem', display: 'flex', justifyContent: 'flex-start' }} sizeS={7} sizeM={10} sizeL={9}>
-                            <Heading variant={3}>Sähkön säästötoimet</Heading>
+                            <Heading color={"secondary"} variant={3}>Sähkön säästötoimet</Heading>
                         </Grid>
                         {selectedFamily !== 'default' &&
                             <>
@@ -128,9 +128,9 @@ const ProfileElectricity = props => {
                                     </Grid>
                                 }
                                 {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 &&
-                                    <Grid style={{ display: 'flex', padding: '0' }} sizeS={5} sizeM={2} sizeL={3}>
+                                    <Grid style={{ display: 'flex', padding: '0 0.5rem 0 0' }} sizeS={5} sizeM={2} sizeL={3}>
 
-                                        <Select style={{ width: '100%' }} rounded value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
+                                        <Select color={"secondary"} style={{ width: '100%' }} rounded value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
 
                                             {familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))}
 

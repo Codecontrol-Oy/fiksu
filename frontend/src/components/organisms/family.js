@@ -16,21 +16,7 @@ const Family = props => {
   const [owner, setOwner] = useState(false)
   return <Block className="family-container">
     <GridContainer height={12} width={12} direction={"column"}>
-      {owner &&
-        <Block className="family-header">
-          <GridContainer height={12} align="center" justify="start">
-            <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={1} sizeM={10} sizeS={8} sizeXL={1}>
-              <Heading style={{ margin: '0rem' }} variant={4}>
-                TALOUS {familyName.toUpperCase()}
-              </Heading>
-            </Grid>
-            <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={2} sizeM={2} sizeS={4} sizeXL={1}>
-              <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista talous</Button>
-            </Grid>
-          </GridContainer>
-        </Block>
-      }
-
+      <Block id={"snackbars"} />
       <Block id={"modal"} />
       <FamilyMemberInvitation />
       <GridRow style={{ padding: '0' }} justify={"center"}>

@@ -25,9 +25,8 @@ import Modal from "../atoms/modal"
 
 const FamilyInfo = props => {
 
-  const [familyName, setFamilyname] = useState(undefined)
+  const [familyName, setFamilyName] = useState(undefined)
   const [displayModal, setDisplayModal] = useState(false)
-
 
   useEffect(() => {
 
@@ -39,7 +38,7 @@ const FamilyInfo = props => {
     },
     onCompleted(familyData) {
       if (familyData && familyData.getUserFamilies.length > 0) {
-        props.setFamilyName(familyData.getUserFamilies[0].name)
+        setFamilyName(familyData.getUserFamilies[0].name)
       }
     }
   })
@@ -47,7 +46,7 @@ const FamilyInfo = props => {
   const [createFamily, { loading: createFamilyLoading, error: createFamilyError, data: createFamilyData }] = useMutation(MUTATION_CREATE_FAMILY,
     {
       onCompleted(data) {
-        setFamilyname(undefined)
+        setFamilyName(undefined)
         props.addSnack("Talous luotu onnistuneesti", "success")
       },
       refetchQueries: ['GetUserFamilies']
@@ -121,6 +120,21 @@ const FamilyInfo = props => {
                 }
                 return (
                   <GridRow style={{ padding: '0' }} size={12}>
+                    <Block className="family-header">
+                      <GridContainer height={12} align="center" justify="start">
+                        <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={9} sizeM={10} sizeS={8} sizeXL={1}>
+                          <Heading color={"default"} style={{ margin: '0rem' }} variant={4}>
+                            TALOUS {family.name.toUpperCase()}
+                          </Heading>
+                        </Grid>
+                        <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3} sizeM={2} sizeS={4} sizeXL={1}>
+                          {family.isOwner &&
+                            <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista talous</Button>
+                          }
+                        </Grid>
+                      </GridContainer>
+                      <Divider color={"secondary"} />
+                    </Block>
                     <Grid style={{ padding: '0' }} sizeS={12} sizeM={12} sizeL={4}>
                       {family.isOwner &&
                         <Modal display={displayModal} id={"profile-card"}>
@@ -139,7 +153,7 @@ const FamilyInfo = props => {
                                 });
                                 props.setDisplayModal(false)
                               }} style={{ width: "5rem" }} basic>Kyllä</Button>
-                              <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                              <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
                             </GridRow>
                           </GridContainer>
 
@@ -147,7 +161,6 @@ const FamilyInfo = props => {
                         </Modal>
                       }
                       <Card>
-                        <Heading align={"left"} variant={2} color={"secondary"}>{family.name}</Heading>
                         <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
                         <FamilyMember
                           key={`family-${family._id}-${family.ownerId}`}
@@ -246,7 +259,6 @@ const FamilyInfo = props => {
                         </GridRow>
                       </Block>
                     </Grid>
-                    <Divider />
                   </GridRow>
                 )
               }
@@ -269,7 +281,7 @@ const FamilyInfo = props => {
                         }
                       })
                     }}>
-                    <InputGroup required underline color={"secondary"} value={familyName} onChange={(e) => setFamilyname(e.target.value)} placeholder="Talouden nimi" basic id="familyname" type="text" />
+                    <InputGroup required underline color={"secondary"} value={familyName} onChange={(e) => setFamilyName(e.target.value)} placeholder="Talouden nimi" basic id="familyname" type="text" />
                     <Button
                       type="submit"
                       basic > Tallenna</Button>

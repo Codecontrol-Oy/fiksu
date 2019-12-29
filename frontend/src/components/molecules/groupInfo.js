@@ -46,6 +46,9 @@ const GroupInfo = props => {
 
   const [removeGroupMember, { loading: removeGroupMemberLoading, error: removeGroupMemberError, data: removeGroupMemberData }] = useMutation(MUTATION_REMOVE_GROUP_MEMBER,
     {
+      onCompleted(data) {
+        props.addSnack("Jäsen poistettu onnistuneesti!", "success")
+      },
       refetchQueries: ['GetUserGroups']
     }
   )
@@ -64,6 +67,9 @@ const GroupInfo = props => {
 
   const [changeGroupVisibility, { loading: visibilityGroupLoading, error: visibilityGroupError, data: visibilityGroupData }] = useMutation(MUTATION_UPDATE_GROUP,
     {
+      onCompleted(data) {
+        props.addSnack("Ryhmän näkyvyys muutettu onnistuneesti!", "success")
+      },
       refetchQueries: ['GetUserGroups']
     }
   )
@@ -78,12 +84,27 @@ const GroupInfo = props => {
           }
           return (
             <GridRow size={12}>
+              <Block className="family-header">
+                <GridContainer height={12} align="center" justify="start">
+                  <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={9} sizeM={10} sizeS={8} sizeXL={1}>
+                    <Heading color={"default"} style={{ margin: '0rem' }} variant={4}>
+                      RYHMÄ {group.name.toUpperCase()}
+                    </Heading>
+                  </Grid>
+                  <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3} sizeM={2} sizeS={4} sizeXL={1}>
+                    {group.isOwner &&
+                      <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista ryhmä</Button>
+                    }
+                  </Grid>
+                </GridContainer>
+                <Divider color={"secondary"} />
+              </Block>
               <Grid sizeS={12} sizeM={12} sizeL={4}>
                 {group.isOwner &&
                   <Modal display={displayModal} id={"profile-card"}>
                     <GridContainer align={"center"} justify={"center"} direction={"column"}>
                       <GridRow>
-                        <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?</Heading>
+                        <Heading color={"default"} variant={5}>Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?</Heading>
                       </GridRow>
                       <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
                         <Button onClick={() => removeGroup({
@@ -91,7 +112,7 @@ const GroupInfo = props => {
                             id: group._id
                           }
                         })} style={{ width: "5rem" }} basic>Kyllä</Button>
-                        <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                        <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
                       </GridRow>
                     </GridContainer>
                   </Modal>

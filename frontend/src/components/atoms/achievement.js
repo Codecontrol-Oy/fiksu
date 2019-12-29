@@ -31,7 +31,12 @@ const Achievement = props => {
         setClasses(newClasses)
     }
     return (
-        <Block onMouseLeave={() => setShowProgress(!showProgress)} onMouseEnter={() => setShowProgress(!showProgress)} className={classes.length === 0 ? "achievement " : classes.join(' ')}>
+        <Block
+            onMouseLeave={() => setShowProgress(!showProgress)}
+            onMouseEnter={() => setShowProgress(!showProgress)}
+            onTouchStart={() => setShowProgress(!showProgress)}
+            onTouchEnd={() => setShowProgress(!showProgress)}
+            className={classes.length === 0 ? "achievement " : classes.join(' ')}>
             {props.locked &&
                 <Block className="achievement-locked">
                     <i className="icofont-ui-lock"></i>
