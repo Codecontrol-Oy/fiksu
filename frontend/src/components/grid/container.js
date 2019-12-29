@@ -27,6 +27,7 @@ const GridContainer = props => {
         if (props.justify === "around") classesNew.push("justify-around")
         if (props.justify === "evenly") classesNew.push("justify-evenly")
         if (props.justify === "stretch") classesNew.push("justify-stretch")
+        if (props.justify === "between") classesNew.push("justify-between")
 
         if (props.align === "center") classesNew.push("align-center")
         if (props.align === "start") classesNew.push("align-start")

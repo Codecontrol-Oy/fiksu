@@ -5,7 +5,8 @@ import {
   XAxis,
   YAxis,
   Hint,
-  LineMarkSeries
+  LineMarkSeries,
+  FlexibleWidthXYPlot
 } from 'react-vis';
 
 class LineChart extends React.Component {
@@ -13,12 +14,12 @@ class LineChart extends React.Component {
   createSeries = () => {
     let series = []
     let index = 0
-    if(this.props.data && this.props.data.length > 0) {
+    if (this.props.data && this.props.data.length > 0) {
       this.props.data.map((serie) => {
         serie.data.forEach((v) => {
           v.x = new Date(v.x)
         })
-        series.push(<LineMarkSeries key={(`lineChart-${index}`)} style={{strokeWidth: 3}} curve={'curveMonotoneX'} data={serie.data} />)
+        series.push(<LineMarkSeries key={(`lineChart-${index}`)} style={{ strokeWidth: 3 }} curve={'curveMonotoneX'} data={serie.data} />)
         index++
       })
     }
@@ -27,7 +28,7 @@ class LineChart extends React.Component {
 
   createRange = () => {
     let range = []
-    if(this.props.data && this.props.data.length > 0) { 
+    if (this.props.data && this.props.data.length > 0) {
       this.props.data.map((rdata) => {
         rdata.data.map((r) => {
           range.push(r.y)
@@ -42,16 +43,14 @@ class LineChart extends React.Component {
     const YRange = this.createRange()
     return (
       <div>
-        <h3 style={{textAlign: 'center'}} className="text-secondary">{this.props.title}</h3>
-        <XYPlot
+        <h3 style={{ textAlign: 'center' }} className="text-secondary">{this.props.title}</h3>
+        <FlexibleWidthXYPlot height={320}
           xType="time"
-          width={320}
-          yDomain={[Math.min(...YRange) - 100, Math.max(...YRange) + 100]}
-          height={320}>
+          yDomain={[Math.min(...YRange) - 100, Math.max(...YRange) + 100]}>
           <XAxis tickLabelAngle={-45} />
           <YAxis />
           {series}
-        </XYPlot>
+        </FlexibleWidthXYPlot>
       </div>
     )
   }

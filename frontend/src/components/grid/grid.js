@@ -15,6 +15,7 @@ const Grid = props => {
         if (props.sizeS >= 1 && props.sizeS <= 12) className.push(`s-grid-${props.sizeS}`)
         if (props.sizeM >= 1 && props.sizeM <= 12) className.push(`m-grid-${props.sizeM}`)
         if (props.sizeL >= 1 && props.sizeL <= 12) className.push(`l-grid-${props.sizeL}`)
+        if (props.sizeXL >= 1 && props.sizeXL <= 12) className.push(`xl-grid-${props.sizeXL}`)
 
 
         if (props.height >= 1 && props.height <= 12) className.push(`height-${props.height}`)

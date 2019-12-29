@@ -21,6 +21,24 @@ const Button = props => {
     if (props.rounded) {
       newClasses.push("button-rounded")
     }
+    if (props.outlined) {
+      newClasses.push("button-outlined")
+    }
+    if (props.plain) {
+      newClasses.push("button-plain")
+    }
+    if (props.color === "alert") {
+      newClasses.push("text-alert")
+    }
+    if (props.color === "secondary") {
+      newClasses.push("text-secondary")
+    }
+    if (props.color === "default") {
+      newClasses.push("text-default")
+    }
+    if (props.color === "success") {
+      newClasses.push("text-success")
+    }
 
     return newClasses
 

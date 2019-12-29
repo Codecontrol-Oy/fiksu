@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Block from '../atoms/block'
 import GridContainer from '../grid/container'
 import GridRow from '../grid/row'
@@ -25,9 +25,19 @@ const GroupInfo = props => {
   const myData = [{ angle: 1, label: "1", subLabel: "ekopisteet" }, { angle: 5, label: "5", subLabel: "Sähkönkäyttöpisteet" }]
   const [displayModal, setDisplayModal] = useState(false)
 
+
+  useEffect(() => {
+    setDisplayModal(props.displayModal)
+  }, [props.displayModal])
+
   const { loading: groupsLoading, error: groupsError, data: groupsData } = useQuery(GET_USER_GROUPS, {
     variables: {
       id: localStorage.getItem('userId')
+    },
+    onCompleted(groupsData) {
+      if (groupsData && groupsData.getUserGroups.length > 0) {
+        props.setHeaderName(groupsData.getUserGroups[0].name)
+      }
     }
   })
   const [removeGroup, { loading: removeGroupLoading, error: removeGroupError, data: removeGroupData }] = useMutation(MUTATION_REMOVE_GROUP, {
@@ -74,19 +84,16 @@ const GroupInfo = props => {
                       id: group._id
                     }
                   })} style={{ width: "5rem" }} basic>Kyllä</Button>
-                  <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                  <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
                 </GridRow>
               </GridContainer>
             </Modal>
             <Card>
-              <InputHeading color={"secondary"} variant={2} name={`RYHMÄ ${group.name.toUpperCase()}`}>
-                {group.ownerId == localStorage.getItem('userId') && <Button
-                  onClick={() => setDisplayModal(true)} style={{ marginLeft: '5px', verticalAlign: 'bottom' }} type="button" alert>
-                  <i className={'icofont-ui-delete'} style={{ marginRight: '5px' }}></i> Poista</Button>}
-              </InputHeading>
-              <Heading color={"secondary"} variant={3}>Perustaja</Heading>
+              <Heading align={"left"} color={"secondary"} variant={2}>{group.name}</Heading>
+              <Heading align={"left"} color={"secondary"} variant={3}>Perustaja</Heading>
               <FamilyMember key={`group-${group._id}-${group.ownerId}`} isOwner={group.isOwner} isAdmin={group.isAdmin} role={"perustaja"} id={group.ownerId} name={`${group.owner.firstName} ${group.owner.lastName}`} />
-              <Heading color={"secondary"} variant={3}>Pääkäyttäjät</Heading>
+              <Heading style={{ marginBottom: 0 }} align={"left"} color={"secondary"} variant={4}>Pääkäyttäjät</Heading>
+              <Divider color={"secondary"} />
               {group.admins && group.admins.length > 0 && group.admins.map(admin => <FamilyMember
                 key={`group-${group._id}-${group._id}`}
                 isOwner={group.isOwner}
@@ -108,7 +115,8 @@ const GroupInfo = props => {
                 })}
                 id={admin._id}
                 name={`${admin.firstName} ${admin.lastName}`} />)}
-              <Heading color={"secondary"} variant={3}>Jäsenet</Heading>
+              <Heading style={{ marginBottom: 0 }} align={"left"} color={"secondary"} variant={4}>Jäsenet</Heading>
+              <Divider color={"secondary"} />
               {group.members && group.members.length > 0 && group.members.map(member => <FamilyMember
                 key={`group-${group._id}-${member._id}`}
                 isOwner={group.isOwner}
@@ -131,8 +139,8 @@ const GroupInfo = props => {
                 id={member._id}
                 name={`${member.firstName} ${member.lastName}`} />)}
               {(group.isOwner || group.isAdmin) && <Block>
-                <Paragraph color={"secondary"}>Alla voit säätää ryhmän näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, ryhmää ei löydy vertailusivuilla. </Paragraph>
-                <Block style={{ textAlign: 'center' }}>
+                <Paragraph align={"left"} color={"secondary"}>Alla voit säätää ryhmän näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, ryhmää ei löydy vertailusivuilla. </Paragraph>
+                <Block style={{ textAlign: 'center', display: "flex", justifyContent: "flex-start" }}>
                   <SelectGroup underline color={"secondary"} value={group.permissions.visibility} onChange={(e, dataset) => changeGroupVisibility({
                     variables: {
                       group: {
