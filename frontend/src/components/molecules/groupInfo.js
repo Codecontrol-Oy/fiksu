@@ -73,21 +73,24 @@ const GroupInfo = props => {
       <GridContainer size={12} direction={"column"}>
         {groupsData && groupsData.getUserGroups.length > 0 && groupsData.getUserGroups.map(group => <GridRow size={12}>
           <Grid sizeS={12} sizeM={12} sizeL={4}>
-            <Modal display={displayModal} id={"profile-card"}>
-              <GridContainer align={"center"} justify={"center"} direction={"column"}>
-                <GridRow>
-                  <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?</Heading>
-                </GridRow>
-                <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
-                  <Button onClick={() => removeGroup({
-                    variables: {
-                      id: group._id
-                    }
-                  })} style={{ width: "5rem" }} basic>Kyllä</Button>
-                  <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
-                </GridRow>
-              </GridContainer>
-            </Modal>
+            {group.isOwner &&
+              <Modal display={displayModal} id={"profile-card"}>
+                <GridContainer align={"center"} justify={"center"} direction={"column"}>
+                  <GridRow>
+                    <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?</Heading>
+                  </GridRow>
+                  <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
+                    <Button onClick={() => removeGroup({
+                      variables: {
+                        id: group._id
+                      }
+                    })} style={{ width: "5rem" }} basic>Kyllä</Button>
+                    <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                  </GridRow>
+                </GridContainer>
+              </Modal>
+            }
+
             <Card>
               <Heading align={"left"} color={"secondary"} variant={2}>{group.name}</Heading>
               <Heading align={"left"} color={"secondary"} variant={3}>Perustaja</Heading>

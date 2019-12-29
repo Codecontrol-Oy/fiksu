@@ -116,28 +116,30 @@ const FamilyInfo = props => {
             <Grid style={{ padding: '0' }}>
               {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow style={{ padding: '0' }} size={12}>
                 <Grid style={{ padding: '0' }} sizeS={12} sizeM={12} sizeL={4}>
-                  <Modal display={displayModal} id={"profile-card"}>
-                    <GridContainer align={"center"} justify={"center"} direction={"column"}>
-                      <Heading variant={4} color={"secondary"}>Talouden poistaminen</Heading>
-                      <Divider color={"secondary"} />
-                      <GridRow>
-                        <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa talouden {family.name.toUpperCase()}?</Heading>
-                      </GridRow>
-                      <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
-                        <Button onClick={() => {
-                          removeFamily({
-                            variables: {
-                              id: family._id
-                            }
-                          });
-                          props.setDisplayModal(false)
-                        }} style={{ width: "5rem" }} basic>Kyllä</Button>
-                        <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
-                      </GridRow>
-                    </GridContainer>
+                  {family.isOwner &&
+                    <Modal display={displayModal} id={"profile-card"}>
+                      <GridContainer align={"center"} justify={"center"} direction={"column"}>
+                        <Heading variant={4} color={"secondary"}>Talouden poistaminen</Heading>
+                        <Divider color={"secondary"} />
+                        <GridRow>
+                          <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa talouden {family.name.toUpperCase()}?</Heading>
+                        </GridRow>
+                        <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
+                          <Button onClick={() => {
+                            removeFamily({
+                              variables: {
+                                id: family._id
+                              }
+                            });
+                            props.setDisplayModal(false)
+                          }} style={{ width: "5rem" }} basic>Kyllä</Button>
+                          <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                        </GridRow>
+                      </GridContainer>
 
 
-                  </Modal>
+                    </Modal>
+                  }
                   <Card>
                     <Heading align={"left"} variant={2} color={"secondary"}>{family.name}</Heading>
                     <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
