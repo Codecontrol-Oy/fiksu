@@ -14,21 +14,11 @@ import Heading from "../atoms/heading"
 const Group = props => {
   const [displayModal, setDisplayModal] = useState(false)
   const [headerName, setHeaderName] = useState("")
+  const [owner, setOwner] = useState(false)
 
   return <Block className="group-container">
     <GridContainer height={12} width={12} direction={"column"}>
-      <Block className="family-header">
-        <GridContainer height={12} align="center" justify="start">
-          <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={2} sizeM={10} sizeS={8} sizeXL={2}>
-            <Heading style={{ margin: '0rem' }} variant={4}>
-              RYHMÄ {headerName.toUpperCase()}
-            </Heading>
-          </Grid>
-          <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={1} sizeM={2} sizeS={4} sizeXL={1}>
-            <Button onClick={() => setDisplayModal(true)} color={'alert'} outlined>Poista ryhmä</Button>
-          </Grid>
-        </GridContainer>
-      </Block>
+      <Block id={"snackbars"} />
       <Block id={"modal"} />
       <GridRow justify={"center"}>
         <GroupMemberInvitation />
@@ -38,6 +28,7 @@ const Group = props => {
       </GridRow>
       <GridRow justify={"center"}>
         <GroupInfo
+          setOwner={setOwner}
           displayModal={displayModal}
           setDisplayModal={setDisplayModal}
           setHeaderName={setHeaderName}

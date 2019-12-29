@@ -25,9 +25,8 @@ import Modal from "../atoms/modal"
 
 const FamilyInfo = props => {
 
-  const [familyName, setFamilyname] = useState(undefined)
+  const [familyName, setFamilyName] = useState(undefined)
   const [displayModal, setDisplayModal] = useState(false)
-
 
   useEffect(() => {
 
@@ -39,7 +38,7 @@ const FamilyInfo = props => {
     },
     onCompleted(familyData) {
       if (familyData && familyData.getUserFamilies.length > 0) {
-        props.setFamilyName(familyData.getUserFamilies[0].name)
+        setFamilyName(familyData.getUserFamilies[0].name)
       }
     }
   })
@@ -47,7 +46,7 @@ const FamilyInfo = props => {
   const [createFamily, { loading: createFamilyLoading, error: createFamilyError, data: createFamilyData }] = useMutation(MUTATION_CREATE_FAMILY,
     {
       onCompleted(data) {
-        setFamilyname(undefined)
+        setFamilyName(undefined)
         props.addSnack("Talous luotu onnistuneesti", "success")
       },
       refetchQueries: ['GetUserFamilies']
@@ -114,132 +113,156 @@ const FamilyInfo = props => {
         <GridContainer style={{ padding: '0' }} size={12} direction={"column"}>
           <GridRow style={{ padding: '0' }} size={12}>
             <Grid style={{ padding: '0' }}>
-              {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow style={{ padding: '0' }} size={12}>
-                <Grid style={{ padding: '0' }} sizeS={12} sizeM={12} sizeL={4}>
-                  <Modal display={displayModal} id={"profile-card"}>
-                    <GridContainer align={"center"} justify={"center"} direction={"column"}>
-                      <Heading variant={4} color={"secondary"}>Talouden poistaminen</Heading>
+              {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => {
+
+                if (family.isOwner) {
+                  props.setOwner(true)
+                }
+                return (
+                  <GridRow style={{ padding: '0' }} size={12}>
+                    <Block className="family-header">
+                      <GridContainer height={12} align="center" justify="start">
+                        <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={9} sizeM={10} sizeS={8} sizeXL={1}>
+                          <Heading color={"default"} style={{ margin: '0rem' }} variant={4}>
+                            TALOUS {family.name.toUpperCase()}
+                          </Heading>
+                        </Grid>
+                        <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3} sizeM={2} sizeS={4} sizeXL={1}>
+                          {family.isOwner &&
+                            <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista talous</Button>
+                          }
+                        </Grid>
+                      </GridContainer>
                       <Divider color={"secondary"} />
-                      <GridRow>
-                        <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa talouden {family.name.toUpperCase()}?</Heading>
-                      </GridRow>
-                      <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
-                        <Button onClick={() => {
-                          removeFamily({
-                            variables: {
-                              id: family._id
-                            }
-                          });
-                          props.setDisplayModal(false)
-                        }} style={{ width: "5rem" }} basic>Kyllä</Button>
-                        <Button onClick={() => props.setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
-                      </GridRow>
-                    </GridContainer>
+                    </Block>
+                    <Grid style={{ padding: '0' }} sizeS={12} sizeM={12} sizeL={4}>
+                      {family.isOwner &&
+                        <Modal display={displayModal} id={"profile-card"}>
+                          <GridContainer align={"center"} justify={"center"} direction={"column"}>
+                            <Heading variant={4} color={"secondary"}>Talouden poistaminen</Heading>
+                            <Divider color={"secondary"} />
+                            <GridRow>
+                              <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa talouden {family.name.toUpperCase()}?</Heading>
+                            </GridRow>
+                            <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
+                              <Button onClick={() => {
+                                removeFamily({
+                                  variables: {
+                                    id: family._id
+                                  }
+                                });
+                                props.setDisplayModal(false)
+                              }} style={{ width: "5rem" }} basic>Kyllä</Button>
+                              <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                            </GridRow>
+                          </GridContainer>
 
 
-                  </Modal>
-                  <Card>
-                    <Heading align={"left"} variant={2} color={"secondary"}>{family.name}</Heading>
-                    <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
-                    <FamilyMember
-                      key={`family-${family._id}-${family.ownerId}`}
-                      isOwner={family.isOwner}
-                      isAdmin={family.isAdmin}
-                      role={"perustaja"}
-                      id={family.ownerId}
-                      name={`${family.owner.firstName} ${family.owner.lastName}`} />
-                    <GridContainer style={{
-                      padding: '0'
-                    }} align="baseline" justify="between" size={12} >
-                      <Heading style={{ marginBottom: '0' }} align={"left"} variant={4} color={"secondary"}>Pääkäyttäjät</Heading>
-                      {/*<Button style={{ width: '8rem' }} plain >
+                        </Modal>
+                      }
+                      <Card>
+                        <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
+                        <FamilyMember
+                          key={`family-${family._id}-${family.ownerId}`}
+                          isOwner={family.isOwner}
+                          isAdmin={family.isAdmin}
+                          role={"perustaja"}
+                          id={family.ownerId}
+                          name={`${family.owner.firstName} ${family.owner.lastName}`} />
+                        <GridContainer style={{
+                          padding: '0'
+                        }} align="baseline" justify="between" size={12} >
+                          <Heading style={{ marginBottom: '0' }} align={"left"} variant={4} color={"secondary"}>Pääkäyttäjät</Heading>
+                          {/*<Button style={{ width: '8rem' }} plain >
                         <i class="icofont-search-user"></i>
                         Lisää jäsen
                   </Button>*/}
-                    </GridContainer>
-                    <Divider color={"secondary"} />
+                        </GridContainer>
+                        <Divider color={"secondary"} />
 
-                    {family.admins && family.admins.length && family.admins.map(admin => <FamilyMember
-                      key={`family-${family._id}-${admin._id}`}
-                      isOwner={family.isOwner}
-                      ownerId={family.ownerId}
-                      isAdmin={family.isAdmin}
-                      role={"ylläpitäjä"}
-                      adminUser={true}
-                      delete={() => removeFamilyMember({
-                        variables: {
-                          id: admin._id,
-                          familyId: family._id
-                        }
-                      })}
-                      demote={() => demoteFamilyMember({
-                        variables: {
-                          id: admin._id,
-                          familyId: family._id
-                        }
-                      })}
-                      id={admin._id}
-                      name={`${admin.firstName} ${admin.lastName}`} />)}
-                    <Heading style={{ margin: '0' }} align="left" color={"secondary"} variant={4}>Jäsenet</Heading>
-                    <Divider color={"secondary"} />
-                    {family.members && family.members.length && family.members.map(member => <FamilyMember
-                      key={`family-${family._id}-${member._id}`}
-                      isOwner={family.isOwner}
-                      isAdmin={family.isAdmin}
-                      ownerId={family.ownerId}
-                      memberUser={true}
-                      role={"jäsen"}
-                      delete={() => removeFamilyMember({
-                        variables: {
-                          id: member._id,
-                          familyId: family._id
-                        }
-                      })}
-                      promote={() => promoteFamilyMember({
-                        variables: {
-                          id: member._id,
-                          familyId: family._id
-                        }
-                      })}
-                      id={member._id}
-                      name={`${member.firstName} ${member.lastName}`} />)}
-                    {(family.isOwner || family.isAdmin) && <Block style={{ paddingTop: '1rem' }}>
-                      <Paragraph align="left" color={"secondary"}>Alla voit säätää talouden näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, taloutta ei löydy vertailusivuilla. </Paragraph>
-                      <Block style={{ textAlign: 'center', display: 'flex', justifyContent: 'flex-start' }}>
-                        <SelectGroup underline color={"secondary"} value={family.permissions.visibility} onChange={(e, dataset) => changeFamilyVisibility({
-                          variables: {
-                            family: {
-                              _id: family._id,
-                              name: family.name,
-                              permissions: {
-                                visibility: e.currentTarget.value
-                              }
+                        {family.admins && family.admins.length && family.admins.map(admin => <FamilyMember
+                          key={`family-${family._id}-${admin._id}`}
+                          isOwner={family.isOwner}
+                          ownerId={family.ownerId}
+                          isAdmin={family.isAdmin}
+                          role={"ylläpitäjä"}
+                          adminUser={true}
+                          delete={() => removeFamilyMember({
+                            variables: {
+                              id: admin._id,
+                              familyId: family._id
                             }
-                          }
-                        })
-                        }>
-                          <Option key={'visibility-NONE'} selected={family.permissions.visibility == 'NONE' ? 'selected' : undefined} value={'NONE'} text={'Piilotettu'} />
-                          <Option key={'visibility-Public'} selected={family.permissions.visibility == 'PUBLIC' ? 'selected' : undefined} value={'PUBLIC'} text={'Julkinen'} />
-                        </SelectGroup>
+                          })}
+                          demote={() => demoteFamilyMember({
+                            variables: {
+                              id: admin._id,
+                              familyId: family._id
+                            }
+                          })}
+                          id={admin._id}
+                          name={`${admin.firstName} ${admin.lastName}`} />)}
+                        <Heading style={{ margin: '0' }} align="left" color={"secondary"} variant={4}>Jäsenet</Heading>
+                        <Divider color={"secondary"} />
+                        {family.members && family.members.length && family.members.map(member => <FamilyMember
+                          key={`family-${family._id}-${member._id}`}
+                          isOwner={family.isOwner}
+                          isAdmin={family.isAdmin}
+                          ownerId={family.ownerId}
+                          memberUser={true}
+                          role={"jäsen"}
+                          delete={() => removeFamilyMember({
+                            variables: {
+                              id: member._id,
+                              familyId: family._id
+                            }
+                          })}
+                          promote={() => promoteFamilyMember({
+                            variables: {
+                              id: member._id,
+                              familyId: family._id
+                            }
+                          })}
+                          id={member._id}
+                          name={`${member.firstName} ${member.lastName}`} />)}
+                        {(family.isOwner || family.isAdmin) && <Block style={{ paddingTop: '1rem' }}>
+                          <Paragraph align="left" color={"secondary"}>Alla voit säätää talouden näkyvyysasetuksia. <br />Mikäli asetat näkyvyyden piilotetuksi, taloutta ei löydy vertailusivuilla. </Paragraph>
+                          <Block style={{ textAlign: 'center', display: 'flex', justifyContent: 'flex-start' }}>
+                            <SelectGroup underline color={"secondary"} value={family.permissions.visibility} onChange={(e, dataset) => changeFamilyVisibility({
+                              variables: {
+                                family: {
+                                  _id: family._id,
+                                  name: family.name,
+                                  permissions: {
+                                    visibility: e.currentTarget.value
+                                  }
+                                }
+                              }
+                            })
+                            }>
+                              <Option key={'visibility-NONE'} selected={family.permissions.visibility == 'NONE' ? 'selected' : undefined} value={'NONE'} text={'Piilotettu'} />
+                              <Option key={'visibility-Public'} selected={family.permissions.visibility == 'PUBLIC' ? 'selected' : undefined} value={'PUBLIC'} text={'Julkinen'} />
+                            </SelectGroup>
+                          </Block>
+                        </Block>}
+                      </Card>
+                    </Grid>
+                    <Grid sizeS={12} sizeM={12} sizeL={8}>
+                      <Block style={{ textAlign: 'center' }}>
+                        <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
+                        <GridRow size={12}>
+                          <Grid sizeS={12} sizeM={6} sizeL={6}>
+                            <FamilyPoints family={family} title={'Pisteet henkilöittäin'} />
+                          </Grid>
+                          <Grid sizeS={12} sizeM={6} sizeL={6}>
+                            <FamilyStackedPoints family={family} title={'jaottelu henkilöittäin'} />
+                          </Grid>
+                        </GridRow>
                       </Block>
-                    </Block>}
-                  </Card>
-                </Grid>
-                <Grid sizeS={12} sizeM={12} sizeL={8}>
-                  <Block style={{ textAlign: 'center' }}>
-                    <Heading variant={2} color={"secondary"}>Talouden kuukausitulos</Heading>
-                    <GridRow size={12}>
-                      <Grid sizeS={12} sizeM={6} sizeL={6}>
-                        <FamilyPoints family={family} title={'Pisteet henkilöittäin'} />
-                      </Grid>
-                      <Grid sizeS={12} sizeM={6} sizeL={6}>
-                        <FamilyStackedPoints family={family} title={'jaottelu henkilöittäin'} />
-                      </Grid>
-                    </GridRow>
-                  </Block>
-                </Grid>
-                <Divider />
-              </GridRow>
+                    </Grid>
+                  </GridRow>
+                )
+              }
+
               )}
               {familyData && (!familyData.getUserFamilies.length || !familyData.getUserFamilies.some(x => x.isOwner)) && <Block>
                 <Heading color={"secondary"} variant={4}>Et ole perustanut taloutta palveluun.</Heading>
@@ -258,7 +281,7 @@ const FamilyInfo = props => {
                         }
                       })
                     }}>
-                    <InputGroup required underline color={"secondary"} value={familyName} onChange={(e) => setFamilyname(e.target.value)} placeholder="Talouden nimi" basic id="familyname" type="text" />
+                    <InputGroup required underline color={"secondary"} value={familyName} onChange={(e) => setFamilyName(e.target.value)} placeholder="Talouden nimi" basic id="familyname" type="text" />
                     <Button
                       type="submit"
                       basic > Tallenna</Button>

@@ -6,7 +6,19 @@ const Heading = props => {
   const [classes, setClasses] = useState(() => {
     let classes = []
 
-    if (props.color === "secondary") classes.push("text-secondary")
+    if (props.color === "alert") {
+      classes.push("text-alert")
+    }
+    if (props.color === "secondary") {
+      classes.push("text-secondary")
+    }
+    if (props.color === "default") {
+      classes.push("text-default")
+    }
+    if (props.color === "success") {
+      classes.push("text-success")
+    }
+
     if (props.align === "center") classes.push("text-center")
     if (props.align === "left") classes.push("text-left")
     if (props.align === "right") classes.push("text-right")
