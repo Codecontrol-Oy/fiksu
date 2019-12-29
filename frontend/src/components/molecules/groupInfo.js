@@ -40,7 +40,11 @@ const GroupInfo = props => {
       }
     }
   })
-  const [removeGroup, { loading: removeGroupLoading, error: removeGroupError, data: removeGroupData }] = useMutation(MUTATION_REMOVE_GROUP, {
+  const [removeGroup, { loading: removeGroupLoading, error: removeGroupError, data: removeGroupData }] = useMutation(MUTATION_REMOVE_GROUP,
+    {
+      onCompleted(data) {
+        setDisplayModal(false)
+      },
     refetchQueries: ['GetUserGroups']
   })
 
@@ -77,7 +81,7 @@ const GroupInfo = props => {
   return (
     <Block className="group-info">
       <GridContainer size={12} direction={"column"}>
-        {groupsData && groupsData.getUserGroups.length > 0 && groupsData.getUserGroups.map(group => {
+        {groupsData && groupsData.getUserGroups.length > 0 && groupsData.getUserGroups.map((group, index) => {
 
           if (group.isOwner) {
             props.setOwner(true)
@@ -93,7 +97,7 @@ const GroupInfo = props => {
                   </Grid>
                   <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3} sizeM={2} sizeS={4} sizeXL={1}>
                     {group.isOwner &&
-                      <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista ryhmä</Button>
+                      <Button onClick={() => setDisplayModal(index)} outlined color={'alert'}>Poista ryhmä</Button>
                     }
                   </Grid>
                 </GridContainer>
@@ -101,7 +105,7 @@ const GroupInfo = props => {
               </Block>
               <Grid sizeS={12} sizeM={12} sizeL={4}>
                 {group.isOwner &&
-                  <Modal display={displayModal} id={"profile-card"}>
+                  <Modal display={displayModal === index} id={`${"profile-card-"}${index}`}>
                     <GridContainer align={"center"} justify={"center"} direction={"column"}>
                       <GridRow>
                         <Heading color={"default"} variant={5}>Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?</Heading>
