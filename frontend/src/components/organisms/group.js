@@ -25,7 +25,7 @@ const Group = props => {
             </Heading>
           </Grid>
           <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={1} sizeM={2} sizeS={4} sizeXL={1}>
-            <Button onClick={() => setDisplayModal(true)} outlined>Poista ryhmä</Button>
+            <Button onClick={() => setDisplayModal(true)} color={'alert'} outlined>Poista ryhmä</Button>
           </Grid>
         </GridContainer>
       </Block>

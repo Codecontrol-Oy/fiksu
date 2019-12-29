@@ -140,9 +140,24 @@ const FamilyInfo = props => {
                   </Modal>
                   <Card>
                     <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
-                    <FamilyMember key={`family-${family._id}-${family.ownerId}`} isOwner={family.isOwner} isAdmin={family.isAdmin} role={"perustaja"} id={family.ownerId} name={`${family.owner.firstName} ${family.owner.lastName}`} />
-                    <Heading style={{ marginBottom: '0' }} align={"left"} variant={4} color={"secondary"}>Pääkäyttäjät</Heading>
+                    <FamilyMember
+                      key={`family-${family._id}-${family.ownerId}`}
+                      isOwner={family.isOwner}
+                      isAdmin={family.isAdmin}
+                      role={"perustaja"}
+                      id={family.ownerId}
+                      name={`${family.owner.firstName} ${family.owner.lastName}`} />
+                    <GridContainer style={{
+                      padding: '0'
+                    }} align="baseline" justify="between" size={12} >
+                      <Heading style={{ marginBottom: '0' }} align={"left"} variant={4} color={"secondary"}>Pääkäyttäjät</Heading>
+                      {/*<Button style={{ width: '8rem' }} plain >
+                        <i class="icofont-search-user"></i>
+                        Lisää jäsen
+                  </Button>*/}
+                    </GridContainer>
                     <Divider color={"secondary"} />
+
                     {family.admins && family.admins.length && family.admins.map(admin => <FamilyMember
                       key={`family-${family._id}-${admin._id}`}
                       isOwner={family.isOwner}

@@ -5,6 +5,7 @@
   --alert-color: #C95360;
   --primary-color: white;
   --secondary-color: #5a5a5a;
+  --success-color: #70c770;
 }
 
 * {
@@ -821,8 +822,7 @@ input::placeholder {
 font-family: 'Oxygen', sans-serif;
   color: white;
   height: 2rem;
-  background-color: rgb(82, 177, 82);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: #70c770;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -867,8 +867,7 @@ font-family: 'Oxygen', sans-serif;
 font-family: 'Oxygen', sans-serif;
   color: white;
   height: 2rem;
-  background-color: #c44741;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: var(--alert-color);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -886,7 +885,6 @@ font-family: 'Oxygen', sans-serif;
   -ms-transition: box-shadow 0.2s ease, background-color 0.2s ease;
   -o-transition: box-shadow 0.2s ease, background-color 0.2s ease;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    background-color: rgb(76, 160, 76);
 }
 .button-alert:not(:active) {
   transition: box-shadow 0.1s ease, background-color 0.1s ease;
@@ -929,6 +927,47 @@ font-family: 'Oxygen', sans-serif;
 }
 .button-outlined:hover {
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.214);
+}
+
+.button-plain {
+  cursor: pointer;
+  position: relative;
+  font-size: 0.8rem;
+  font-family: 'Oxygen';
+  color: var(--default-color);
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border: none;
+}
+.button-plain:focus {
+  outline:none;
+}
+.button-plain:active {
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -webkit-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -moz-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -ms-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  -o-transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.button-plain:not(:active) {
+  transition: background-color 0.1s ease;
+  -webkit-transition: background-color 0.1s ease;
+  -moz-transition: background-color 0.1s ease;
+  -ms-transition: background-color 0.1s ease;
+  -o-transition: background-color 0.1s ease;
+}
+.button-plain:hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.214);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
 }
 
 .ripple::before {
@@ -1738,6 +1777,9 @@ font-family: 'Oxygen', sans-serif;
 .text-default {
   color: var(--default-color)
 }
+.text-success {
+  color: var(--success-color)
+}
 
 .text-center {
   text-align: center;
@@ -1903,6 +1945,7 @@ font-family: 'Oxygen', sans-serif;
 .align-start {align-items: flex-start}
 .align-center {align-items: center}
 .align-end {align-items: flex-end}
+.align-baseline {align-items: baseline}
 
 .direction-row {flex-direction: row}
 .direction-column {flex-direction: column}
@@ -1939,6 +1982,8 @@ select {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
+   text-align: center;
+  text-align-last: center;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

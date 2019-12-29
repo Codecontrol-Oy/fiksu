@@ -23,7 +23,7 @@ const Family = props => {
             </Heading>
           </Grid>
           <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={2} sizeM={2} sizeS={4} sizeXL={1}>
-            <Button onClick={() => setDisplayModal(true)} outlined>Poista ryhmä</Button>
+            <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista ryhmä</Button>
           </Grid>
         </GridContainer>
       </Block>

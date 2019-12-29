@@ -7,7 +7,8 @@ import {
   YAxis,
   VerticalGridLines,
   HorizontalGridLines,
-  VerticalBarSeries
+  VerticalBarSeries,
+  FlexibleWidthXYPlot
 } from 'react-vis';
 
 class StackedBarChart extends React.Component {
@@ -16,7 +17,7 @@ class StackedBarChart extends React.Component {
     let series = []
     let data = this.props.data
     data.map((serie) => {
-      series.push(<VerticalBarSeries data={serie} style={{stroke: '#fff'}} />)
+      series.push(<VerticalBarSeries data={serie} style={{ stroke: '#fff' }} />)
     })
     return series
   }
@@ -25,20 +26,18 @@ class StackedBarChart extends React.Component {
     const series = this.createSeries()
     return (
       <div>
-        <h3 className={(this.props.primary ? 'text' :'text-secondary')}>{this.props.title}</h3>
-        <XYPlot
-          margin={{bottom: 70}}
+        <h3 className={(this.props.primary ? 'text' : 'text-secondary')}>{this.props.title}</h3>
+        <FlexibleWidthXYPlot height={320}
+          margin={{ bottom: 70 }}
           xType="ordinal"
-          width={320}
           stackBy="y"
-          height={320}
           xDistance={100}>
           <XAxis tickLabelAngle={-45} />
           <HorizontalGridLines />
           <VerticalGridLines />
           <YAxis />
           {series}
-        </XYPlot>
+        </FlexibleWidthXYPlot>
       </div>
     )
   }

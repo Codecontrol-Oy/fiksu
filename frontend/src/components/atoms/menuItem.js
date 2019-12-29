@@ -30,7 +30,6 @@ const MenuItem = props => {
                 return
               }
               if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-                console.log(svg)
               }
               if (props.active) {
                 svg.classList.add('new-menu-item-active')

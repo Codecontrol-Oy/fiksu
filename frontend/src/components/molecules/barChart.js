@@ -7,46 +7,44 @@ import {
   YAxis,
   VerticalGridLines,
   HorizontalGridLines,
-  VerticalRectSeries
+  VerticalRectSeries,
+  FlexibleXYPlot,
+  FlexibleWidthXYPlot
 } from 'react-vis';
 
-class BarChart extends React.Component {
+const BarChart = props => {
 
-  createSeries = () => {
+  const createSeries = () => {
     let series = []
-    let data = this.props.data
+    let data = props.data
     data.map((serie) => {
       serie.data.forEach((v) => {
         v.x = new Date(v.x)
         v.x0 = new Date(v.x)
         v.x0.setDate(v.x.getDate() - 1)
       })
-      series.push(<VerticalRectSeries data={serie.data} style={{stroke: '#fff'}} />)
+      series.push(<VerticalRectSeries data={serie.data} style={{ stroke: '#fff' }} />)
     })
     return series
   }
 
-  render() {
-    const series = this.createSeries()
-    return (
-      <div>
-        <h3 className={(this.props.primary ? 'text' :'text-secondary')}>{this.props.title}</h3>
-        <XYPlot
-          xType="time"
-          width={320}
-          height={320}
-          xDomain={[this.props.rangeA, this.props.rangeB]}
-          xDistance={100}>
-          <XAxis />
-          <HorizontalGridLines />
-          <VerticalGridLines />
-          <YAxis />
-          {series}
-          
-        </XYPlot>
-      </div>
-    )
-  }
+  const series = createSeries()
+  return (
+    <div>
+      <h3 className={(props.primary ? 'text' : 'text-secondary')}>{props.title}</h3>
+      <FlexibleWidthXYPlot height={320}
+        xType="time"
+        xDomain={[props.rangeA, props.rangeB]}
+        xDistance={100}>
+        <XAxis />
+        <HorizontalGridLines />
+        <VerticalGridLines />
+        <YAxis />
+        {series}
+
+      </FlexibleWidthXYPlot>
+    </div>
+  )
 }
 
 BarChart.propTypes = {

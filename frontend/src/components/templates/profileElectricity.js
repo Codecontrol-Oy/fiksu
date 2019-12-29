@@ -20,6 +20,7 @@ import ListItemAction from '../atoms/listItemAction'
 import Form from '../atoms/form'
 import LineChart from '../molecules/lineChart'
 import withSnackbar from "../molecules/withSnackbar"
+import Select from "../atoms/select"
 
 const ProfileElectricity = props => {
 
@@ -112,15 +113,33 @@ const ProfileElectricity = props => {
 
     return (
         <ProfileCard>
-            <Heading variant={3} color={"secondary"}>Sähkön säästötoimet</Heading>
+            <Block className="family-header">
+                <GridContainer style={{ padding: '0' }} height={12} size={12} justify="flex-start" align="baseline">
+                    <GridRow>
+                        <Grid style={{ padding: '0', paddingLeft: '1rem', display: 'flex', justifyContent: 'flex-start' }} sizeS={7} sizeM={10} sizeL={3}>
+                            <Heading variant={3}>Sähkön säästötoimet</Heading>
+                        </Grid>
+                        {selectedFamily !== 'default' &&
+                            <Grid style={{ display: 'flex' }} sizeS={5} sizeM={2} sizeL={2}>
+                                <Select style={{ width: '100%' }} rounded value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
+                                    {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 &&
+                                        familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
+                                    }
+                                </Select>
+                            </Grid>
+                        }
+                    </GridRow>
+                </GridContainer>
+
+            </Block>
             <GridContainer size={12} direction={"column"}>
-                {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 &&
+                {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 && selectedFamily === 'default' &&
                     <GridRow wrap direction="row">
                         <Grid sizeS={12} sizeM={12} sizeL={12}>
                             <Heading variant={4} color={"secondary"}>Valitse talous</Heading>
                             <Paragraph color={"secondary"}>Valitse mille taloudelle haluat merkata sähkölukemia tai säästötoimia</Paragraph>
                             <Block style={{ textAlign: 'center' }}>
-                                <SelectGroup underline color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
+                                <SelectGroup rounded color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
                                     <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
                                     {familyData.getUserFamilies &&
                                         familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
