@@ -113,9 +113,9 @@ const FamilyInfo = props => {
       <Block className="family-info">
         <GridContainer style={{ padding: '0' }} size={12} direction={"column"}>
           <GridRow style={{ padding: '0' }} size={12}>
-            <Grid>
-              {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow size={12}>
-                <Grid sizeS={12} sizeM={12} sizeL={4}>
+            <Grid style={{ padding: '0' }}>
+              {familyData && familyData.getUserFamilies.length > 0 && familyData.getUserFamilies.map(family => <GridRow style={{ padding: '0' }} size={12}>
+                <Grid style={{ padding: '0' }} sizeS={12} sizeM={12} sizeL={4}>
                   <Modal display={displayModal} id={"profile-card"}>
                     <GridContainer align={"center"} justify={"center"} direction={"column"}>
                       <Heading variant={4} color={"secondary"}>Talouden poistaminen</Heading>
@@ -139,6 +139,7 @@ const FamilyInfo = props => {
 
                   </Modal>
                   <Card>
+                    <Heading align={"left"} variant={2} color={"secondary"}>{family.name}</Heading>
                     <Heading align={"left"} variant={4} color={"secondary"}>Perustaja</Heading>
                     <FamilyMember
                       key={`family-${family._id}-${family.ownerId}`}

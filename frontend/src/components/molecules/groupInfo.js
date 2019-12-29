@@ -89,6 +89,7 @@ const GroupInfo = props => {
               </GridContainer>
             </Modal>
             <Card>
+              <Heading align={"left"} color={"secondary"} variant={2}>{group.name}</Heading>
               <Heading align={"left"} color={"secondary"} variant={3}>Perustaja</Heading>
               <FamilyMember key={`group-${group._id}-${group.ownerId}`} isOwner={group.isOwner} isAdmin={group.isAdmin} role={"perustaja"} id={group.ownerId} name={`${group.owner.firstName} ${group.owner.lastName}`} />
               <Heading style={{ marginBottom: 0 }} align={"left"} color={"secondary"} variant={4}>Pääkäyttäjät</Heading>

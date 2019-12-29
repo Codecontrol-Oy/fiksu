@@ -11,7 +11,7 @@ const FamilyMember = props =>
 
   <>
     <Block className="member-wrapper">
-      <GridContainer justify={"start"} align="center">
+      <GridContainer style={{ padding: '0' }} justify={"start"} align="center">
         <Grid style={{ padding: '0' }} sizeXL={7} sizeL={4} sizeM={7} sizeS={4}>
           <GridRow direction={"column"} justify={"start"} align={"start"}>
             <Paragraph style={{ margin: '0' }} size={2} color={"secondary"}>{props.name}</Paragraph>

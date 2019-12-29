@@ -23,13 +23,13 @@ const Family = props => {
             </Heading>
           </Grid>
           <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={2} sizeM={2} sizeS={4} sizeXL={1}>
-            <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista ryhmä</Button>
+            <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista talous</Button>
           </Grid>
         </GridContainer>
       </Block>
       <Block id={"modal"} />
       <FamilyMemberInvitation />
-      <GridRow justify={"center"}>
+      <GridRow style={{ padding: '0' }} justify={"center"}>
         <FamilyInfo setFamilyName={setFamilyName} displayModal={displayModal} setDisplayModal={setDisplayModal} />
       </GridRow>
       <GridRow justify={"center"}>
