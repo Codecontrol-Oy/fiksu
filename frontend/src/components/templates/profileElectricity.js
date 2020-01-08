@@ -144,142 +144,146 @@ const ProfileElectricity = props => {
                 </GridContainer>
 
             </Block>
-            <GridContainer size={12} direction={"column"}>
-                {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 && selectedFamily === 'default' &&
-                    <GridRow wrap direction="row">
-                        <Grid sizeS={12} sizeM={12} sizeL={12}>
-                            <Heading variant={4} color={"secondary"}>Valitse talous</Heading>
-                            <Paragraph color={"secondary"}>Valitse mille taloudelle haluat merkata sähkölukemia tai säästötoimia</Paragraph>
-                            <Block style={{ textAlign: 'center' }}>
-                                <SelectGroup rounded color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
-                                    <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
-                                    {familyData.getUserFamilies &&
-                                        familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
-                                    }
-                                </SelectGroup>}
+            <GridContainer style={{ padding: "1rem" }} size={12} direction={"column"}>
+                <Grid sizeS={12} sizeM={12} sizeL={11} sizeXL={10}>
+                    {familyData && familyData.getUserFamilies && familyData.getUserFamilies.length > 1 && selectedFamily === 'default' &&
+                        <GridRow wrap direction="row">
+                            <Grid sizeS={12} sizeM={12} sizeL={12}>
+                                <Heading variant={4} color={"secondary"}>Valitse talous</Heading>
+                                <Paragraph color={"secondary"}>Valitse mille taloudelle haluat merkata sähkölukemia tai säästötoimia</Paragraph>
+                                <Block style={{ textAlign: 'center' }}>
+                                    <SelectGroup rounded color={"secondary"} value={selectedFamily} onChange={(e, dataset) => { setSelectedFamily(e.currentTarget.value) }}>
+                                        <Option key={'defaultFamily'} value={'default'} text={'Valitse talous'} />
+                                        {familyData.getUserFamilies &&
+                                            familyData.getUserFamilies.map((item => <Option key={item._id} value={item._id} text={item.name} />))
+                                        }
+                                    </SelectGroup>}
                 </Block>
-                        </Grid>
-                    </GridRow>}
-                {familyData && familyData.getUserFamilies.length > 0 && selectedFamily != 'default' && <Block>
-                    <GridRow wrap direction="row">
-                        <Grid sizeS={12} sizeM={4} sizeL={4}>
-                            <Block className="new-electricity-consumption">
-                                <Heading variant={3} color={"secondary"}>Olen säästänyt kulutuksessa</Heading>
-                                <Form
-                                    onSubmit={e => saveConsumption(
-                                        {
-                                            variables: {
-                                                savedConsumption: {
-                                                    "householdId": selectedFamily,
-                                                    "consumptionTypeId": selectedType,
-                                                    "value": parseFloat(reading),
-                                                    "notes": notes,
-                                                    "date": date,
-                                                }
-                                            }
-                                        }
-                                    )
-                                    }>
-                                    <GridRow align={"center"} direction={"column"}>
-
-                                        <InputGroup required underline value={date} onChange={(e) => setDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
-                                        <SelectGroup underline color={"secondary"} value={selectedType} onChange={(e, dataset) => { setSelectedType(e.currentTarget.value); setReadingType(dataset.type) }}>
-                                            <Option key={'first_default_consumptionType'} type={'undefined'} value={'undefined'} text={'Valitse tapahtuma'} />
-                                            {data && data.getConsumptionTypes && data.getConsumptionTypes.length > 0 &&
-                                                data.getConsumptionTypes.map((item => <Option key={item._id} type={item.amountType} value={item._id} text={item.description} />))
-                                            }
-                                        </SelectGroup>
-                                        <InputGroup required underline value={reading} onChange={(e) => setReading(e.target.value)} color={"secondary"} placeholder={readingType} basic id="reading" type="number" min="0" />
-                                        <InputGroup underline color={"secondary"} onChange={(e) => setNotes(e.target.value)} value={notes} placeholder="Muistiinpanot" basic id="notes" type="text" maxlength="255" />
-                                        {selectedType != 'undefined' && <Button
-                                            type="submit"
-                                            basic > Tallenna</Button>}
-                                    </GridRow>
-                                </Form>
-                            </Block>
-                        </Grid>
-                        <Grid sizeS={12} sizeM={4} sizeL={4}>
-                            <Block className="new-electricity-consumption">
-                                <Heading variant={3} color={"secondary"}>Kuukauden sähkötiedot</Heading>
-                                <Form
-                                    onSubmit={e => saveMeasurement(
-                                        {
-                                            variables: {
-                                                measurement: {
-                                                    "householdId": selectedFamily,
-                                                    "value": parseFloat(measurement),
-                                                    "date": measurementDate,
-                                                }
-                                            }
-                                        }
-                                    )
-                                    }>
-                                    <GridRow align={"center"} direction={"column"}>
-                                        <InputGroup required underline value={measurementDate} onChange={(e) => setMeasurementDate(e.target.value)} color={"secondary"} basic id="measurementDate" type="date" />
-                                        <InputGroup required underline value={measurement} onChange={(e) => setMeasurement(e.target.value)} color={"secondary"} placeholder="Sähkömittarilukema" basic id="measurement" type="number" min="0" />
-                                        <Button
-                                            type="submit"
-                                            basic > Tallenna</Button>
-
-                                    </GridRow>
-                                </Form>
-                            </Block>
-                        </Grid>
-                        <Grid sizeS={12} sizeM={4} sizeL={4}>
-                            <Block>
-                                {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
-                            </Block>
-                        </Grid>
-                    </GridRow>
-                    <Divider />
-                    <GridRow direction="row">
-                        <Block className="edit-electricity-consumption">
-                            <Heading variant={3} color={"secondary"}>Poista energiansäästötapahtumia</Heading>
-                            <Block>
-                                <InputGroup required underline value={removeSavingsFrom.toISOString().slice(0, 10)} onChange={(e) => setRemoveSavingsFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeSavingsFrom} basic id="from" type="date" />
-                                <InputGroup required underline value={removeSavingsTo.toISOString().slice(0, 10)} onChange={(e) => setRemoveSavingsTo(new Date(e.target.value))} color={"secondary"} placeholder={removeSavingsTo} basic id="to" type="date" />
-                            </Block>
-                            <List>
-                                {sData && sData.getSavedConsumptions && sData.getSavedConsumptions.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
-                                    <ListItem
-                                        key={`item-${item._id}`} action={<ListItemAction
-                                            icon={"icofont-energy-savings"} onClick={(e) => removeConsumption(
+                            </Grid>
+                        </GridRow>}
+                    {familyData && familyData.getUserFamilies.length > 0 && selectedFamily != 'default' &&
+                        <>
+                            <GridRow wrap direction="row">
+                                <Grid sizeS={12} sizeM={4} sizeL={4}>
+                                    <Block className="new-electricity-consumption">
+                                        <Heading variant={3} color={"secondary"}>Olen säästänyt kulutuksessa</Heading>
+                                        <Form
+                                            onSubmit={e => saveConsumption(
                                                 {
                                                     variables: {
-                                                        id: item._id
+                                                        savedConsumption: {
+                                                            "householdId": selectedFamily,
+                                                            "consumptionTypeId": selectedType,
+                                                            "value": parseFloat(reading),
+                                                            "notes": notes,
+                                                            "date": date,
+                                                        }
                                                     }
                                                 }
-                                            )}>Poista</ListItemAction>} title={item.consumptionType.title} description={(item.consumptionType.description + ": " + item.value + " " + item.consumptionType.amountType)} date={new Date(item.date).toLocaleDateString()} />
+                                            )
+                                            }>
+                                            <GridRow align={"center"} direction={"column"}>
+
+                                                <InputGroup required underline value={date} onChange={(e) => setDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
+                                                <SelectGroup underline color={"secondary"} value={selectedType} onChange={(e, dataset) => { setSelectedType(e.currentTarget.value); setReadingType(dataset.type) }}>
+                                                    <Option key={'first_default_consumptionType'} type={'undefined'} value={'undefined'} text={'Valitse tapahtuma'} />
+                                                    {data && data.getConsumptionTypes && data.getConsumptionTypes.length > 0 &&
+                                                        data.getConsumptionTypes.map((item => <Option key={item._id} type={item.amountType} value={item._id} text={item.description} />))
+                                                    }
+                                                </SelectGroup>
+                                                <InputGroup required underline value={reading} onChange={(e) => setReading(e.target.value)} color={"secondary"} placeholder={readingType} basic id="reading" type="number" min="0" />
+                                                <InputGroup underline color={"secondary"} onChange={(e) => setNotes(e.target.value)} value={notes} placeholder="Muistiinpanot" basic id="notes" type="text" maxlength="255" />
+                                                {selectedType != 'undefined' && <Button
+                                                    type="submit"
+                                                    basic > Tallenna</Button>}
+                                            </GridRow>
+                                        </Form>
+                                    </Block>
                                 </Grid>
-                                )}
-                            </List>
-                        </Block>
-                    </GridRow>
-                    <Divider />
-                    <GridRow direction="row">
-                        <Block className="edit-electricity-consumption">
-                            <Heading variant={3} color={"secondary"}>Poista sähkömittarilukemia</Heading>
-                            <Block>
-                                <InputGroup required underline value={removeMeasurementFrom.toISOString().slice(0, 10)} onChange={(e) => setRemoveMeasurementFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementFrom} basic id="MeasurementFrom" type="date" />
-                                <InputGroup required underline value={removeMeasurementTo.toISOString().slice(0, 10)} onChange={(e) => setRemoveMeasurementTo(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementTo} basic id="MeasurementTo" type="date" />
-                            </Block>
-                            <List>
-                                {mData && mData.measurements && mData.measurements.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
-                                    <ListItem
-                                        key={`item-${item._id}`} action={<ListItemAction
-                                            icon={"icofont-energy-savings"} onClick={(e) => removeMeasurement(
+                                <Grid sizeS={12} sizeM={4} sizeL={4}>
+                                    <Block className="new-electricity-consumption">
+                                        <Heading variant={3} color={"secondary"}>Kuukauden sähkötiedot</Heading>
+                                        <Form
+                                            onSubmit={e => saveMeasurement(
                                                 {
                                                     variables: {
-                                                        id: item._id
+                                                        measurement: {
+                                                            "householdId": selectedFamily,
+                                                            "value": parseFloat(measurement),
+                                                            "date": measurementDate,
+                                                        }
                                                     }
                                                 }
-                                            )}>Poista</ListItemAction>} description={("Sähkömittarilukema: " + item.value)} date={new Date(item.date).toLocaleDateString()} />
+                                            )
+                                            }>
+                                            <GridRow align={"center"} direction={"column"}>
+                                                <InputGroup required underline value={measurementDate} onChange={(e) => setMeasurementDate(e.target.value)} color={"secondary"} basic id="measurementDate" type="date" />
+                                                <InputGroup required underline value={measurement} onChange={(e) => setMeasurement(e.target.value)} color={"secondary"} placeholder="Sähkömittarilukema" basic id="measurement" type="number" min="0" />
+                                                <Button
+                                                    type="submit"
+                                                    basic > Tallenna</Button>
+
+                                            </GridRow>
+                                        </Form>
+                                    </Block>
                                 </Grid>
-                                )}
-                            </List>
-                        </Block>
-                    </GridRow>
-                </Block>}
+                                <Grid sizeS={12} sizeM={4} sizeL={4}>
+                                    <Block>
+                                        {gData && gData.getElectricityGraph.length && <LineChart data={gData.getElectricityGraph} title="Sähkönkäyttö" />}
+                                    </Block>
+                                </Grid>
+                            </GridRow>
+                            <Divider />
+                            <GridRow direction="row">
+                                <Block className="edit-electricity-consumption">
+                                    <Heading variant={3} color={"secondary"}>Poista energiansäästötapahtumia</Heading>
+                                    <Block>
+                                        <InputGroup required underline value={removeSavingsFrom.toISOString().slice(0, 10)} onChange={(e) => setRemoveSavingsFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeSavingsFrom} basic id="from" type="date" />
+                                        <InputGroup required underline value={removeSavingsTo.toISOString().slice(0, 10)} onChange={(e) => setRemoveSavingsTo(new Date(e.target.value))} color={"secondary"} placeholder={removeSavingsTo} basic id="to" type="date" />
+                                    </Block>
+                                    <List>
+                                        {sData && sData.getSavedConsumptions && sData.getSavedConsumptions.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
+                                            <ListItem
+                                                key={`item-${item._id}`} action={<ListItemAction
+                                                    icon={"icofont-energy-savings"} onClick={(e) => removeConsumption(
+                                                        {
+                                                            variables: {
+                                                                id: item._id
+                                                            }
+                                                        }
+                                                    )}>Poista</ListItemAction>} title={item.consumptionType.title} description={(item.consumptionType.description + ": " + item.value + " " + item.consumptionType.amountType)} date={new Date(item.date).toLocaleDateString()} />
+                                        </Grid>
+                                        )}
+                                    </List>
+                                </Block>
+                            </GridRow>
+                            <Divider />
+                            <GridRow direction="row">
+                                <Block className="edit-electricity-consumption">
+                                    <Heading variant={3} color={"secondary"}>Poista sähkömittarilukemia</Heading>
+                                    <Block>
+                                        <InputGroup required underline value={removeMeasurementFrom.toISOString().slice(0, 10)} onChange={(e) => setRemoveMeasurementFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementFrom} basic id="MeasurementFrom" type="date" />
+                                        <InputGroup required underline value={removeMeasurementTo.toISOString().slice(0, 10)} onChange={(e) => setRemoveMeasurementTo(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementTo} basic id="MeasurementTo" type="date" />
+                                    </Block>
+                                    <List>
+                                        {mData && mData.measurements && mData.measurements.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
+                                            <ListItem
+                                                key={`item-${item._id}`} action={<ListItemAction
+                                                    icon={"icofont-energy-savings"} onClick={(e) => removeMeasurement(
+                                                        {
+                                                            variables: {
+                                                                id: item._id
+                                                            }
+                                                        }
+                                                    )}>Poista</ListItemAction>} description={("Sähkömittarilukema: " + item.value)} date={new Date(item.date).toLocaleDateString()} />
+                                        </Grid>
+                                        )}
+                                    </List>
+                                </Block>
+                            </GridRow>
+                        </>}
+
+                </Grid>
             </GridContainer>
         </ProfileCard>
     )
