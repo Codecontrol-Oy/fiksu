@@ -52,7 +52,7 @@ const Register = props => {
   return (
 
     <GridContainer grow justify="center" align="center">
-      <Grid height={12} size={6}>
+      <Grid style={{ display: "flex", justifyContent: "center" }} height={12} size={6}>
 
         <Card>
           {register === false &&
