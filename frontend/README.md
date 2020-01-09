@@ -1,4 +1,4 @@
-## Fixu Client
+## Fiksu Client
 
   ** npm start **
     Starts the development server.
