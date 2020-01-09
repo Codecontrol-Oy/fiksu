@@ -1,12 +1,12 @@
 ## Fixu Client
 
-  ** yarn start **
+  ** npm start **
     Starts the development server.
 
-  ** yarn build **
+  ** npm build **
     Bundles the app into static files for production.
 
-  ** yarn test **
+  ** npm test **
     Starts the test runner.
 
 
