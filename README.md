@@ -60,8 +60,8 @@ This resolves as:
       "id": "2",
       "createdAt": "2019-04-30T21:01:07+00:00",
       "firstName": "Kalervo",
-      "lastName": "Fixu",
-      "email": "asia.kunnossa@fiksu.codecontrol.fi"
+      "lastName": "Jankko",
+      "email": "asia.kunnossa@jankko.energy"
 ```
 
 if you want to create a new token, just use ```fiksu``` as the secret (suprise suprise! - well at the least for now)
