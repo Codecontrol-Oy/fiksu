@@ -1,4 +1,4 @@
-# Fixu
+# Fiksu
 
 ## Installing 
 
@@ -61,10 +61,10 @@ This resolves as:
       "createdAt": "2019-04-30T21:01:07+00:00",
       "firstName": "Kalervo",
       "lastName": "Fixu",
-      "email": "asia.kunnossa@fixu.energy"
+      "email": "asia.kunnossa@fiksu.codecontrol.fi"
 ```
 
-if you want to create a new token, just use ```fixu``` as the secret (suprise suprise! - well at the least for now)
+if you want to create a new token, just use ```fiksu``` as the secret (suprise suprise! - well at the least for now)
 
 currently, passwore hash and JWT secret comes from the following environment variables
 
