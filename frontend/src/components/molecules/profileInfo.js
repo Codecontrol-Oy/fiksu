@@ -59,7 +59,6 @@ const ProfileInfo = props => {
                                             {props.data && props.data.combinedEcoAchievement.level !== "NONE" &&
                                                 <>
                                                     <i class="icofont-medal"></i>
-
                                                 </>
                                             }
                                         </Block>

@@ -21,10 +21,6 @@ export const PUBLICITY_SETTINGS = [
         text: "Ei julkinen"
     },
     {
-        value: "FRIENDS_ONLY",
-        text: "Vain ystävät"
-    },
-    {
         value: "PUBLIC",
         text: "Julkinen"
     }

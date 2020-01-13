@@ -47,6 +47,8 @@ const ProfileSettings = props => {
         variables: {
             id: localStorage.getItem("userId")
         },
+        fetchPolicy: "no-cache",
+
         onCompleted(data) {
             console.log(data)
             setNamePublicity(data.user.permissions && data.user.permissions.showRealName)
@@ -64,6 +66,9 @@ const ProfileSettings = props => {
     const [updateUser, { loading: mloading, error: mError, data: mData }] = useMutation(MUTATION_UPDATE_USER, {
         onCompleted(data) {
             props.addSnack("Tiedot muutettu onnistuneesti!", "success")
+        },
+        onError(error) {
+            props.addSnack("Virhe tallanteassa tietoja!", "error")
         },
         refetchQueries: [{ query: GET_MY_USER, variables: { id: localStorage.getItem("userId") } }]
 
@@ -94,8 +99,8 @@ const ProfileSettings = props => {
                         <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa käyttäjätilin?</Heading>
                     </GridRow>
                     <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
-                        <Button onClick={() => deleteUser()} style={{ width: "5rem" }} basic>Kyllä</Button>
-                        <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                        <Button color={"alert"} onClick={() => deleteUser()} style={{ width: "5rem" }} outlined>Kyllä</Button>
+                        <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} outlined>Ei</Button>
                     </GridRow>
                 </GridContainer>
 
@@ -225,7 +230,7 @@ const ProfileSettings = props => {
                                 <Grid sizeS={8} sizeM={8} sizeL={8}>
                                     <Label name={"Sähköposti ilmoitukset"} />
                                 </Grid>
-                                <Grid sizeS={4} sizeM={4} sizeL={4}>
+                                <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeS={4} sizeM={4} sizeL={4}>
                                     <Switch onClick={() => setEmailNotifications(!emailNotifications)} value={emailNotifications} />
                                 </Grid>
                             </GridRow>

@@ -75,12 +75,15 @@ const ProfileElectricity = props => {
     const [saveConsumption, { loading: consumptionLoading, error: consumptionError, data: consumptionData }] = useMutation(MUTATION_ADD_NEW_CONSUMPTION,
         {
             onCompleted(data) {
-                setSelectedType(undefined)
-                setReadingType(undefined)
+                setSelectedType("")
+                setReadingType("")
                 setDate(today.toJSON().slice(0, 10))
-                setReading(undefined)
+                setReading("")
                 setNotes('')
                 props.addSnack("Lukema tallennettu onnistuneesti!", "success")
+            },
+            onError(error) {
+                props.addSnack("Virhe tallentaessa lukemaa!", "error")
             },
             refetchQueries: ['GetEnergySavings', 'GetElectricityGraph', 'GetUserAchievements', 'getTopGroupResults']
         }
@@ -97,8 +100,11 @@ const ProfileElectricity = props => {
         {
             onCompleted(data) {
                 setMeasurementDate(today.toJSON().slice(0, 10))
-                setMeasurement(undefined)
+                setMeasurement("")
                 props.addSnack("Sähkötiedot tallennettu onnistuneesti", "success")
+            },
+            onError(error) {
+                props.addSnack("Virhe tallentaessa lukemaa!", "error")
             },
             refetchQueries: ['Measurements', 'GetElectricityGraph', 'GetUserAchievements', 'getTopGroupResults']
         }

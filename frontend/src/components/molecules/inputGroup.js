@@ -25,7 +25,7 @@ const InputGroup = props => {
                 value={props.value}
                 onChange={props.onChange}
             />
-            <Paragraph size={2}>{props.error && props.error.message}</Paragraph>
+            <Paragraph size={2}>{props.error && props.error.message ? props.error.message : props.error}</Paragraph>
         </Block>
     )
 }

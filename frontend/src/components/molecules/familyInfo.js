@@ -122,12 +122,12 @@ const FamilyInfo = props => {
                   <GridRow style={{ padding: '0' }} size={12}>
                     <Block className="family-header">
                       <GridContainer height={12} align="center" justify="start">
-                        <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={9} sizeM={10} sizeS={8} sizeXL={1}>
+                        <Grid style={{ display: "flex", justifyContent: "flex-start" }} sizeL={9} sizeM={10} sizeS={7} sizeXL={1}>
                           <Heading color={"default"} style={{ margin: '0rem' }} variant={4}>
                             TALOUS {family.name.toUpperCase()}
                           </Heading>
                         </Grid>
-                        <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3} sizeM={2} sizeS={4} sizeXL={1}>
+                        <Grid style={{ display: 'flex', justifyContent: 'flex-end' }} sizeL={3} sizeM={2} sizeS={5} sizeXL={1}>
                           {family.isOwner &&
                             <Button onClick={() => setDisplayModal(true)} outlined color={'alert'}>Poista talous</Button>
                           }
@@ -145,15 +145,17 @@ const FamilyInfo = props => {
                               <Heading color={"secondary"} variant={5}>Oletko varma että haluat poistaa talouden {family.name.toUpperCase()}?</Heading>
                             </GridRow>
                             <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
-                              <Button onClick={() => {
-                                removeFamily({
-                                  variables: {
-                                    id: family._id
-                                  }
-                                });
-                                props.setDisplayModal(false)
-                              }} style={{ width: "5rem" }} basic>Kyllä</Button>
-                              <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                              <Button
+                                color={"alert"}
+                                onClick={() => {
+                                  removeFamily({
+                                    variables: {
+                                      id: family._id
+                                    }
+                                  });
+                                  props.setDisplayModal(false)
+                                }} style={{ width: "5rem" }} outlined>Kyllä</Button>
+                              <Button outlined onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} >Ei</Button>
                             </GridRow>
                           </GridContainer>
 

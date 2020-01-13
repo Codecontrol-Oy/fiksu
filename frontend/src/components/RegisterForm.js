@@ -24,30 +24,43 @@ import GridRow from './grid/row';
 import InputGroup from './molecules/inputGroup';
 import { withRouter } from "react-router-dom"
 import * as constants from '../constants'
+import Modal from "./atoms/modal"
+
 
 const Register = props => {
 
   const [errors, setErrors] = useState(null)
+  const [displayModal, setDisplayModal] = useState(false)
   const [createUser, { loading: mutationLoading, error: mutationError, data }] = useMutation(CREATE_USER,
     {
       onError(error) {
-        console.log(error.graphQLErrors[0].extensions.exception.errors)
         setErrors(error.graphQLErrors[0].extensions.exception.errors)
       },
       onCompleted(data) {
-
+        setDisplayModal(true)
+        setErrors(false)
         setTimeout(() => {
-          props.history.push(constants.ROUTE_HOMEPAGE)
+          props.setRegister(false)
         }, 1500)
       }
     },
 
   )
 
-
   console.log(errors)
   return (
     <Transition>
+      <Modal display={displayModal}>
+        <GridContainer align="center" justify="around" size={10}>
+          <Paragraph size={1} style={{ width: "5rem" }} color={"success"}>
+            <i class="icofont-tick-mark"></i>
+          </Paragraph>
+          <Paragraph color={"secondary"} size={4}>
+            Käyttäjätili luotu onnistuneesti! Sinut ohjataan takaisin kirjautumissivulle.
+            </Paragraph>
+        </GridContainer>
+
+      </Modal>
       <CardTitle>
         <Heading variant={4}>Uuden tilin luonti on helppoa, ja mikä parasta, ilmaista!</Heading>
       </CardTitle>
@@ -81,7 +94,7 @@ const Register = props => {
               <InputGroup required placeholder="Sukunimi" error={errors && errors.lastName && errors.lastName} underline id="lastName" type="text" />
             </GridRow>
             <GridRow align="center" justify="center">
-              <InputGroup required placeholder="Syntymäaika" error={errors && errors.birthDate && errors.birthDate} underline id="birthDate" type="date" />
+              <InputGroup placeholder="Syntymäaika" error={errors && errors.birthDate && errors.birthDate} underline id="birthDate" type="date" />
             </GridRow>
 
             <GridRow align="center" justify="center">
@@ -93,14 +106,14 @@ const Register = props => {
             <GridContainer align="center" direction="column">
 
               <GridRow align="center" justify="center">
-                <IconInput required id="nickName" type="text" icon="icofont-user-alt-4" placeholder="Käyttäjänimi" underline />
+                <InputGroup required id="nickName" type="text" icon="icofont-user-alt-4" placeholder="Käyttäjänimi" underline />
               </GridRow>
               <GridRow align="center" justify="center">
-                <IconInput required id="email" type="email" icon="icofont-email" placeholder="Sähköpostiosoite" underline />
+                <InputGroup required id="email" type="email" error={errors && errors.email && errors.email} icon="icofont-email" placeholder="Sähköpostiosoite" underline />
 
               </GridRow>
               <GridRow align="center" justify="center">
-                <IconInput required id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
+                <InputGroup required id="password" error={errors && errors.password && errors.password} type="password" icon="icofont-lock" placeholder="Salasana" underline />
               </GridRow>
 
 

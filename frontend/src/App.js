@@ -26,6 +26,8 @@ import GdprPage from "./components/templates/gdprPage"
 
 const App = () => (
   <>
+    <Block id="modal">
+    </Block>
     <HeaderBar />
     <Main>
       <PrivateRoute path={constants.ROUTE_ACCOUNT} component={HeaderAccount} />
