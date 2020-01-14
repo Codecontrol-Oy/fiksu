@@ -15,6 +15,7 @@ const SelectGroup = props => {
                 rounded={props.rounded}
                 underline={props.underline}
                 onChange={props.onChange}
+                required={props.required}
                 name={props.name}
                 id={props.id}
                 error={props.error && props.error}

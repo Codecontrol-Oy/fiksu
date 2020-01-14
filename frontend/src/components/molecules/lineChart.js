@@ -46,6 +46,7 @@ class LineChart extends React.Component {
         <h3 style={{ textAlign: 'center' }} className="text-secondary">{this.props.title}</h3>
         <FlexibleWidthXYPlot height={320}
           xType="time"
+          animation
           yDomain={[Math.min(...YRange) - 100, Math.max(...YRange) + 100]}>
           <XAxis tickLabelAngle={-45} />
           <YAxis />

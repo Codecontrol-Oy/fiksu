@@ -29,9 +29,9 @@ const FamilyMemberInvitation = props => {
         <GridRow justify={"center"}>
           <Block className="family-info">
 
-            <GridContainer size={12} direction={"column"}>
-              <GridRow size={12}>
-                <Grid sizeS={12} sizeM={12} sizeL={12}>
+            <GridContainer style={{ padding: '0' }} size={12} direction={"column"}>
+              <GridRow style={{ padding: '0' }} size={12}>
+                <Grid style={{ padding: '0' }} sizeS={12} sizeM={12} sizeL={12}>
                   <Card>
                     <Heading color={"secondary"} variant={2}>Olet saanut kutsun talouteen!</Heading>
                     <Paragraph color={"secondary"}>Hyväksymällä kutsun, liityt mukaan talouteen.</Paragraph>
@@ -41,7 +41,7 @@ const FamilyMemberInvitation = props => {
                           familyId: family._id
                         }
                       })} style={{ marginLeft: '5px' }} type="button" basic>
-                        <i class={'icofont-ui-add'} style={{ marginRight: '5px' }}></i> Hyväksy kutsu
+                        <i class={'icofont-ui-add'} style={{ marginRight: '5px' }}></i> Hyväksy
                     </Button>
                       <Button onClick={() => removeFamilyMember({
                         variables: {
@@ -49,7 +49,7 @@ const FamilyMemberInvitation = props => {
                           id: localStorage.getItem('userId')
                         }
                       })} style={{ marginLeft: '5px' }} type="button" alert>
-                        <i class={'icofont-ui-delete'} style={{ marginRight: '5px' }}></i> Hylkää kutsu
+                        <i class={'icofont-ui-delete'} style={{ marginRight: '5px' }}></i> Hylkää
                     </Button>
                     </InputLabel>)}
                   </Card>

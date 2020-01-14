@@ -117,7 +117,7 @@ function validatePassword(password) {
     if (password.length < Const.DEFAULT_MIN_PASSWORD_LENGTH) {
         throw new ApolloError(localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH }), null, {
             errors: {
-                password: localeService.translate('PASSWORD_MIN_REQUIRED')
+                password: localeService.translate('PASSWORD_MIN_REQUIRED', { minLen: Const.DEFAULT_MIN_PASSWORD_LENGTH })
             }
         })
     }
@@ -162,7 +162,7 @@ exports.createProfile = async (args) => {
         lastName: user.lastName,
         birthDate: user.birthDate,
         address: {
-            city: user?.address?.city
+            city: user ?.address ?.city
         },
         loginId: loginId,
     })
@@ -347,18 +347,20 @@ exports.searchUser = async (args) => {
         let firstName = search[0]
         let lastName = search[search.length - 1]
 
-        return Profile.find({ $and: [
-            { _id: { $nin: userIdsFilterOut } },
-            { firstName: { $regex : new RegExp(firstName, "i") } }, 
-            { lastName: { $regex : new RegExp(lastName, "i") } }, 
-            { 'permissions.showRealName': Const.PERMISSION_PUBLIC }
-        ] })
+        return Profile.find({
+            $and: [
+                { _id: { $nin: userIdsFilterOut } },
+                { firstName: { $regex: new RegExp(firstName, "i") } },
+                { lastName: { $regex: new RegExp(lastName, "i") } },
+                { 'permissions.showRealName': Const.PERMISSION_PUBLIC }
+            ]
+        })
     }
-    
+
     return null
 }
 
-function getFamilyMemberIds (familyId, ignoreUnaccepted) {
+function getFamilyMemberIds(familyId, ignoreUnaccepted) {
     if (!familyId || familyId.length != 24) return []
     return Family.findOne({ _id: mongoose.Types.ObjectId(familyId) })
         .then((family) => {
@@ -377,16 +379,16 @@ function getFamilyMemberIds (familyId, ignoreUnaccepted) {
 function getGroupMemberIds(groupId, ignoreUnaccepted) {
     if (!groupId || groupId.length != 24) return []
     return Group.findOne({ _id: mongoose.Types.ObjectId(groupId) })
-    .then((group) => {
-        if (group) {
-            if (ignoreUnaccepted) {
-                return [group.ownerId, ...group.adminIds, ...group.memberIds]
+        .then((group) => {
+            if (group) {
+                if (ignoreUnaccepted) {
+                    return [group.ownerId, ...group.adminIds, ...group.memberIds]
+                }
+                return [group.ownerId, ...group.adminIds, ...group.memberIds, ...group.pendingIds, ...group.invitedIds]
             }
-            return [group.ownerId, ...group.adminIds, ...group.memberIds, ...group.pendingIds, ...group.invitedIds]
-        }
-        
-        return []
-    })
+
+            return []
+        })
 }
 
 exports.getFamilyMemberIds = getFamilyMemberIds

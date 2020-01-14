@@ -107,16 +107,22 @@ const GroupInfo = props => {
                 {group.isOwner &&
                   <Modal display={displayModal === index} id={`${"profile-card-"}${index}`}>
                     <GridContainer align={"center"} justify={"center"} direction={"column"}>
-                      <GridRow>
-                        <Heading color={"default"} variant={5}>Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?</Heading>
-                      </GridRow>
+                      <GridRow justify={"center"}>
+                      <Heading style={{ margin: "1rem" }} align={"center"} color={"secondary"} variant={4}>Ryhmän poisto</Heading>
+                    </GridRow>
+                    <Divider  color={"secondary"} />
+                    <GridRow>
+                      <Paragraph size={3} color={"secondary"}>
+                        Oletko varma että haluat poistaa ryhmän {group.name.toUpperCase()}?
+                      </Paragraph>
+                    </GridRow>
                       <GridRow style={{ marginBottom: "1rem" }} justify={"around"}>
                         <Button onClick={() => removeGroup({
                           variables: {
                             id: group._id
                           }
-                        })} style={{ width: "5rem" }} basic>Kyllä</Button>
-                        <Button onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} alert>Ei</Button>
+                        })} style={{ width: "5rem" }} outlined>Kyllä</Button>
+                      <Button outlined color={"alert"} onClick={() => setDisplayModal(false)} style={{ width: "5rem" }} >Ei</Button>
                       </GridRow>
                     </GridContainer>
                   </Modal>

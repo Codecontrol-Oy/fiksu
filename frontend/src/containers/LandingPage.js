@@ -43,7 +43,7 @@ class LandingPage extends React.PureComponent {
                 </Paragraph>
 
                       <Paragraph>Säästä rahaa. Säästä luontoa. Ole Fiksu.</Paragraph>
-                      <Button onClick={() => this.props.history.push(constants.ROUTE_REGISTER)} basic rounded style={{ width: '15rem', marginTop: '2rem', height: '2rem', fontSize: '1.2rem', textTransform: 'capitalize' }}>Liity Nyt</Button>
+                      <Button onClick={() => this.props.history.push(`${constants.ROUTE_REGISTER}?register=true`)} basic rounded style={{ width: '15rem', marginTop: '2rem', height: '2rem', fontSize: '1.2rem', textTransform: 'capitalize' }}>Liity Nyt</Button>
                     </GridContainer>
                   </Transition>
                 </Card>

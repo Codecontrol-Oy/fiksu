@@ -75,12 +75,15 @@ const ProfileElectricity = props => {
     const [saveConsumption, { loading: consumptionLoading, error: consumptionError, data: consumptionData }] = useMutation(MUTATION_ADD_NEW_CONSUMPTION,
         {
             onCompleted(data) {
-                setSelectedType(undefined)
-                setReadingType(undefined)
+                setSelectedType("undefined")
+                setReadingType("")
                 setDate(today.toJSON().slice(0, 10))
-                setReading(undefined)
+                setReading("")
                 setNotes('')
                 props.addSnack("Lukema tallennettu onnistuneesti!", "success")
+            },
+            onError(error) {
+                props.addSnack("Virhe tallentaessa lukemaa!", "error")
             },
             refetchQueries: ['GetEnergySavings', 'GetElectricityGraph', 'GetUserAchievements', 'getTopGroupResults']
         }
@@ -97,8 +100,11 @@ const ProfileElectricity = props => {
         {
             onCompleted(data) {
                 setMeasurementDate(today.toJSON().slice(0, 10))
-                setMeasurement(undefined)
+                setMeasurement("")
                 props.addSnack("Sähkötiedot tallennettu onnistuneesti", "success")
+            },
+            onError(error) {
+                props.addSnack("Virhe tallentaessa lukemaa!", "error")
             },
             refetchQueries: ['Measurements', 'GetElectricityGraph', 'GetUserAchievements', 'getTopGroupResults']
         }
@@ -185,7 +191,7 @@ const ProfileElectricity = props => {
                                             <GridRow align={"center"} direction={"column"}>
 
                                                 <InputGroup required underline value={date} onChange={(e) => setDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
-                                                <SelectGroup underline color={"secondary"} value={selectedType} onChange={(e, dataset) => { setSelectedType(e.currentTarget.value); setReadingType(dataset.type) }}>
+                                                <SelectGroup required underline color={"secondary"} value={selectedType} onChange={(e, dataset) => { setSelectedType(e.currentTarget.value); setReadingType(dataset.type) }}>
                                                     <Option key={'first_default_consumptionType'} type={'undefined'} value={'undefined'} text={'Valitse tapahtuma'} />
                                                     {data && data.getConsumptionTypes && data.getConsumptionTypes.length > 0 &&
                                                         data.getConsumptionTypes.map((item => <Option key={item._id} type={item.amountType} value={item._id} text={item.description} />))

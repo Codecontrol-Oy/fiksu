@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.scss';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag'
@@ -27,6 +27,9 @@ import { GET_ME } from '../graphqlQueries';
 import LoadingSpinner from '../components/atoms/loadingSpinner';
 import { withRouter } from 'react-router-dom'
 import * as constants from '../constants'
+import Modal from '../components/atoms/modal';
+const queryString = require('query-string');
+
 const Register = props => {
 
   const [errors, setErrors] = useState(null)
@@ -48,63 +51,70 @@ const Register = props => {
   )
   const [me, { loading, error, qdata }] = useLazyQuery(GET_ME)
 
+  useEffect(() => {
+    const parsed = queryString.parse(window.location.search);
 
+    if (parsed.register) setRegister(true)
+    else setRegister(false)
+  }, [])
   return (
+    <>
+      <GridContainer grow justify="center" align="center">
 
-    <GridContainer grow justify="center" align="center">
-      <Grid style={{ display: "flex", justifyContent: "center" }} height={12} size={6}>
+        <Grid style={{ display: "flex", justifyContent: "center" }} height={12} size={6}>
 
-        <Card>
-          {register === false &&
+          <Card>
+            {register === false &&
 
-            <Block>
-              <CardTitle>
-                <Heading variant={4}>Tervetuloa takaisin!</Heading>
-              </CardTitle>
-              <CardBody>
-                <Form
-                  onSubmit={() => { postLogin({ variables: { nickname: document.getElementById("nickname").value, password: document.getElementById("password").value } }) }
-                  }>
-                  <GridContainer align="center" justify="center" height={12} grow direction="column" size={12}>
-                    <GridRow justify="center" align="center">
-                      <InputGroup placeholder={"Käyttäjätunnus"} required error={errors ? true : false} underline id="nickname" type="text" />
-                    </GridRow>
-                    <GridRow justify="center" align="center">
-                      <InputGroup placeholder={"Salasana"} required error={errors} underline id="password" type="password" />
-                    </GridRow>
-                    <GridRow justify="center" align="center">
+              <Block>
+                <CardTitle>
+                  <Heading variant={4}>Tervetuloa takaisin!</Heading>
+                </CardTitle>
+                <CardBody>
+                  <Form
+                    onSubmit={() => { postLogin({ variables: { nickname: document.getElementById("nickname").value, password: document.getElementById("password").value } }) }
+                    }>
+                    <GridContainer align="center" justify="center" height={12} grow direction="column" size={12}>
+                      <GridRow justify="center" align="center">
+                        <InputGroup placeholder={"Käyttäjätunnus"} required error={errors ? true : false} underline id="nickname" type="text" />
+                      </GridRow>
+                      <GridRow justify="center" align="center">
+                        <InputGroup placeholder={"Salasana"} required error={errors} underline id="password" type="password" />
+                      </GridRow>
+                      <GridRow justify="center" align="center">
 
-                      <Button
-                        style={{ width: "15rem", marginTop: "2rem" }}
-                        type={"submit"}
-                        basic>
-                        {mutationLoading ?
-                          <LoadingSpinner />
-                          :
-                          "Kirjaudu"
+                        <Button
+                          style={{ width: "15rem", marginTop: "2rem" }}
+                          type={"submit"}
+                          basic>
+                          {mutationLoading ?
+                            <LoadingSpinner />
+                            :
+                            "Kirjaudu"
 
-                        }
-                      </Button>
-                    </GridRow>
-                  </GridContainer>
-                </Form>
-              </CardBody>
-              <CardFooter>
-                <Paragraph onClick={(e) => setRegister(true)} weight={3} size={2}>Uusi käyttäjä? Luo tilisi täältä!</Paragraph>
-                <Paragraph onClick={(e) => props.history.push(constants.ROUTE_RESET_PASSWORD)} weight={3} size={2}>Unohtuiko salasana! Luo uusi täältä</Paragraph>
+                          }
+                        </Button>
+                      </GridRow>
+                    </GridContainer>
+                  </Form>
+                </CardBody>
+                <CardFooter>
+                  <Paragraph onClick={(e) => setRegister(true)} weight={3} size={2}>Uusi käyttäjä? Luo tilisi täältä!</Paragraph>
+                  <Paragraph onClick={(e) => props.history.push(constants.ROUTE_RESET_PASSWORD)} weight={3} size={2}>Unohtuiko salasana! Luo uusi täältä</Paragraph>
 
-              </CardFooter>
-            </Block>
-          }
-          {register === true &&
-            <RegisterForm onClick={(e) => setRegister(false)} />
+                </CardFooter>
+              </Block>
+            }
+            {register === true &&
+              <RegisterForm setRegister={setRegister} onClick={(e) => setRegister(false)} />
 
-          }
+            }
 
 
-        </Card>
-      </Grid>
-    </GridContainer >
+          </Card>
+        </Grid>
+      </GridContainer >
+    </>
   );
 }
 export default withRouter(Register)

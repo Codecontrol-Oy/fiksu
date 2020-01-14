@@ -4,7 +4,19 @@ const Paragraph = props => {
     let newClasses = ["paragraph"]
     if (props.size >= 1 && props.size <= 6) newClasses.push(`font-size-${props.size}`)
     if (props.weight >= 1 && props.weight <= 8) newClasses.push(`weight-${props.weight}00`)
-    if (props.color === "secondary") newClasses.push("text-secondary")
+
+    if (props.color === "alert") {
+      newClasses.push("text-alert")
+    }
+    if (props.color === "secondary") {
+      newClasses.push("text-secondary")
+    }
+    if (props.color === "default") {
+      newClasses.push("text-default")
+    }
+    if (props.color === "success") {
+      newClasses.push("text-success")
+    }
 
     if (props.align === "center") newClasses.push("text-center")
     if (props.align === "left") newClasses.push("text-left")
