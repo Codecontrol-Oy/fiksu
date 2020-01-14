@@ -44,8 +44,8 @@ const ProfileElectricity = props => {
     const [notes, setNotes] = useState("")
     const [removeSavingsFrom, setRemoveSavingsFrom] = useState(yesterday)
     const [removeSavingsTo, setRemoveSavingsTo] = useState(tomorrow)
-    const [removeMeasurementFrom, setRemoveMeasurementFrom] = useState(yesterday)
-    const [removeMeasurementTo, setRemoveMeasurementTo] = useState(tomorrow)
+    const [removeMeasurementFrom, setRemoveMeasurementFrom] = useState(lastMonth)
+    const [removeMeasurementTo, setRemoveMeasurementTo] = useState(today)
     const { loading, error, data } = useQuery(QUERY_CONSUMPTION_TYPES)
     const { loading: sLoading, error: sError, data: sData } = useQuery(GET_USER_ENERGY_SAVINGS, {
         variables: {
@@ -197,7 +197,7 @@ const ProfileElectricity = props => {
                                                         data.getConsumptionTypes.map((item => <Option key={item._id} type={item.amountType} value={item._id} text={item.description} />))
                                                     }
                                                 </SelectGroup>
-                                                <InputGroup required underline value={reading} onChange={(e) => setReading(e.target.value)} color={"secondary"} placeholder={readingType} basic id="reading" type="number" min="0" />
+                                                <InputGroup min={0} required underline value={reading} onChange={(e) => setReading(e.target.value)} color={"secondary"} placeholder={readingType} basic id="reading" type="number" min="0" />
                                                 <InputGroup underline color={"secondary"} onChange={(e) => setNotes(e.target.value)} value={notes} placeholder="Muistiinpanot" basic id="notes" type="text" maxlength="255" />
                                                 {selectedType != 'undefined' && <Button
                                                     type="submit"
@@ -224,7 +224,7 @@ const ProfileElectricity = props => {
                                             }>
                                             <GridRow align={"center"} direction={"column"}>
                                                 <InputGroup required underline value={measurementDate} onChange={(e) => setMeasurementDate(e.target.value)} color={"secondary"} basic id="measurementDate" type="date" />
-                                                <InputGroup required underline value={measurement} onChange={(e) => setMeasurement(e.target.value)} color={"secondary"} placeholder="Sähkömittarilukema" basic id="measurement" type="number" min="0" />
+                                                <InputGroup min={0} required underline value={measurement} onChange={(e) => setMeasurement(e.target.value)} color={"secondary"} placeholder="Sähkömittarilukema" basic id="measurement" type="number" min="0" />
                                                 <Button
                                                     type="submit"
                                                     basic > Tallenna</Button>

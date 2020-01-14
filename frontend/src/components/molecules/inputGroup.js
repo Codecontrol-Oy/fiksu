@@ -24,6 +24,8 @@ const InputGroup = props => {
                 color={props.color}
                 value={props.value}
                 onChange={props.onChange}
+                min={props.min}
+                max={props.max}
             />
             <Paragraph size={2}>{props.error && props.error.message ? props.error.message : props.error}</Paragraph>
         </Block>
