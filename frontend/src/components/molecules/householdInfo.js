@@ -19,7 +19,8 @@ const HouseholdInfo = props => {
     const { loading: gLoading, error: gError, data: gData } = useQuery(GET_USER_ELECTRICITY_GRAPH, {
         variables: {
             id: props.id
-        }
+        },
+        fetchPolicy: "no-cache"
     })
 
     const [data, setData] = useState([])

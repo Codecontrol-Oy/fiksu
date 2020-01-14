@@ -36,6 +36,6 @@ const Input = props => {
         }
 
     }, [props.error])
-    return <input style={props.style} required={props.required ? 'required' : undefined} value={props.value} id={props.id} name={props.name} placeholder={props.placeholder} {...(props.onChange && { onChange: (e) => props.onChange(e) })} className={"input " + (classes.join(' '))} type={props.type ? props.type : "text"} />
+    return <input min={props.min} max={props.max} style={props.style} required={props.required ? 'required' : undefined} value={props.value} id={props.id} name={props.name} placeholder={props.placeholder} {...(props.onChange && { onChange: (e) => props.onChange(e) })} className={"input " + (classes.join(' '))} type={props.type ? props.type : "text"} />
 }
 export default Input
