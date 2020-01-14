@@ -40,6 +40,6 @@ const Select = props => {
         props.onChange(e, dataset)
     }
 
-    return <select style={props.style} value={props.value} id={props.id} name={props.name}  {...(props.onChange && { onChange: (e) => onChange(e) })} className={"input " + (classes.join(' '))}>{props.children}</select>
+    return <select required={props.required} style={props.style} value={props.value} id={props.id} name={props.name}  {...(props.onChange && { onChange: (e) => onChange(e) })} className={"input " + (classes.join(' '))}>{props.children}</select>
 }
 export default Select
