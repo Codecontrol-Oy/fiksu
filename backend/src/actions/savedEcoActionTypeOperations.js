@@ -30,11 +30,11 @@ exports.createSavedEcoAction = async (args, context) => {
 exports.getSavedEcoActions = async (args) => {
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return SavedEcoAction.find({ userId: args.userId, date: { "$gte": from, "$lt": to } })
+    return SavedEcoAction.find({ userId: args.userId, date: { "$gte": from, "$lt": to } }).sort({ date: -1 })
 }
 
 exports.getAllSavedEcoActions = async (args) => {
-    return SavedEcoAction.find({ userId: args.userId })
+    return SavedEcoAction.find({ userId: args.userId }).sort({ date: -1 })
 }
 
 exports.removeSavedEcoAction = async (args) => {

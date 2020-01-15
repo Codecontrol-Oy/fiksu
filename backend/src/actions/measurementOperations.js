@@ -8,7 +8,7 @@ const localeService = container.resolve('localeService')
 exports.getMeasurements = async (args) => {
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return Measurement.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
+    return Measurement.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } }).sort({ date: -1 })
 }
 
 exports.createMeasurement = async (args, context) => {
