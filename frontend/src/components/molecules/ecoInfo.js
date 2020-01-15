@@ -22,6 +22,7 @@ const EcoInfo = props => {
   var tomorrow = new Date()
   var yesterday = new Date()
   var lastMonth = new Date()
+  today.setHours(today.getHours() + 6)
   tomorrow.setDate(today.getDate() + 1)
   yesterday.setDate(today.getDate() - 1)
   lastMonth.setDate(today.getDate() - 31)
@@ -55,7 +56,7 @@ const EcoInfo = props => {
             <Heading variant={2} color={"secondary"}>Syötä uusi ekoteko</Heading>
             <Paragraph color={"secondary"}>Valitse ekoteko listasta ja tallenna - Päivän hyvä työ tehty!</Paragraph>
             <Block style={{ textAlign: 'center' }}>
-              <InputGroup required underline value={ecoDate} onChange={(e) => setEcoDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
+              <InputGroup max={today.toISOString().slice(0, 10)} required underline value={ecoDate} onChange={(e) => setEcoDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
               <SelectGroup underline color={"secondary"} value={selectedEcoAction} onChange={(e, dataset) => { setEcoActionTypeDescription(dataset.type); setSelectedEcoAction(e.currentTarget.value); }}>
                 <Option key={'defaultEcoAction'} value={'default'} text={'Valitse ekoteko'} />
                 {ecoActionTypeData && ecoActionTypeData.getEcoActionTypes && ecoActionTypeData.getEcoActionTypes.map((item) => <Option key={item._id} type={item.description} value={item._id} text={item.title} />)}

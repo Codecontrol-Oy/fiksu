@@ -204,7 +204,7 @@ const ProfileElectricity = props => {
                                             }>
                                             <GridRow align={"center"} direction={"column"}>
 
-                                                <InputGroup required underline value={date} onChange={(e) => setDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
+                                                <InputGroup max={today.toISOString().slice(0, 10)} required underline value={date} onChange={(e) => setDate(e.target.value)} color={"secondary"} basic id="date" type="date" />
                                                 <SelectGroup required underline color={"secondary"} value={selectedType} onChange={(e, dataset) => { setSelectedType(e.currentTarget.value); setReadingType(dataset.type) }}>
                                                     <Option key={'first_default_consumptionType'} type={'undefined'} value={'undefined'} text={'Valitse tapahtuma'} />
                                                     {data && data.getConsumptionTypes && data.getConsumptionTypes.length > 0 &&
@@ -220,7 +220,8 @@ const ProfileElectricity = props => {
                                                     basic
                                                     id="reading"
                                                     type="number"
-                                                    min="0" />
+                                                    min="0"
+                                                />
                                                 <InputGroup underline color={"secondary"} onChange={(e) => setNotes(e.target.value)} value={notes} placeholder="Muistiinpanot" basic id="notes" type="text" maxlength="255" />
                                                 {selectedType != 'undefined' && <Button
                                                     type="submit"
@@ -246,7 +247,7 @@ const ProfileElectricity = props => {
                                             )
                                             }>
                                             <GridRow align={"center"} direction={"column"}>
-                                                <InputGroup required underline value={measurementDate} onChange={(e) => setMeasurementDate(e.target.value)} color={"secondary"} basic id="measurementDate" type="date" />
+                                                <InputGroup max={today.toISOString().slice(0, 10)} required underline value={measurementDate} onChange={(e) => setMeasurementDate(e.target.value)} color={"secondary"} basic id="measurementDate" type="date" />
                                                 <InputGroup min={0} required underline value={measurement} onChange={(e) => setMeasurement(e.target.value)} color={"secondary"} placeholder="Sähkömittarilukema" basic id="measurement" type="number" min="0" />
                                                 <Button
                                                     type="submit"
@@ -280,7 +281,7 @@ const ProfileElectricity = props => {
                                                                 id: item._id
                                                             }
                                                         }
-                                                    )}>Poista</ListItemAction>} title={item.consumptionType.title} description={(item.consumptionType.description + ": " + item.value + " " + item.consumptionType.amountType)} date={new Date(item.date).toLocaleDateString()} />
+                                                    )}>Poista</ListItemAction>} title={item.consumptionType.title} description={(item.consumptionType.description + ": " + item.value + " " + item.consumptionType.amountType)} date={new Date(item.date).toLocaleDateString('fi-FI')} />
                                         </Grid>
                                         )}
                                     </List>
@@ -304,7 +305,7 @@ const ProfileElectricity = props => {
                                                                 id: item._id
                                                             }
                                                         }
-                                                    )}>Poista</ListItemAction>} description={("Sähkömittarilukema: " + item.value)} date={new Date(item.date).toLocaleDateString()} />
+                                                    )}>Poista</ListItemAction>} description={("Sähkömittarilukema: " + item.value)} date={new Date(item.date).toLocaleDateString('fi-FI')} />
                                         </Grid>
                                         )}
                                     </List>

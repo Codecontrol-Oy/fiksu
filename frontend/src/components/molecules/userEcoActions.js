@@ -20,12 +20,13 @@ const UserEcoActions = props => {
   var tomorrow = new Date()
   var yesterday = new Date()
   var lastMonth = new Date()
+  today.setHours(today.getHours() + 6)
   tomorrow.setDate(today.getDate() + 1)
   yesterday.setDate(today.getDate() - 1)
   lastMonth.setDate(today.getDate() - 31)
 
-  const [ecoDateFrom, setEcoDateFrom] = useState(yesterday.toJSON().slice(0, 10))
-  const [ecoDateTo, setEcoDateTo] = useState(tomorrow.toJSON().slice(0, 10))
+  const [ecoDateFrom, setEcoDateFrom] = useState(lastMonth.toJSON().slice(0, 10))
+  const [ecoDateTo, setEcoDateTo] = useState(today.toJSON().slice(0, 10))
   const { loading: ecoActionsLoading, error: ecoActionsError, data: ecoActionsData } = useQuery(GET_USER_ECOACTIONS, {
     variables: {
       id: localStorage.getItem('userId'), from: ecoDateFrom, to: ecoDateTo
@@ -34,6 +35,12 @@ const UserEcoActions = props => {
   const [removeEcoAction, { loading: removeEcoActionLoading, error: removeEcoActionError, data: removeEcoActionData }] = useMutation(MUTATION_REMOVE_ECO_ACTION, {
     refetchQueries: ['EcoActions', 'UserEcoActions', 'GetUserEcoActionsGraph', 'GetUserAchievements'],
   })
+
+  const EcoDateTo = (e) => {
+    let eDate = new Date(e)
+    eDate.setHours(eDate.getHours() + 6)
+    setEcoDateTo(eDate)
+  }
   return <Block className="eco-info">
     <GridContainer size={12} direction="column">
       <GridRow size={12} direction="row">
@@ -43,7 +50,7 @@ const UserEcoActions = props => {
             <Paragraph color={"secondary"}>Aseta haettavien ekotekojen alue valitsemalla päivämäärät</Paragraph>
             <Block style={{ textAlign: 'center' }}>
               <InputGroup required underline value={ecoDateFrom} onChange={(e) => setEcoDateFrom(e.target.value)} color={"secondary"} basic id="dateFrom" type="date" />
-              <InputGroup required underline value={ecoDateTo} onChange={(e) => setEcoDateTo(e.target.value)} color={"secondary"} basic id="dateTo" type="date" />
+              <InputGroup required underline value={ecoDateTo} onChange={(e) => EcoDateTo(e.target.value)} color={"secondary"} basic id="dateTo" type="date" />
             </Block>
             <List>
               {ecoActionsData && ecoActionsData.getSavedEcoActions && ecoActionsData.getSavedEcoActions.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
@@ -58,7 +65,7 @@ const UserEcoActions = props => {
                         }
                       );
                       props.addSnack("Ekoteko poistettu onnistuneesti!", "success")
-                    }}>Poista</ListItemAction>} title={item.ecoActionType.title} description={(item.ecoActionType.description)} date={new Date(item.date).toLocaleDateString()} />
+                    }}>Poista</ListItemAction>} title={item.ecoActionType.title} description={(item.ecoActionType.description)} date={new Date(item.date).toLocaleDateString('fi-FI')} />
               </Grid>
               )}
             </List>
