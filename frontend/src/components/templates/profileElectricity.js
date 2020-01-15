@@ -28,6 +28,7 @@ const ProfileElectricity = props => {
     var tomorrow = new Date()
     var yesterday = new Date()
     var lastMonth = new Date()
+    today.setHours(today.getHours() + 6)
     tomorrow.setDate(today.getDate() + 1);
     yesterday.setDate(today.getDate() - 1);
     lastMonth.setDate(today.getDate() - 31);
@@ -42,11 +43,12 @@ const ProfileElectricity = props => {
     const [measurementDate, setMeasurementDate] = useState(today.toJSON().slice(0, 10))
     const [reading, setReading] = useState("")
     const [notes, setNotes] = useState("")
-    const [removeSavingsFrom, setRemoveSavingsFrom] = useState(yesterday)
-    const [removeSavingsTo, setRemoveSavingsTo] = useState(tomorrow)
+    const [removeSavingsFrom, setRemoveSavingsFrom] = useState(lastMonth)
+    const [removeSavingsTo, setRemoveSavingsTo] = useState(today)
     const [removeMeasurementFrom, setRemoveMeasurementFrom] = useState(lastMonth)
     const [removeMeasurementTo, setRemoveMeasurementTo] = useState(today)
     const { loading, error, data } = useQuery(QUERY_CONSUMPTION_TYPES)
+
     const { loading: sLoading, error: sError, data: sData } = useQuery(GET_USER_ENERGY_SAVINGS, {
         variables: {
             id: selectedFamily, from: removeSavingsFrom, to: removeSavingsTo
@@ -116,6 +118,18 @@ const ProfileElectricity = props => {
             props.addSnack("Sähkötieto poistettu onnistuneesti", "success")
         }
     })
+
+    const RemoveMeasurementTo = (e) => {
+        let eDate = new Date(e)
+        eDate.setHours(eDate.getHours() + 6)
+        setRemoveMeasurementTo(eDate)
+    }
+
+    const RemoveSavingsTo = (e) => {
+        let eDate = new Date(e)
+        eDate.setHours(eDate.getHours() + 6)
+        setRemoveSavingsTo(eDate)
+    }
 
     return (
         <ProfileCard>
@@ -197,7 +211,16 @@ const ProfileElectricity = props => {
                                                         data.getConsumptionTypes.map((item => <Option key={item._id} type={item.amountType} value={item._id} text={item.description} />))
                                                     }
                                                 </SelectGroup>
-                                                <InputGroup min={0} required underline value={reading} onChange={(e) => setReading(e.target.value)} color={"secondary"} placeholder={readingType} basic id="reading" type="number" min="0" />
+                                                <InputGroup
+                                                    max={readingType === "Tuntia" ? 24 : readingType === "Minuuttia" ? 3600 : ""}
+                                                    min={0} required underline value={reading}
+                                                    onChange={(e) => setReading(e.target.value)}
+                                                    color={"secondary"}
+                                                    placeholder={readingType}
+                                                    basic
+                                                    id="reading"
+                                                    type="number"
+                                                    min="0" />
                                                 <InputGroup underline color={"secondary"} onChange={(e) => setNotes(e.target.value)} value={notes} placeholder="Muistiinpanot" basic id="notes" type="text" maxlength="255" />
                                                 {selectedType != 'undefined' && <Button
                                                     type="submit"
@@ -245,7 +268,7 @@ const ProfileElectricity = props => {
                                     <Heading variant={3} color={"secondary"}>Poista energiansäästötapahtumia</Heading>
                                     <Block>
                                         <InputGroup required underline value={removeSavingsFrom.toISOString().slice(0, 10)} onChange={(e) => setRemoveSavingsFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeSavingsFrom} basic id="from" type="date" />
-                                        <InputGroup required underline value={removeSavingsTo.toISOString().slice(0, 10)} onChange={(e) => setRemoveSavingsTo(new Date(e.target.value))} color={"secondary"} placeholder={removeSavingsTo} basic id="to" type="date" />
+                                        <InputGroup required underline value={removeSavingsTo.toISOString().slice(0, 10)} onChange={(e) => RemoveSavingsTo(e.target.value)} color={"secondary"} placeholder={removeSavingsTo} basic id="to" type="date" />
                                     </Block>
                                     <List>
                                         {sData && sData.getSavedConsumptions && sData.getSavedConsumptions.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
@@ -269,7 +292,7 @@ const ProfileElectricity = props => {
                                     <Heading variant={3} color={"secondary"}>Poista sähkömittarilukemia</Heading>
                                     <Block>
                                         <InputGroup required underline value={removeMeasurementFrom.toISOString().slice(0, 10)} onChange={(e) => setRemoveMeasurementFrom(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementFrom} basic id="MeasurementFrom" type="date" />
-                                        <InputGroup required underline value={removeMeasurementTo.toISOString().slice(0, 10)} onChange={(e) => setRemoveMeasurementTo(new Date(e.target.value))} color={"secondary"} placeholder={removeMeasurementTo} basic id="MeasurementTo" type="date" />
+                                        <InputGroup required underline value={removeMeasurementTo.toISOString().slice(0, 10)} onChange={(e) => RemoveMeasurementTo(e.target.value)} color={"secondary"} placeholder={removeMeasurementTo} basic id="MeasurementTo" type="date" />
                                     </Block>
                                     <List>
                                         {mData && mData.measurements && mData.measurements.map((item) => <Grid key={`grid-${item._id}`} sizeS={12} sizeM={4} sizeL={3}>
