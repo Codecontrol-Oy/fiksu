@@ -39,11 +39,11 @@ exports.createSavedConsumption = async (args, context) => {
 exports.getSavedConsumptions = async (args) => {
     const from = new Date(args.from)
     const to = new Date(args.to)
-    return SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } })
+    return SavedConsumption.find({ householdId: args.householdId, date: { "$gte": from, "$lt": to } }).sort({ date: -1 })
 }
 
 exports.getAllSavedConsumptions = async (args) => {
-    return SavedConsumption.find({ householdId: args.householdId })
+    return SavedConsumption.find({ householdId: args.householdId }).sort({ date: -1 })
 }
 
 exports.removeSavedConsumption = async (args) => {
